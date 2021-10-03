@@ -10,6 +10,8 @@ public class GameView {
 
     private SignUpPanel signUpPanel;
 
+    private LoginPanel loginPanel;
+
     public GameView() {
     }
 
@@ -35,5 +37,13 @@ public class GameView {
 
     public void setSignUpPanel(SignUpPanel signUpPanel) {
         this.signUpPanel = signUpPanel;
+    }
+
+    public LoginPanel getLoginPanel() {
+        return loginPanel;
+    }
+
+    public void setLoginPanel(LoginPanel loginPanel) {
+        this.loginPanel = loginPanel;
     }
 }
