@@ -4,6 +4,7 @@ public class GameModel {
 
     private Snake snake;
     private Food food;
+    private User user;
 
     public GameModel() {
         snake = new Snake();
@@ -24,5 +25,13 @@ public class GameModel {
 
     public void setFood(Food food) {
         this.food = food;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
