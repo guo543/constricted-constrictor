@@ -52,4 +52,21 @@ public class UserDao {
             return false;
         }
     }
+
+    public User getUser(User user) throws SQLException{
+        User u = new User();
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("SELECT username, password, email FROM user where username=? AND password=?");
+
+        preparedStatement.setString(1, user.getUsername());
+        preparedStatement.setString(2, user.getPassword());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            u.setUsername(resultSet.getString("username"));
+            u.setPassword(resultSet.getString("password"));
+            u.setEmail(resultSet.getString("email"));
+        }
+        return u.getUsername() == null ? null : u;
+    }
 }

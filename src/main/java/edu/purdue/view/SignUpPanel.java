@@ -6,23 +6,20 @@ import java.awt.*;
 public class SignUpPanel extends JPanel {
 
     private JTextField username;
-
     private JTextField password;
-
     private JTextField email;
-
     private JButton signUp;
 
     public SignUpPanel() {
-        this.setBackground(new Color(255, 249, 236));
+//        this.setBackground(new Color(255, 249, 236));
         this.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
+        constraints.insets = new Insets(0, 7, 7, 0);
         username = new JTextField(20);
         password = new JTextField(20);
         email = new JTextField(20);
         signUp = new JButton("signUp");
-        signUp.setPreferredSize(new Dimension(200, 30));
 
         JLabel usernameLabel = new JLabel("username: ");
         JLabel passwordLabel = new JLabel("password: ");

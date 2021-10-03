@@ -1,8 +1,9 @@
 package edu.purdue;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.*;
 import edu.purdue.dao.UserDao;
 import edu.purdue.controller.SignUpController;
+import edu.purdue.controller.LoginController;
 import edu.purdue.controller.GameController;
 import edu.purdue.model.GameModel;
 import edu.purdue.view.GamePanel;
@@ -18,20 +19,14 @@ public class StartGame {
 
     public static void main(String[] args) throws SQLException {
         try {
-            UIManager.setLookAndFeel( new FlatLightLaf() );
-        } catch( Exception ex ) {
-            System.err.println( "Failed to initialize LaF" );
+            // Set System L&F
+//            UIManager.setLookAndFeel(
+//                    UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(new FlatDarculaLaf());
         }
-        UIManager.put( "TextComponent.arc", 5 );
-//        try {
-//            // Set System L&F
-////            UIManager.setLookAndFeel(
-////                    UIManager.getSystemLookAndFeelClassName());
-//            UIManager.setLookAndFeel(new FlatDarculaLaf());
-//        }
-//        catch (Exception e) {
-//            // handle exception
-//        }
+        catch (Exception e) {
+            // handle exception
+        }
 
         JFrame jFrame = new JFrame();
 
@@ -55,6 +50,7 @@ public class StartGame {
 
         new GameController(gamePanel, gameModel);
         new SignUpController(userDao, gameView);
+        new LoginController(userDao, gameView, gameModel);
 
         jFrame.setContentPane(loginPanel);
 
