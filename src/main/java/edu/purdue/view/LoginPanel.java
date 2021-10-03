@@ -14,13 +14,12 @@ public class LoginPanel extends JPanel {
     private JButton signUp;
 
     public LoginPanel() {
+        this.setBackground(new Color(255, 249, 236));
         this.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
         username = new JTextField(20);
-        username.setSize(200, 10);
         password = new JTextField(20);
-        password.setSize(200, 10);
         login = new JButton("Log In");
         signUp = new JButton("Sign Up");
 

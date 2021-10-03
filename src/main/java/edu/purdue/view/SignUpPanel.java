@@ -14,15 +14,13 @@ public class SignUpPanel extends JPanel {
     private JButton signUp;
 
     public SignUpPanel() {
+        this.setBackground(new Color(255, 249, 236));
         this.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
         username = new JTextField(20);
-        username.setSize(200, 10);
         password = new JTextField(20);
-        password.setSize(200, 10);
         email = new JTextField(20);
-        email.setSize(200, 10);
         signUp = new JButton("signUp");
         signUp.setPreferredSize(new Dimension(200, 30));
 
