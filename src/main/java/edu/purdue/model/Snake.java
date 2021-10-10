@@ -45,6 +45,37 @@ public class Snake {
         bodyImg = new ImageIcon(bodyPath);
     }
 
+    public void move() {
+
+        for (int i = length - 1; i > 0; i--) {
+            x[i] = x[i - 1];
+            y[i] = y[i - 1];
+        }
+
+        if ("U".equals(direction)) {
+            y[0] -= 25;
+        } else if ("D".equals(direction)) {
+            y[0] += 25;
+        } else if ("L".equals(direction)) {
+            x[0] -= 25;
+        } else {
+            x[0] += 25;
+        }
+
+        if (x[0] == 750) {
+            x[0] = 25;
+        }
+        if (x[0] < 25) {
+            x[0] = 725;
+        }
+        if (y[0] < 50) {
+            y[0] = 700;
+        }
+        if (y[0] == 725) {
+            y[0] = 50;
+        }
+    }
+
     public int[] getX() {
         return x;
     }

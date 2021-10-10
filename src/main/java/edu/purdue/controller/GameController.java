@@ -30,38 +30,8 @@ public class GameController {
     }
 
     private void update() {
-        int[] snakeX = gameModel.getSnake().getX();
-        int[] snakeY = gameModel.getSnake().getY();
-        String direction = gameModel.getSnake().getDirection();
-        int length = gameModel.getSnake().getLength();
 
-        for (int i = length - 1; i > 0; i--) {
-            snakeX[i] = snakeX[i - 1];
-            snakeY[i] = snakeY[i - 1];
-        }
-
-        if ("U".equals(direction)) {
-            snakeY[0] -= 25;
-        } else if ("D".equals(direction)) {
-            snakeY[0] += 25;
-        } else if ("L".equals(direction)) {
-            snakeX[0] -= 25;
-        } else {
-            snakeX[0] += 25;
-        }
-
-        if (snakeX[0] == 750) {
-            snakeX[0] = 25;
-        }
-        if (snakeX[0] < 25) {
-            snakeX[0] = 725;
-        }
-        if (snakeY[0] < 50) {
-            snakeY[0] = 700;
-        }
-        if (snakeY[0] == 725) {
-            snakeY[0] = 50;
-        }
+        gameModel.getSnake().move();
 
         gamePanel.repaint();
     }

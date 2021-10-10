@@ -34,6 +34,8 @@ public class LoginController {
             if (user == null) {
                 doesNotExistAction();
             } else {
+                Thread t = new Thread(new MusicClip());
+                t.start();
                 gameView.getMainFrame().setContentPane(gameView.getGamePanel());
                 gameView.getMainFrame().setSize(800, 800);
                 gameView.getGamePanel().setFocusable(true);

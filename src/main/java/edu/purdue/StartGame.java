@@ -54,9 +54,6 @@ public class StartGame {
 
         jFrame.setContentPane(loginPanel);
 
-        Thread t = new Thread(new MusicClip());
-        t.start();
-
         jFrame.setBounds((width - 800) / 2, (height - 800) / 2, 800, 800);
         jFrame.setSize(400, 400);
         jFrame.setResizable(false);
