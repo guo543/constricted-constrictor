@@ -18,6 +18,8 @@ public class LoginPanel extends JPanel {
 
     private JButton signUp;
 
+    private JButton skip;
+
     public LoginPanel() {
 //        this.setBackground(new Color(255, 249, 236));
         this.setLayout(new GridBagLayout());
@@ -32,6 +34,8 @@ public class LoginPanel extends JPanel {
         login.setPreferredSize(new Dimension(200, 30));
         signUp = new JButton("Sign Up");
         signUp.setPreferredSize(new Dimension(200, 30));
+        skip = new JButton("Skip and Continue");
+        skip.setPreferredSize(new Dimension(200, 30));
 
         JLabel usernameLabel = new JLabel("username: ");
         JLabel passwordLabel = new JLabel("password: ");
@@ -50,7 +54,6 @@ public class LoginPanel extends JPanel {
         constraints.gridy = 2;
         this.add(passwordLabel, constraints);
 
-
         constraints.gridx = 1;
         constraints.gridy = 1;
         this.add(username, constraints);
@@ -65,6 +68,10 @@ public class LoginPanel extends JPanel {
         constraints.gridy = 4;
         constraints.gridwidth = 2;
         this.add(signUp, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        constraints.gridwidth = 2;
+        this.add(skip, constraints);
     }
 
     public JLabel getError() {
@@ -105,5 +112,13 @@ public class LoginPanel extends JPanel {
 
     public void setSignUp(JButton signUp) {
         this.signUp = signUp;
+    }
+
+    public JButton getSkip() {
+        return skip;
+    }
+
+    public void setSkip(JButton skip) {
+        this.skip = skip;
     }
 }

@@ -49,6 +49,16 @@ public class LoginController {
             gameView.getMainFrame().setSize(500, 500);
             gameView.getMainFrame().setSize(400, 400);
         });
+
+        gameView.getLoginPanel().getSkip().addActionListener(e -> {
+            Thread t = new Thread(new MusicClip());
+            t.start();
+            gameView.getMainFrame().setContentPane(gameView.getGamePanel());
+            gameView.getMainFrame().setSize(800, 800);
+            gameView.getGamePanel().setFocusable(true);
+            gameView.getGamePanel().requestFocus();
+            gameModel.setPaused(false);
+        });
     }
 
     private void emptyAction() {

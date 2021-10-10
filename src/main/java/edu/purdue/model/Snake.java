@@ -16,8 +16,8 @@ public class Snake {
     private ImageIcon bodyImg;
 
     public Snake() {
-        x = new int[256];
-        y = new int[256];
+        x = new int[1024];
+        y = new int[1024];
 
         length = 3;
 
@@ -100,8 +100,12 @@ public class Snake {
         this.length = length;
     }
 
-    public void incrementLength(int inc) {
-        length += inc;
+    public void incrementLength() {
+        int x = this.x[length - 1];
+        int y = this.y[length - 1];
+        length += 1;
+        this.x[length - 1] = x;
+        this.y[length - 1] = y;
     }
 
     public String getDirection() {

@@ -39,13 +39,15 @@ public class GameController {
             int headY = gameModel.getSnake().getY()[0];
 
             Food food = gameModel.getFood();
+            boolean scored = false;
             if (headX == food.getX() && headY == food.getY()) {
                 gameModel.incrementScore(1);
                 food.generateNewFood();
-                gameModel.getSnake().incrementLength(1);
+                gameModel.getSnake().incrementLength();
             }
 
             gamePanel.repaint();
+
         }
     }
 
