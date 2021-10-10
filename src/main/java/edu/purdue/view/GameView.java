@@ -15,6 +15,8 @@ public class GameView {
 
     private LoginPanel loginPanel;
 
+    private PausePanel pausePanel;
+
     public GameView() {
     }
 
@@ -48,5 +50,13 @@ public class GameView {
 
     public void setLoginPanel(LoginPanel loginPanel) {
         this.loginPanel = loginPanel;
+    }
+
+    public PausePanel getPausePanel() {
+        return pausePanel;
+    }
+
+    public void setPausePanel(PausePanel pausePanel) {
+        this.pausePanel = pausePanel;
     }
 }

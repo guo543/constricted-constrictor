@@ -6,10 +6,7 @@ import edu.purdue.controller.SignUpController;
 import edu.purdue.controller.LoginController;
 import edu.purdue.controller.GameController;
 import edu.purdue.model.GameModel;
-import edu.purdue.view.GamePanel;
-import edu.purdue.view.GameView;
-import edu.purdue.view.SignUpPanel;
-import edu.purdue.view.LoginPanel;
+import edu.purdue.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,16 +39,18 @@ public class StartGame {
         GamePanel gamePanel = new GamePanel(gameModel);
         SignUpPanel signUpPanel = new SignUpPanel();
         LoginPanel loginPanel = new LoginPanel();
+        PausePanel pausePanel = new PausePanel();
 
         GameView gameView = new GameView();
         gameView.setMainFrame(jFrame);
         gameView.setGamePanel(gamePanel);
         gameView.setSignUpPanel(signUpPanel);
         gameView.setLoginPanel(loginPanel);
+        gameView.setPausePanel(pausePanel);
 
         UserDao userDao = new UserDao();
 
-        new GameController(gamePanel, gameModel);
+        new GameController(gameView, gameModel);
         new SignUpController(userDao, gameView);
         new LoginController(userDao, gameView, gameModel);
 
