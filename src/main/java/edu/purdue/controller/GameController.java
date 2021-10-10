@@ -1,6 +1,8 @@
 package edu.purdue.controller;
 
+import edu.purdue.model.Food;
 import edu.purdue.model.GameModel;
+import edu.purdue.model.Snake;
 import edu.purdue.view.GamePanel;
 
 import java.awt.event.KeyAdapter;
@@ -30,10 +32,21 @@ public class GameController {
     }
 
     private void update() {
+        if (!gameModel.isPaused()) {
+            gameModel.getSnake().move();
 
-        gameModel.getSnake().move();
+            int headX = gameModel.getSnake().getX()[0];
+            int headY = gameModel.getSnake().getY()[0];
 
-        gamePanel.repaint();
+            Food food = gameModel.getFood();
+            if (headX == food.getX() && headY == food.getY()) {
+                gameModel.incrementScore(1);
+                food.generateNewFood();
+                gameModel.getSnake().incrementLength(1);
+            }
+
+            gamePanel.repaint();
+        }
     }
 
     private void keyAction(int keyCode) {

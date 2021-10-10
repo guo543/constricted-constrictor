@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * The JPanel object used for the pause screen
+ */
 public class PausePanel extends JPanel {
 
     enum GameState {

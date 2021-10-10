@@ -5,6 +5,9 @@ import javazoom.jl.player.Player;
 import java.io.File;
 import java.io.FileInputStream;
 
+/**
+ * Runnable object for playing background music
+ */
 public class MusicClip implements Runnable {
 
     @Override

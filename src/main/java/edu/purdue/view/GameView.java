@@ -2,6 +2,9 @@ package edu.purdue.view;
 
 import javax.swing.*;
 
+/**
+ * The Class that contains all the component of the GUI
+ */
 public class GameView {
 
     private JFrame mainFrame;

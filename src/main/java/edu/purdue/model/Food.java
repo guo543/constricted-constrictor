@@ -2,6 +2,7 @@ package edu.purdue.model;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.Random;
 
 public class Food {
 
@@ -21,6 +22,12 @@ public class Food {
         File food = new File("images/food.jpg");
         String bodyPath = food.getAbsolutePath();
         foodImg = new ImageIcon(bodyPath);
+    }
+
+    public void generateNewFood() {
+        Random r = new Random();
+        x = (r.nextInt(29) + 1) * 25;
+        y = (r.nextInt(27) + 2) * 25;
     }
 
     public int getX() {

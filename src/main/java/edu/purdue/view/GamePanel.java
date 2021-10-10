@@ -7,6 +7,9 @@ import edu.purdue.model.Snake;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The JPanel object used for the main game screen
+ */
 public class GamePanel extends JPanel {
 
     private GameModel gameModel;

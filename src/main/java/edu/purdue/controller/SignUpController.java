@@ -33,4 +33,12 @@ public class SignUpController {
 
         return userDao.addUser(user);
     }
+
+    private boolean checkUsername() {
+        return true;
+    }
+
+    private boolean checkPassword() {
+        return true;
+    }
 }

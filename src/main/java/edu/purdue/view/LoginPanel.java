@@ -3,6 +3,9 @@ package edu.purdue.view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The JPanel object used for the login screen
+ */
 public class LoginPanel extends JPanel {
 
     private JLabel error;

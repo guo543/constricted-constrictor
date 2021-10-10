@@ -100,6 +100,10 @@ public class Snake {
         this.length = length;
     }
 
+    public void incrementLength(int inc) {
+        length += inc;
+    }
+
     public String getDirection() {
         return direction;
     }

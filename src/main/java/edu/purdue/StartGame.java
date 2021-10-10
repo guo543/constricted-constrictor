@@ -15,6 +15,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
+/**
+ * Entry point of the application
+ */
 public class StartGame {
 
     public static void main(String[] args) throws SQLException {

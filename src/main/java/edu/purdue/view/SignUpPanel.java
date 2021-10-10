@@ -3,6 +3,9 @@ package edu.purdue.view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The JPanel object used for the sign-up screen
+ */
 public class SignUpPanel extends JPanel {
 
     private JTextField username;

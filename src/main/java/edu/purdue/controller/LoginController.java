@@ -40,6 +40,7 @@ public class LoginController {
                 gameView.getMainFrame().setSize(800, 800);
                 gameView.getGamePanel().setFocusable(true);
                 gameView.getGamePanel().requestFocus();
+                gameModel.setPaused(false);
             }
         });
 
