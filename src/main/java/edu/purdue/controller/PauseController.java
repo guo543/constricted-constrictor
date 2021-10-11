@@ -16,5 +16,14 @@ public class PauseController {
             gameView.getGamePanel().requestFocus();
             gameModel.setPaused(false);
         });
+
+        gameView.getPausePanel().getRestart().addActionListener(e -> {
+            gameModel.reset();
+            gameView.getMainFrame().setContentPane(gameView.getGamePanel());
+            gameView.getMainFrame().setSize(900, 900);
+            gameView.getMainFrame().setSize(800, 800);
+            gameView.getGamePanel().requestFocus();
+            gameModel.setPaused(false);
+        });
     }
 }

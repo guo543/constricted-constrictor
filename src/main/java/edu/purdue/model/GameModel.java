@@ -9,6 +9,10 @@ public class GameModel {
     private int score;
 
     public GameModel() {
+        reset();
+    }
+
+    public void reset() {
         snake = new Snake();
         food = new Food();
         score = 0;

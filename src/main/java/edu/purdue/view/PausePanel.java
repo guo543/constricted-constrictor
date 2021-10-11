@@ -12,45 +12,50 @@ import java.awt.event.KeyEvent;
  */
 public class PausePanel extends JPanel {
 
-    private JButton resumeButton;
+    private JButton resume;
 
-    private JButton quitButton;
+    private JButton restart;
 
-    private JButton settingsButton;
-
-    private JLabel pauseLabel;
+    private JButton settings;
 
     public PausePanel() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
-        resumeButton = new JButton("Resume");
-        quitButton = new JButton("Restart");
-        settingsButton = new JButton("Settings");
-        pauseLabel = new JLabel("Game Paused");
+        resume = new JButton("Resume");
+        restart = new JButton("Restart");
+        settings = new JButton("Settings");
+
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        this.add(resume, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
-        this.add(resumeButton, constraints);
-
-        constraints.gridx = 1;
-        constraints.gridy = 2;
-        this.add(quitButton, constraints);
+        this.add(restart, constraints);
     }
 
     public JButton getResume() {
-        return resumeButton;
+        return resume;
     }
 
-    public void setResumeButton(JButton resumeButton) {
-        this.resumeButton = resumeButton;
+    public void setResume(JButton resume) {
+        this.resume = resume;
     }
 
-    public JButton getQuitButton() {
-        return quitButton;
+    public JButton getRestart() {
+        return restart;
     }
 
-    public void setQuitButton(JButton quitButton) {
-        this.quitButton = quitButton;
+    public void setRestart(JButton restart) {
+        this.restart = restart;
+    }
+
+    public JButton getSettings() {
+        return settings;
+    }
+
+    public void setSettings(JButton settings) {
+        this.settings = settings;
     }
 }
