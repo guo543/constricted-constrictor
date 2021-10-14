@@ -5,6 +5,7 @@ import edu.purdue.model.GameModel;
 import edu.purdue.model.Snake;
 import edu.purdue.view.GamePanel;
 import edu.purdue.view.GameView;
+import edu.purdue.view.LostPanel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -61,6 +62,9 @@ public class GameController {
                     gameModel.setPaused(true);
                     gameModel.getHighScores().add(gameModel.getScore());
                     System.out.println(gameModel.getHighScores());
+                    gameView.getMainFrame().setContentPane(gameView.getLostPanel());
+                    gameView.getMainFrame().setSize(900, 900);
+                    gameView.getMainFrame().setSize(800, 800);
                 }
             }
 

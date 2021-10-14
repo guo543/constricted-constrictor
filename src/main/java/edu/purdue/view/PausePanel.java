@@ -16,7 +16,7 @@ public class PausePanel extends JPanel {
 
     private JButton restart;
 
-    private JButton settings;
+    private JButton quit;
 
     public PausePanel() {
         this.setLayout(new GridBagLayout());
@@ -24,7 +24,7 @@ public class PausePanel extends JPanel {
 
         resume = new JButton("Resume");
         restart = new JButton("Restart");
-        settings = new JButton("Settings");
+        quit = new JButton("Quit");
 
         constraints.gridx = 0;
         constraints.gridy = 1;
@@ -33,6 +33,10 @@ public class PausePanel extends JPanel {
         constraints.gridx = 0;
         constraints.gridy = 2;
         this.add(restart, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        this.add(quit, constraints);
     }
 
     public JButton getResume() {
@@ -51,11 +55,11 @@ public class PausePanel extends JPanel {
         this.restart = restart;
     }
 
-    public JButton getSettings() {
-        return settings;
+    public JButton getQuit() {
+        return quit;
     }
 
-    public void setSettings(JButton settings) {
-        this.settings = settings;
+    public void setQuit(JButton quit) {
+        this.quit = quit;
     }
 }

@@ -58,6 +58,7 @@ public class LoginController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMainFrame().setSize(800, 800);
             gameModel.setUser(null);
+            gameView.getMenuPanel().getGreeting().setText("Welcome, Guest");
 //            gameView.getGamePanel().setFocusable(true);
 //            gameView.getGamePanel().requestFocus();
 //            gameModel.setPaused(false);

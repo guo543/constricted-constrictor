@@ -20,6 +20,8 @@ public class GameView {
 
     private MenuPanel menuPanel;
 
+    private LostPanel lostPanel;
+
     public GameView() {
     }
 
@@ -69,5 +71,13 @@ public class GameView {
 
     public void setMenuPanel(MenuPanel menuPanel) {
         this.menuPanel = menuPanel;
+    }
+
+    public LostPanel getLostPanel() {
+        return lostPanel;
+    }
+
+    public void setLostPanel(LostPanel lostPanel) {
+        this.lostPanel = lostPanel;
     }
 }
