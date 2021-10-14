@@ -23,7 +23,7 @@ public class StartGame {
             // Set System L&F
 //            UIManager.setLookAndFeel(
 //                    UIManager.getSystemLookAndFeelClassName());
-            UIManager.setLookAndFeel(new FlatDarculaLaf());
+            UIManager.setLookAndFeel(new FlatLightLaf());
         }
         catch (Exception e) {
             // handle exception
@@ -41,6 +41,7 @@ public class StartGame {
         SignUpPanel signUpPanel = new SignUpPanel();
         LoginPanel loginPanel = new LoginPanel();
         PausePanel pausePanel = new PausePanel();
+        MenuPanel menuPanel = new MenuPanel();
 
         GameView gameView = new GameView();
         gameView.setMainFrame(jFrame);
@@ -48,6 +49,7 @@ public class StartGame {
         gameView.setSignUpPanel(signUpPanel);
         gameView.setLoginPanel(loginPanel);
         gameView.setPausePanel(pausePanel);
+        gameView.setMenuPanel(menuPanel);
 
         UserDao userDao = new UserDao();
 

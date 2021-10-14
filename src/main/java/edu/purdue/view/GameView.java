@@ -1,6 +1,7 @@
 package edu.purdue.view;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * The Class that contains all the component of the GUI
@@ -16,6 +17,8 @@ public class GameView {
     private LoginPanel loginPanel;
 
     private PausePanel pausePanel;
+
+    private MenuPanel menuPanel;
 
     public GameView() {
     }
@@ -58,5 +61,13 @@ public class GameView {
 
     public void setPausePanel(PausePanel pausePanel) {
         this.pausePanel = pausePanel;
+    }
+
+    public MenuPanel getMenuPanel() {
+        return menuPanel;
+    }
+
+    public void setMenuPanel(MenuPanel menuPanel) {
+        this.menuPanel = menuPanel;
     }
 }

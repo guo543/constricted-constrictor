@@ -36,11 +36,11 @@ public class LoginController {
             } else {
                 Thread t = new Thread(new MusicClip());
                 t.start();
-                gameView.getMainFrame().setContentPane(gameView.getGamePanel());
+                gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
                 gameView.getMainFrame().setSize(800, 800);
-                gameView.getGamePanel().setFocusable(true);
-                gameView.getGamePanel().requestFocus();
-                gameModel.setPaused(false);
+//                gameView.getGamePanel().setFocusable(true);
+//                gameView.getGamePanel().requestFocus();
+//                gameModel.setPaused(false);
             }
         });
 
@@ -53,11 +53,11 @@ public class LoginController {
         gameView.getLoginPanel().getSkip().addActionListener(e -> {
             Thread t = new Thread(new MusicClip());
             t.start();
-            gameView.getMainFrame().setContentPane(gameView.getGamePanel());
+            gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMainFrame().setSize(800, 800);
-            gameView.getGamePanel().setFocusable(true);
-            gameView.getGamePanel().requestFocus();
-            gameModel.setPaused(false);
+//            gameView.getGamePanel().setFocusable(true);
+//            gameView.getGamePanel().requestFocus();
+//            gameModel.setPaused(false);
         });
     }
 
