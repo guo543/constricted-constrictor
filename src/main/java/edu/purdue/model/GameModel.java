@@ -10,10 +10,10 @@ public class GameModel {
     private User user;
     private boolean paused;
     private int score;
-    private List<Integer> highScores;
+    private HighScores highScores;
 
     public GameModel() {
-        highScores = new ArrayList<>();
+        highScores = new HighScores();
         reset();
     }
 
@@ -68,11 +68,11 @@ public class GameModel {
         score += inc;
     }
 
-    public List<Integer> getHighScores() {
+    public HighScores getHighScores() {
         return highScores;
     }
 
-    public void setHighScores(List<Integer> highScores) {
+    public void setHighScores(HighScores highScores) {
         this.highScores = highScores;
     }
 }

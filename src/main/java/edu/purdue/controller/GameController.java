@@ -61,7 +61,7 @@ public class GameController {
                         headY == gameModel.getSnake().getY()[i]) {
                     gameModel.setPaused(true);
                     gameModel.getHighScores().add(gameModel.getScore());
-                    System.out.println(gameModel.getHighScores());
+                    System.out.println(gameModel.getHighScores().getScores());
                     gameView.getMainFrame().setContentPane(gameView.getLostPanel());
                     gameView.getMainFrame().setSize(900, 900);
                     gameView.getMainFrame().setSize(800, 800);

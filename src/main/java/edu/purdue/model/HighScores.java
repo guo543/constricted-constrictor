@@ -23,4 +23,12 @@ public class HighScores {
         }
 
     }
+
+    public List<Integer> getScores() {
+        return scores;
+    }
+
+    public void setScores(List<Integer> scores) {
+        this.scores = scores;
+    }
 }

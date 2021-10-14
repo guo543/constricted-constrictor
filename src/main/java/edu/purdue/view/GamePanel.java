@@ -46,8 +46,8 @@ public class GamePanel extends JPanel {
         g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
 
         g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
-        if (gameModel.getHighScores().size() > 0) {
-            g.drawString("Record: " + Math.max(gameModel.getHighScores().get(0), gameModel.getScore()), 530, 32);
+        if (gameModel.getHighScores().getScores().size() > 0) {
+            g.drawString("Record: " + Math.max(gameModel.getHighScores().getScores().get(0), gameModel.getScore()), 530, 32);
         } else {
             g.drawString("Record: " + gameModel.getScore(), 530, 32);
         }

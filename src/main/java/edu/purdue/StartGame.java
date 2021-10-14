@@ -57,6 +57,7 @@ public class StartGame {
         new LoginController(userDao, gameView, gameModel);
         new PauseController(gameView, gameModel);
         new MenuController(gameView, gameModel);
+        new LostController(gameView, gameModel);
 
         jFrame.setContentPane(loginPanel);
 
