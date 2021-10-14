@@ -42,8 +42,17 @@ public class GameController {
             Food food = gameModel.getFood();
             if (headX == food.getX() && headY == food.getY()) {
                 gameModel.incrementScore(1);
-                food.generateNewFood();
                 gameModel.getSnake().incrementLength();
+                boolean overlap = true;
+                while (overlap) {
+                    food.generateNewFood();
+                    for (int i = 0; i < gameModel.getSnake().getLength(); i++) {
+                        if (food.getX() != gameModel.getSnake().getX()[i] &&
+                                food.getY() != gameModel.getSnake().getY()[i]) {
+                            overlap = false;
+                        }
+                    }
+                }
             }
 
             gameView.getGamePanel().repaint();

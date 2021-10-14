@@ -38,7 +38,9 @@ public class LoginController {
                 t.start();
                 gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
                 gameView.getMainFrame().setSize(800, 800);
-//                gameView.getGamePanel().setFocusable(true);
+                gameView.getMenuPanel().getGreeting().setText("Welcome, " + user.getUsername());
+
+                //                gameView.getGamePanel().setFocusable(true);
 //                gameView.getGamePanel().requestFocus();
 //                gameModel.setPaused(false);
             }
@@ -55,6 +57,7 @@ public class LoginController {
             t.start();
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMainFrame().setSize(800, 800);
+            gameModel.setUser(null);
 //            gameView.getGamePanel().setFocusable(true);
 //            gameView.getGamePanel().requestFocus();
 //            gameModel.setPaused(false);

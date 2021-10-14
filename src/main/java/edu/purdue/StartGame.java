@@ -1,11 +1,8 @@
 package edu.purdue;
 
 import com.formdev.flatlaf.*;
-import edu.purdue.controller.PauseController;
+import edu.purdue.controller.*;
 import edu.purdue.dao.UserDao;
-import edu.purdue.controller.SignUpController;
-import edu.purdue.controller.LoginController;
-import edu.purdue.controller.GameController;
 import edu.purdue.model.GameModel;
 import edu.purdue.view.*;
 
@@ -57,6 +54,7 @@ public class StartGame {
         new SignUpController(userDao, gameView);
         new LoginController(userDao, gameView, gameModel);
         new PauseController(gameView, gameModel);
+        new MenuController(gameView, gameModel);
 
         jFrame.setContentPane(loginPanel);
 
