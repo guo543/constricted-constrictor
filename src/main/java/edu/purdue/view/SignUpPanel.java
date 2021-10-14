@@ -8,6 +8,7 @@ import java.awt.*;
  */
 public class SignUpPanel extends JPanel {
 
+    private JLabel error;
     private JTextField username;
     private JTextField password;
     private JTextField email;
@@ -19,6 +20,8 @@ public class SignUpPanel extends JPanel {
         GridBagConstraints constraints = new GridBagConstraints();
 
         constraints.insets = new Insets(0, 7, 7, 0);
+        error = new JLabel("Invalid username");
+        error.setForeground(new Color(191, 48, 63));
         username = new JTextField(20);
         password = new JTextField(20);
         email = new JTextField(20);
@@ -28,21 +31,28 @@ public class SignUpPanel extends JPanel {
         JLabel passwordLabel = new JLabel("password: ");
         JLabel emailLabel = new JLabel("email: ");
 
+        constraints.gridwidth = 2;
         constraints.gridx = 0;
         constraints.gridy = 0;
-        this.add(usernameLabel, constraints);
+        this.add(error, constraints);
+        error.setVisible(false);
+
+        constraints.gridwidth = 1;
         constraints.gridx = 0;
         constraints.gridy = 1;
+        this.add(usernameLabel, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 2;
         this.add(passwordLabel, constraints);
         constraints.gridx = 0;
         constraints.gridy = 3;
         this.add(emailLabel, constraints);
 
         constraints.gridx = 1;
-        constraints.gridy = 0;
+        constraints.gridy = 1;
         this.add(username, constraints);
         constraints.gridx = 1;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         this.add(password, constraints);
         constraints.gridx = 1;
         constraints.gridy = 3;
@@ -82,5 +92,13 @@ public class SignUpPanel extends JPanel {
 
     public void setSignUp(JButton signUp) {
         this.signUp = signUp;
+    }
+
+    public JLabel getError() {
+        return error;
+    }
+
+    public void setError(JLabel error) {
+        this.error = error;
     }
 }

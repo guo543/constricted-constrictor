@@ -15,6 +15,18 @@ public class SignUpController {
         this.gameView = gameView;
 
         gameView.getSignUpPanel().getSignUp().addActionListener(e -> {
+            if (!checkUsername(gameView.getSignUpPanel().getUsername().getText())) {
+                gameView.getSignUpPanel().getError().setText("Invalid Username");
+                gameView.getSignUpPanel().getError().setVisible(true);
+                return;
+            }
+
+            if (!checkPassword(gameView.getSignUpPanel().getPassword().getText())) {
+                gameView.getSignUpPanel().getError().setText("Invalid Password");
+                gameView.getSignUpPanel().getError().setVisible(true);
+                return;
+            }
+
             signUpAction();
             gameView.getMainFrame().setContentPane(gameView.getLoginPanel());
         });
@@ -34,11 +46,11 @@ public class SignUpController {
         return userDao.addUser(user);
     }
 
-    private boolean checkUsername() {
-        return true;
+    private boolean checkUsername(String username) {
+        return username.length() >= 3;
     }
 
-    private boolean checkPassword() {
-        return true;
+    private boolean checkPassword(String password) {
+        return password.length() >= 6;
     }
 }
