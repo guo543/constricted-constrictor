@@ -55,6 +55,15 @@ public class GameController {
                 }
             }
 
+            for (int i = 1; i < gameModel.getSnake().getLength(); i++) {
+                if (headX == gameModel.getSnake().getX()[i] &&
+                        headY == gameModel.getSnake().getY()[i]) {
+                    gameModel.setPaused(true);
+                    gameModel.getHighScores().add(gameModel.getScore());
+                    System.out.println(gameModel.getHighScores());
+                }
+            }
+
             gameView.getGamePanel().repaint();
 
         }

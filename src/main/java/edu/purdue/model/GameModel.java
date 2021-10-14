@@ -1,5 +1,8 @@
 package edu.purdue.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameModel {
 
     private Snake snake;
@@ -7,8 +10,10 @@ public class GameModel {
     private User user;
     private boolean paused;
     private int score;
+    private List<Integer> highScores;
 
     public GameModel() {
+        highScores = new ArrayList<>();
         reset();
     }
 
@@ -61,5 +66,13 @@ public class GameModel {
 
     public void incrementScore(int inc) {
         score += inc;
+    }
+
+    public List<Integer> getHighScores() {
+        return highScores;
+    }
+
+    public void setHighScores(List<Integer> highScores) {
+        this.highScores = highScores;
     }
 }
