@@ -12,7 +12,9 @@ public class LostController {
 
         gameView.getLostPanel().getRestart().addActionListener(e -> {
             gameModel.reset();
-            gameView.getMainFrame().setContentPane(gameView.getGamePanel());
+            //gameView.getMainFrame().setContentPane(gameView.getGamePanel());
+            gameView.getMainFrame().setContentPane(gameView.getLayeredPane());
+            gameView.getPausePanel().setVisible(false);
             gameView.getMainFrame().setSize(900, 900);
             gameView.getMainFrame().setSize(800, 800);
             gameView.getGamePanel().requestFocus();

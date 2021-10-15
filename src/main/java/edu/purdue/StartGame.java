@@ -35,9 +35,12 @@ public class StartGame {
 
         GameModel gameModel = new GameModel();
         GamePanel gamePanel = new GamePanel(gameModel);
+        gamePanel.setBounds(0, 0, 800, 800);
         SignUpPanel signUpPanel = new SignUpPanel();
         LoginPanel loginPanel = new LoginPanel();
         PausePanel pausePanel = new PausePanel();
+        pausePanel.setBounds(250, 250, 250, 250);
+        pausePanel.setVisible(false);
         MenuPanel menuPanel = new MenuPanel();
         LostPanel lostPanel = new LostPanel();
 
@@ -49,6 +52,7 @@ public class StartGame {
         gameView.setPausePanel(pausePanel);
         gameView.setMenuPanel(menuPanel);
         gameView.setLostPanel(lostPanel);
+        gameView.initializeLayeredPane();
 
         UserDao userDao = new UserDao();
 

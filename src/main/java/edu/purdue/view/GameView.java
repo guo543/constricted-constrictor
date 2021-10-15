@@ -22,6 +22,8 @@ public class GameView {
 
     private LostPanel lostPanel;
 
+    private JLayeredPane layeredPane;
+
     public GameView() {
     }
 
@@ -79,5 +81,17 @@ public class GameView {
 
     public void setLostPanel(LostPanel lostPanel) {
         this.lostPanel = lostPanel;
+    }
+
+    public void initializeLayeredPane() {
+        layeredPane = new JLayeredPane();
+        layeredPane.setBounds(0, 0, 500, 500);
+        pausePanel.setBounds(250, 250, 250, 250);
+        layeredPane.add(gamePanel, Integer.valueOf(0));
+        layeredPane.add(pausePanel, Integer.valueOf(1));
+    }
+
+    public JLayeredPane getLayeredPane() {
+        return layeredPane;
     }
 }

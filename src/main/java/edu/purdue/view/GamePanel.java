@@ -34,6 +34,7 @@ public class GamePanel extends JPanel {
         Food food = gameModel.getFood();
 
         //this.setBackground(new Color(0, 10, 151));
+        this.setOpaque(true);
         this.setBackground(new Color(0, 0, 0));
 
         g.setColor(new Color(255, 255, 255));

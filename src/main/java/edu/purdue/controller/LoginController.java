@@ -55,6 +55,7 @@ public class LoginController {
         gameView.getLoginPanel().getSkip().addActionListener(e -> {
             Thread t = new Thread(new MusicClip());
             t.start();
+
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMainFrame().setSize(800, 800);
             gameModel.setUser(null);

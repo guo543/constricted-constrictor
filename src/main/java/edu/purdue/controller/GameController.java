@@ -77,7 +77,8 @@ public class GameController {
         String currentDirection = gameModel.getSnake().getDirection();
 
         if (keyCode == KeyEvent.VK_ESCAPE) {
-            gameView.getMainFrame().setContentPane(gameView.getPausePanel());
+            //gameView.getMainFrame().setContentPane(gameView.getPausePanel());
+            gameView.getPausePanel().setVisible(true);
             gameView.getMainFrame().setSize(900, 900);
             gameView.getMainFrame().setSize(800, 800);
             gameModel.setPaused(true);
