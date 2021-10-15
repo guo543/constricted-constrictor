@@ -1,7 +1,6 @@
 package edu.purdue.view;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * The Class that contains all the component of the GUI
