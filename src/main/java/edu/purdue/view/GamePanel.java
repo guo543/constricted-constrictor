@@ -37,7 +37,13 @@ public class GamePanel extends JPanel {
         this.setOpaque(true);
         this.setBackground(new Color(0, 0, 0));
 
-        g.setColor(new Color(255, 255, 255));
+        //darken screen when paused
+        if (gameModel.isPaused()) {
+            g.setColor(new Color(255, 255, 255, 122));
+        } else {
+            g.setColor(new Color(255, 255, 255));
+        }
+
         g.drawRect(25, 50, 725, 675);
 
         //food.getFoodImg().paintIcon(this, g, food.getX(), food.getY());
