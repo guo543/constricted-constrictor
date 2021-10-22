@@ -39,7 +39,7 @@ public class StartGame {
         SignUpPanel signUpPanel = new SignUpPanel();
         LoginPanel loginPanel = new LoginPanel();
         PausePanel pausePanel = new PausePanel();
-        pausePanel.setBounds(250, 250, 250, 250);
+        pausePanel.setBounds(275, 275, 250, 250);
         pausePanel.setVisible(false);
         MenuPanel menuPanel = new MenuPanel();
         LostPanel lostPanel = new LostPanel();

@@ -65,8 +65,8 @@ public class GameController {
                     gameModel.getHighScores().add(gameModel.getScore());
                     System.out.println(gameModel.getHighScores().getScores());
                     gameView.getMainFrame().setContentPane(gameView.getLostPanel());
-                    gameView.getMainFrame().setSize(900, 900);
-                    gameView.getMainFrame().setSize(800, 800);
+                    gameView.getMainFrame().revalidate();
+                    gameView.getMainFrame().repaint();
                 }
             }
 
@@ -81,9 +81,9 @@ public class GameController {
         if (keyCode == KeyEvent.VK_ESCAPE) {
             //gameView.getMainFrame().setContentPane(gameView.getPausePanel());
             gameView.getPausePanel().setVisible(true);
-            gameView.getMainFrame().setSize(900, 900);
-            gameView.getMainFrame().setSize(800, 800);
             gameModel.setPaused(true);
+            gameView.getGamePanel().revalidate();
+            gameView.getGamePanel().repaint();
         }
 
         if (keyCode == KeyEvent.VK_UP) {
