@@ -18,5 +18,11 @@ public class MenuController {
             gameView.getGamePanel().revalidate();
             gameView.getGamePanel().repaint();
         });
+
+        gameView.getMenuPanel().getSettings().addActionListener(e -> {
+            gameView.getMainFrame().setContentPane(gameView.getSettingsPanel());
+            gameView.getSettingsPanel().revalidate();
+            gameView.getSettingsPanel().repaint();
+        });
     }
 }

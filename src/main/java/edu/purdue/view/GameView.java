@@ -23,6 +23,8 @@ public class GameView {
 
     private JLayeredPane layeredPane;
 
+    private JTabbedPane settingsPanel;
+
     public GameView() {
     }
 
@@ -91,5 +93,13 @@ public class GameView {
 
     public JLayeredPane getLayeredPane() {
         return layeredPane;
+    }
+
+    public JTabbedPane getSettingsPanel() {
+        return settingsPanel;
+    }
+
+    public void setSettingsPanel(JTabbedPane settingsPanel) {
+        this.settingsPanel = settingsPanel;
     }
 }

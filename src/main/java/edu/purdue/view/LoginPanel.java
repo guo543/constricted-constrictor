@@ -12,7 +12,7 @@ public class LoginPanel extends JPanel {
 
     private JTextField username;
 
-    private JTextField password;
+    private JPasswordField password;
 
     private JButton login;
 
@@ -29,7 +29,7 @@ public class LoginPanel extends JPanel {
         error = new JLabel("User does not exist, username or password is incorrect.");
         error.setForeground(new Color(191, 48, 63));
         username = new JTextField(20);
-        password = new JTextField(20);
+        password = new JPasswordField(20);
         login = new JButton("Log In");
         login.setPreferredSize(new Dimension(200, 30));
         signUp = new JButton("Sign Up");
@@ -94,7 +94,7 @@ public class LoginPanel extends JPanel {
         return password;
     }
 
-    public void setPassword(JTextField password) {
+    public void setPassword(JPasswordField password) {
         this.password = password;
     }
 

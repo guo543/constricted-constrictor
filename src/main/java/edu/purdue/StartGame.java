@@ -43,6 +43,7 @@ public class StartGame {
         pausePanel.setVisible(false);
         MenuPanel menuPanel = new MenuPanel();
         LostPanel lostPanel = new LostPanel();
+        SettingsPanel settingsPanel = new SettingsPanel();
 
         GameView gameView = new GameView();
         gameView.setMainFrame(jFrame);
@@ -53,6 +54,7 @@ public class StartGame {
         gameView.setMenuPanel(menuPanel);
         gameView.setLostPanel(lostPanel);
         gameView.initializeLayeredPane();
+        gameView.setSettingsPanel(settingsPanel);
 
         UserDao userDao = new UserDao();
 
