@@ -8,7 +8,8 @@ public class MenuPanel extends JPanel {
     private JLabel greeting;
     private JButton start;
     private JButton settings;
-
+    private JButton manual;
+    private JButton ovo;
     public MenuPanel() {
         this.setLayout(null);
 
@@ -23,15 +24,24 @@ public class MenuPanel extends JPanel {
         start.setPreferredSize(new Dimension(200, 50));
         settings = new JButton("SETTINGS");
         settings.setPreferredSize(new Dimension(200, 50));
-
+        manual = new JButton("MANUAL");
+        manual.setPreferredSize(new Dimension(200,50));
+        ovo = new JButton("1-on-1");
+        ovo.setPreferredSize(new Dimension(200,50));
         this.add(title);
         title.setBounds(180, 220, 500, 50);
 
         this.add(start);
         start.setBounds(300, 360, 200, 50);
 
+        this.add(ovo);
+        ovo.setBounds(300, 420, 200, 50);
+
+        this.add(manual);
+        manual.setBounds(300, 560, 200, 50);
+
         this.add(settings);
-        settings.setBounds(300, 420, 200, 50);
+        settings.setBounds(300, 620, 200, 50);
     }
 
     public JLabel getGreeting() {
@@ -57,4 +67,8 @@ public class MenuPanel extends JPanel {
     public void setSettings(JButton settings) {
         this.settings = settings;
     }
+
+    public JButton getManual() { return manual; }
+
+    public void setManual(JButton manual) { this.manual = manual; }
 }

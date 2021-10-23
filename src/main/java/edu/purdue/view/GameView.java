@@ -25,6 +25,8 @@ public class GameView {
 
     private SettingsPanel settingsPanel;
 
+    private HelpPanel helpPanel;
+
     public GameView() {
     }
 
@@ -76,6 +78,14 @@ public class GameView {
         this.menuPanel = menuPanel;
     }
 
+    public HelpPanel getHelpPanel() {
+        return helpPanel;
+    }
+
+    public void setHelpPanel(HelpPanel helpPanel) {
+        this.helpPanel = helpPanel;
+    }
+
     public LostPanel getLostPanel() {
         return lostPanel;
     }
@@ -83,6 +93,7 @@ public class GameView {
     public void setLostPanel(LostPanel lostPanel) {
         this.lostPanel = lostPanel;
     }
+
 
     public void initializeLayeredPane() {
         layeredPane = new JLayeredPane();
