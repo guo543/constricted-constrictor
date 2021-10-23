@@ -4,6 +4,7 @@ import com.formdev.flatlaf.*;
 import edu.purdue.controller.*;
 import edu.purdue.dao.UserDao;
 import edu.purdue.model.GameModel;
+import edu.purdue.model.Settings;
 import edu.purdue.view.*;
 
 import javax.swing.*;
@@ -33,7 +34,10 @@ public class StartGame {
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
 
+        // initialize model
         GameModel gameModel = new GameModel();
+
+        // initialize view
         GamePanel gamePanel = new GamePanel(gameModel);
         gamePanel.setBounds(0, 0, 800, 800);
         SignUpPanel signUpPanel = new SignUpPanel();
@@ -43,7 +47,7 @@ public class StartGame {
         pausePanel.setVisible(false);
         MenuPanel menuPanel = new MenuPanel();
         LostPanel lostPanel = new LostPanel();
-        SettingsPanel settingsPanel = new SettingsPanel();
+        SettingsPanel settingsPanel = new SettingsPanel(gameModel);
 
         GameView gameView = new GameView();
         gameView.setMainFrame(jFrame);
@@ -56,8 +60,10 @@ public class StartGame {
         gameView.initializeLayeredPane();
         gameView.setSettingsPanel(settingsPanel);
 
+        // initialize dao
         UserDao userDao = new UserDao();
 
+        // initialize controller
         new GameController(gameView, gameModel);
         new SignUpController(userDao, gameView);
         new LoginController(userDao, gameView, gameModel);

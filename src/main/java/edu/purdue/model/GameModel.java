@@ -11,9 +11,11 @@ public class GameModel {
     private boolean paused;
     private int score;
     private HighScores highScores;
+    private Settings settings;
 
     public GameModel() {
         highScores = new HighScores();
+        settings = new Settings();
         reset();
     }
 
@@ -74,5 +76,13 @@ public class GameModel {
 
     public void setHighScores(HighScores highScores) {
         this.highScores = highScores;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 }
