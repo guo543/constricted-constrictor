@@ -13,8 +13,16 @@ public class SettingsPanel extends JTabbedPane {
 
     private JSlider difficultySlider;
 
+    private JButton back;
+
+    private JButton save;
+
     public SettingsPanel(GameModel gameModel) {
         this.gameModel = gameModel;
+        back = new JButton("Back");
+        back.setBounds(150,500, 100, 40);
+        save = new JButton("Save");
+        save.setBounds(500,500, 100, 40);
         initializeDifficultyPanel();
     }
 
@@ -22,13 +30,15 @@ public class SettingsPanel extends JTabbedPane {
         difficultyPanel = new JPanel();
         difficultyPanel.setLayout(null);
         JLabel difficultyLabel = new JLabel("Difficulty Level");
-        difficultyLabel.setBounds(300, 250, 500, 200);
+        difficultyLabel.setBounds(300, 200, 500, 200);
         difficultyLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
         difficultySlider = new JSlider(JSlider.HORIZONTAL, 1, 5,
                 Integer.parseInt(gameModel.getSettings().getSetting("difficulty")));
-        difficultySlider.setBounds(150, 300, 500, 200);
+        difficultySlider.setBounds(150, 250, 500, 200);
         difficultyPanel.add(difficultySlider);
         difficultyPanel.add(difficultyLabel);
+        difficultyPanel.add(back);
+        difficultyPanel.add(save);
         this.add("Difficulty", difficultyPanel);
 
         difficultySlider.setMajorTickSpacing(1);
@@ -39,5 +49,13 @@ public class SettingsPanel extends JTabbedPane {
 
     public JSlider getDifficultySlider() {
         return difficultySlider;
+    }
+
+    public JButton getBack() {
+        return back;
+    }
+
+    public JButton getSave() {
+        return save;
     }
 }

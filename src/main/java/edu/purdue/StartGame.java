@@ -70,6 +70,7 @@ public class StartGame {
         new PauseController(gameView, gameModel);
         new MenuController(gameView, gameModel);
         new LostController(gameView, gameModel);
+        new SettingsController(gameView, gameModel);
 
         jFrame.setContentPane(loginPanel);
 

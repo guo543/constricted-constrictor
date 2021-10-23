@@ -2,20 +2,15 @@ package edu.purdue.controller;
 
 import edu.purdue.model.Food;
 import edu.purdue.model.GameModel;
-import edu.purdue.model.Snake;
-import edu.purdue.view.GamePanel;
 import edu.purdue.view.GameView;
-import edu.purdue.view.LostPanel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.*;
 
 public class GameController {
 
     private GameView gameView;
     private GameModel gameModel;
-    private Timer timer;
 
     public GameController(GameView gameView, GameModel gameModel) {
         this.gameView = gameView;
@@ -29,8 +24,8 @@ public class GameController {
             }
         });
 
-        timer = new Timer(110, e -> update());
-        timer.start();
+        gameModel.getTimer().addActionListener(e -> update());
+        gameModel.getTimer().start();
     }
 
     private void update() {
@@ -110,4 +105,6 @@ public class GameController {
             }
         }
     }
+
+
 }

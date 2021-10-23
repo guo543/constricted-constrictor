@@ -13,6 +13,7 @@ public class Settings {
             InputStream is = new FileInputStream(f);
             settings = new Properties();
             settings.load(is);
+            is.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -24,7 +25,20 @@ public class Settings {
         System.out.println("difficulty" + " = " + settings.getProperty("difficulty"));
     }
 
-    public String getSetting(String setting) {
-        return settings.getProperty(setting);
+    public void save() {
+        try {
+            OutputStream os = new FileOutputStream("conf/settings.properties");
+            settings.store(os, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getSetting(String value) {
+        return settings.getProperty(value);
+    }
+
+    public void setSetting(String property, String value) {
+        settings.setProperty(property, value);
     }
 }
