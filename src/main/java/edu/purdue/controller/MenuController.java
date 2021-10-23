@@ -9,6 +9,9 @@ public class MenuController {
     private GameModel gameModel;
 
     public MenuController(GameView gameView, GameModel gameModel) {
+        this.gameView = gameView;
+        this.gameModel = gameModel;
+
         gameView.getMenuPanel().getStart().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getLayeredPane());
             gameView.getPausePanel().setVisible(false);
@@ -25,6 +28,7 @@ public class MenuController {
             gameView.getSettingsPanel().revalidate();
             gameView.getSettingsPanel().repaint();
         });
+
         gameView.getMenuPanel().getManual().addActionListener(e -> {
             //gameView.getMainFrame().setContentPane(gameView.getGamePanel());
             gameView.getMainFrame().setContentPane(gameView.getHelpPanel());
@@ -37,27 +41,5 @@ public class MenuController {
 
         });
 
-        gameView.getHelpPanel().getStart().addActionListener(e -> {
-            //gameView.getMainFrame().setContentPane(gameView.getGamePanel());
-//            gameModel.reset();
-            gameView.getMainFrame().setContentPane(gameView.getLayeredPane());
-            gameView.getPausePanel().setVisible(false);
-            gameView.getMainFrame().setSize(900, 900);
-            gameView.getMainFrame().setSize(800, 800);
-//            gameView.getGamePanel().setFocusable(true);
-            gameView.getGamePanel().requestFocus();
-            //gameView.getLayeredPane().setFocusable(true);
-            //gameView.getLayeredPane().requestFocus();
-            gameModel.setPaused(false);
-
-
-        });
-
-        gameView.getHelpPanel().getRet().addActionListener(e -> {
-            gameModel.reset();
-            gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
-            gameView.getMainFrame().setSize(900, 900);
-            gameView.getMainFrame().setSize(800, 800);
-        });
     }
 }
