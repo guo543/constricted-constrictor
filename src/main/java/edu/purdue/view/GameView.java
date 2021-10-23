@@ -23,6 +23,8 @@ public class GameView {
 
     private JLayeredPane layeredPane;
 
+    private SettingsPanel settingsPanel;
+
     private HelpPanel helpPanel;
 
     public GameView() {
@@ -102,5 +104,13 @@ public class GameView {
 
     public JLayeredPane getLayeredPane() {
         return layeredPane;
+    }
+
+    public SettingsPanel getSettingsPanel() {
+        return settingsPanel;
+    }
+
+    public void setSettingsPanel(SettingsPanel settingsPanel) {
+        this.settingsPanel = settingsPanel;
     }
 }

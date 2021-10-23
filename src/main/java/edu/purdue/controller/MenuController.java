@@ -19,6 +19,12 @@ public class MenuController {
             gameView.getGamePanel().repaint();
         });
 
+
+        gameView.getMenuPanel().getSettings().addActionListener(e -> {
+            gameView.getMainFrame().setContentPane(gameView.getSettingsPanel());
+            gameView.getSettingsPanel().revalidate();
+            gameView.getSettingsPanel().repaint();
+        });
         gameView.getMenuPanel().getManual().addActionListener(e -> {
             //gameView.getMainFrame().setContentPane(gameView.getGamePanel());
             gameView.getMainFrame().setContentPane(gameView.getHelpPanel());
@@ -52,7 +58,6 @@ public class MenuController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMainFrame().setSize(900, 900);
             gameView.getMainFrame().setSize(800, 800);
-
         });
     }
 }

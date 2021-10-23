@@ -1,7 +1,6 @@
 package edu.purdue.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.Timer;
 
 public class GameModel {
 
@@ -11,9 +10,32 @@ public class GameModel {
     private boolean paused;
     private int score;
     private HighScores highScores;
+    private Settings settings;
+    private Timer timer;
 
     public GameModel() {
         highScores = new HighScores();
+        settings = new Settings();
+        int delay = 0;
+
+        switch (settings.getSetting("difficulty")) {
+            case "1":
+                delay = 170;
+                break;
+            case "2":
+                delay = 140;
+                break;
+            case "3":
+                delay = 110;
+                break;
+            case "4":
+                delay = 80;
+                break;
+            case "5":
+                delay = 50;
+                break;
+        }
+        timer = new Timer(delay, e -> {});
         reset();
     }
 
@@ -74,5 +96,21 @@ public class GameModel {
 
     public void setHighScores(HighScores highScores) {
         this.highScores = highScores;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
     }
 }
