@@ -12,21 +12,53 @@ public class SettingsController {
         this.gameView = gameView;
         this.gameModel = gameModel;
 
-        gameView.getSettingsPanel().getBack().addActionListener(e -> {
+        gameView.getSettingsPanel().getDifficultyBack().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
         });
 
-        gameView.getSettingsPanel().getSave().addActionListener(e -> {
-            saveAction();
+        gameView.getSettingsPanel().getDifficultySave().addActionListener(e -> {
+            saveDifficulty();
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+        });
+
+        gameView.getSettingsPanel().getMapBack().addActionListener( e -> {
+            gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+            gameView.getMenuPanel().revalidate();
+            gameView.getMenuPanel().repaint();
+        });
+
+        gameView.getSettingsPanel().getMapSave().addActionListener(e -> {
+            saveMap();
+            gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+            gameView.getMenuPanel().revalidate();
+            gameView.getMenuPanel().repaint();
+        });
+
+        gameView.getSettingsPanel().getMapA().addActionListener(e -> {
+            //ask to change map using JDialog
+            //set Map A if yes
+            gameModel.getSettings().setSetting("map", "A");
+            gameModel.getSettings().save();
+        });
+        gameView.getSettingsPanel().getMapB().addActionListener(e -> {
+            //ask to change map using JDialog
+            //set Map B if yes
+            gameModel.getSettings().setSetting("map", "B");
+            gameModel.getSettings().save();
+        });
+        gameView.getSettingsPanel().getMapC().addActionListener(e -> {
+            //ask to change map using JDialog
+            //set Map C if yes
+            gameModel.getSettings().setSetting("map", "C");
+            gameModel.getSettings().save();
         });
     }
 
-    private void saveAction() {
+    private void saveDifficulty() {
         String newDifficulty = Integer.toString(gameView.getSettingsPanel().getDifficultySlider().getValue());
         gameModel.getSettings().setSetting("difficulty", newDifficulty);
 
@@ -57,5 +89,9 @@ public class SettingsController {
         }
 
         gameModel.getTimer().setDelay(delay);
+    }
+
+    private void saveMap() {
+        System.out.println("save map pressed");
     }
 }

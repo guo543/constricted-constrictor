@@ -12,11 +12,13 @@ public class GameModel {
     private HighScores highScores;
     private Settings settings;
     private Timer timer;
+    private Map map;
 
     public GameModel() {
         highScores = new HighScores();
         settings = new Settings();
         int delay = 0;
+        map = new Map(settings.getSetting("map"));
 
         switch (settings.getSetting("difficulty")) {
             case "1":
@@ -113,4 +115,14 @@ public class GameModel {
     public void setTimer(Timer timer) {
         this.timer = timer;
     }
+
+    /*
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+     */
 }

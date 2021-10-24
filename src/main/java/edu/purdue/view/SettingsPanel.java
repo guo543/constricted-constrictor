@@ -13,17 +13,34 @@ public class SettingsPanel extends JTabbedPane {
 
     private JSlider difficultySlider;
 
-    private JButton back;
+    private JButton difficultyBack;
 
-    private JButton save;
+    private JButton difficultySave;
+
+    private JPanel mapPanel;
+
+    private JButton mapBack;
+
+    private JButton mapSave;
+
+    private JButton mapA;
+
+    private JButton mapB;
+
+    private JButton mapC;
 
     public SettingsPanel(GameModel gameModel) {
         this.gameModel = gameModel;
-        back = new JButton("Back");
-        back.setBounds(150,500, 100, 40);
-        save = new JButton("Save");
-        save.setBounds(500,500, 100, 40);
+        difficultyBack = new JButton("Back");
+        difficultyBack.setBounds(150,500, 100, 40);
+        difficultySave = new JButton("Save");
+        difficultySave.setBounds(500,500, 100, 40);
+        mapBack = new JButton("Back");
+        mapBack.setBounds(150,500, 100, 40);
+        mapSave = new JButton("Save");
+        mapSave.setBounds(500,500, 100, 40);
         initializeDifficultyPanel();
+        initializeMapPanel();
     }
 
     private void initializeDifficultyPanel() {
@@ -37,8 +54,8 @@ public class SettingsPanel extends JTabbedPane {
         difficultySlider.setBounds(150, 250, 500, 200);
         difficultyPanel.add(difficultySlider);
         difficultyPanel.add(difficultyLabel);
-        difficultyPanel.add(back);
-        difficultyPanel.add(save);
+        difficultyPanel.add(difficultyBack);
+        difficultyPanel.add(difficultySave);
         this.add("Difficulty", difficultyPanel);
 
         difficultySlider.setMajorTickSpacing(1);
@@ -51,11 +68,53 @@ public class SettingsPanel extends JTabbedPane {
         return difficultySlider;
     }
 
-    public JButton getBack() {
-        return back;
+    public JButton getDifficultyBack() {
+        return difficultyBack;
     }
 
-    public JButton getSave() {
-        return save;
+    public JButton getDifficultySave() {
+        return difficultySave;
+    }
+
+    public void initializeMapPanel() {
+        mapPanel = new JPanel();
+        mapPanel.setLayout(null);
+        JLabel mapLabel = new JLabel("Select a map:");
+        mapLabel.setBounds(300, 0, 500, 200);
+        mapLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+        mapPanel.add(mapLabel);
+        //add picture of map A later
+        mapA = new JButton("Map A");
+        mapA.setBounds(150, 200, 100, 40);
+        mapB = new JButton("Map B");
+        mapB.setBounds(350, 200, 100, 40);
+        mapC = new JButton("Map C");
+        mapC.setBounds(550, 200, 100, 40);
+        mapPanel.add(mapA);
+        mapPanel.add(mapB);
+        mapPanel.add(mapC);
+        mapPanel.add(mapBack);
+        mapPanel.add(mapSave);
+        this.add("Map", mapPanel);
+    }
+
+    public JButton getMapBack() {
+        return mapBack;
+    }
+
+    public JButton getMapSave() {
+        return mapSave;
+    }
+
+    public JButton getMapA() {
+        return mapA;
+    }
+
+    public JButton getMapB() {
+        return mapB;
+    }
+
+    public JButton getMapC() {
+        return mapC;
     }
 }
