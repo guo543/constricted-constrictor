@@ -9,6 +9,8 @@ import edu.purdue.view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 /**
@@ -80,7 +82,30 @@ public class StartGame {
         jFrame.setBounds((width - 800) / 2, (height - 800) / 2, 800, 800);
         jFrame.setSize(400, 400);
         jFrame.setResizable(false);
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        jFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                System.out.println("trying to close");
+                /*
+                    In the future check if game state is home, playing or paused
+                    If game state is playing, pause game then prompt warning
+                    If game state is paused, simply prompt warning
+                 */
+                if (gameModel.isPaused()) {
+                    Object[] options = {"Close", "Cancel"};
+                    int quitConfirm = JOptionPane.showOptionDialog(gameView.getPausePanel(), "Are you sure you would close the game?",
+                            "Warning: Game in Progress", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                            null, options, options[1]);
+                    //System.out.println(quitConfirm);
+                    if (quitConfirm == 0) {
+                        System.exit(0);
+                    }
+                }
+            }
+        });
         jFrame.setVisible(true);
     }
 }
