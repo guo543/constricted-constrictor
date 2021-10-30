@@ -19,15 +19,24 @@ public class SettingsPanel extends JTabbedPane {
 
     private JPanel mapPanel;
 
+    private JLabel mapLabel;
+
     private JButton mapBack;
 
     private JButton mapSave;
 
-    private JButton mapA;
+    private JRadioButton mapA;
 
-    private JButton mapB;
+    private JRadioButton mapB;
 
-    private JButton mapC;
+    private JRadioButton mapC;
+
+    private ImageIcon imageA = new ImageIcon("images/A.png");
+
+    private ImageIcon imageB = new ImageIcon("images/B.png");
+
+    private ImageIcon imageC = new ImageIcon("images/C.png");
+
 
     public SettingsPanel(GameModel gameModel) {
         this.gameModel = gameModel;
@@ -76,26 +85,54 @@ public class SettingsPanel extends JTabbedPane {
         return difficultySave;
     }
 
-    public void initializeMapPanel() {
+    private void initializeMapPanel() {
         mapPanel = new JPanel();
-        mapPanel.setLayout(null);
-        JLabel mapLabel = new JLabel("Select a map:");
-        mapLabel.setBounds(300, 0, 500, 200);
+        //mapPanel.setLayout(null);
+        mapLabel = new JLabel();
+        //mapLabel.setBounds(300, 0, 500, 200);
         mapLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-        mapPanel.add(mapLabel);
-        //add picture of map A later
-        mapA = new JButton("Map A");
-        mapA.setBounds(150, 200, 100, 40);
-        mapB = new JButton("Map B");
-        mapB.setBounds(350, 200, 100, 40);
-        mapC = new JButton("Map C");
-        mapC.setBounds(550, 200, 100, 40);
-        mapPanel.add(mapA);
-        mapPanel.add(mapB);
-        mapPanel.add(mapC);
-        mapPanel.add(mapBack);
-        mapPanel.add(mapSave);
+        mapLabel.setIcon(imageA);
+
+        mapA = new JRadioButton("Map A");
+        mapB = new JRadioButton("Map B");
+        mapC = new JRadioButton("Map C");
+        ButtonGroup mapGroup = new ButtonGroup();
+        mapGroup.add(mapA);
+        mapGroup.add(mapB);
+        mapGroup.add(mapC);
+        mapA.setSelected(true);
+
+        mapPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(10, 10, 10, 10);
+
+        mapPanel.add(mapA, constraints);
+        constraints.gridx = 1;
+        mapPanel.add(mapB, constraints);
+        constraints.gridx = 2;
+        mapPanel.add(mapC, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 3;
+        mapPanel.add(mapLabel, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 2;
+        mapPanel.add(mapBack, constraints);
+        constraints.gridx = 2;
+        mapPanel.add(mapSave, constraints);
+
         this.add("Map", mapPanel);
+    }
+
+    public JLabel getMapLabel() {
+        return mapLabel;
     }
 
     public JButton getMapBack() {
@@ -106,15 +143,32 @@ public class SettingsPanel extends JTabbedPane {
         return mapSave;
     }
 
-    public JButton getMapA() {
+    public JRadioButton getMapA() {
         return mapA;
     }
 
-    public JButton getMapB() {
+    public JRadioButton getMapB() {
         return mapB;
     }
 
-    public JButton getMapC() {
+    public JRadioButton getMapC() {
         return mapC;
+    }
+
+    public void changeMapIcon(String mapValue) {
+        switch (mapValue) {
+            case ("A"):
+                mapLabel.setIcon(imageA);
+                break;
+            case ("B"):
+                mapLabel.setIcon(imageB);
+                break;
+            case ("C"):
+                mapLabel.setIcon(imageC);
+                break;
+            default:
+                System.out.println("invalid map");
+                break;
+        }
     }
 }

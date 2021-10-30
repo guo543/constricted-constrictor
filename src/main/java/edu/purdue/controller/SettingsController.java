@@ -2,6 +2,11 @@ package edu.purdue.controller;
 
 import edu.purdue.model.GameModel;
 import edu.purdue.view.GameView;
+import edu.purdue.view.SettingsPanel;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SettingsController {
 
@@ -38,24 +43,13 @@ public class SettingsController {
             gameView.getMenuPanel().repaint();
         });
 
-        gameView.getSettingsPanel().getMapA().addActionListener(e -> {
-            //ask to change map using JDialog
-            //set Map A if yes
-            gameModel.getSettings().setSetting("map", "A");
-            gameModel.getSettings().save();
-        });
-        gameView.getSettingsPanel().getMapB().addActionListener(e -> {
-            //ask to change map using JDialog
-            //set Map B if yes
-            gameModel.getSettings().setSetting("map", "B");
-            gameModel.getSettings().save();
-        });
-        gameView.getSettingsPanel().getMapC().addActionListener(e -> {
-            //ask to change map using JDialog
-            //set Map C if yes
-            gameModel.getSettings().setSetting("map", "C");
-            gameModel.getSettings().save();
-        });
+        MapButtonListener mapButtonListener = new MapButtonListener();
+
+        gameView.getSettingsPanel().getMapA().addActionListener(mapButtonListener);
+
+        gameView.getSettingsPanel().getMapB().addActionListener(mapButtonListener);
+
+        gameView.getSettingsPanel().getMapC().addActionListener(mapButtonListener);
     }
 
     private void saveDifficulty() {
@@ -92,6 +86,30 @@ public class SettingsController {
     }
 
     private void saveMap() {
-        System.out.println("save map pressed");
+        //System.out.println("save map pressed");
+        if (gameView.getSettingsPanel().getMapA().isSelected()) {
+            gameModel.getSettings().setSetting("map", "A");
+            gameModel.getSettings().save();
+        } else if (gameView.getSettingsPanel().getMapB().isSelected()) {
+            gameModel.getSettings().setSetting("map", "B");
+            gameModel.getSettings().save();
+        } else if (gameView.getSettingsPanel().getMapC().isSelected()) {
+            gameModel.getSettings().setSetting("map", "C");
+            gameModel.getSettings().save();
+        }
+    }
+
+    private class MapButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            JRadioButton button = (JRadioButton) e.getSource();
+            if (button == gameView.getSettingsPanel().getMapA()) {
+                gameView.getSettingsPanel().changeMapIcon("A");
+            } else if (button == gameView.getSettingsPanel().getMapB()) {
+                gameView.getSettingsPanel().changeMapIcon("B");
+            } else if (button == gameView.getSettingsPanel().getMapC()) {
+                gameView.getSettingsPanel().changeMapIcon("C");
+            }
+        }
     }
 }
