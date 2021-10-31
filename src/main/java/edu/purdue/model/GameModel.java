@@ -9,7 +9,6 @@ public class GameModel {
     private Food food;
     private User user;
     private boolean paused;
-    private int score;
     private HighScores highScores;
     private Settings settings;
     private Timer timer;
@@ -47,7 +46,6 @@ public class GameModel {
         snake = new Snake(false);
         snake2 = new Snake(true);
         food = new Food();
-        score = 0;
         paused = true;
     }
 
@@ -75,24 +73,12 @@ public class GameModel {
         this.user = user;
     }
 
-    public int getScore() {
-        return score;
-    }
-
     public boolean isPaused() {
         return paused;
     }
 
     public void setPaused(boolean paused) {
         this.paused = paused;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public void incrementScore(int inc) {
-        score += inc;
     }
 
     public HighScores getHighScores() {

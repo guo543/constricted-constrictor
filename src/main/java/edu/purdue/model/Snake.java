@@ -2,6 +2,10 @@ package edu.purdue.model;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Snake {
 
@@ -12,6 +16,12 @@ public class Snake {
 
     private String direction;
 
+    private boolean dead;
+
+    private Stack<Boolean> dieSequence;
+
+    private int score;
+
     private ImageIcon headImg;
     private ImageIcon bodyImg;
 
@@ -19,7 +29,13 @@ public class Snake {
         x = new int[1024];
         y = new int[1024];
 
+        dead = false;
+
         length = 3;
+
+        score = 0;
+
+        dieSequence = new Stack<>();
 
         if (!secondSnake) {
             direction = "R";
@@ -35,13 +51,13 @@ public class Snake {
         } else {
             direction = "L";
 
-            x[0] = 225;
+            x[0] = 525;
             y[0] = 275;
 
-            x[1] = 250;
+            x[1] = 550;
             y[1] = 275;
 
-            x[2] = 275;
+            x[2] = 575;
             y[2] = 275;
         }
         loadImages();
@@ -86,6 +102,10 @@ public class Snake {
         if (y[0] == 725) {
             y[0] = 50;
         }
+    }
+
+    public void incrementScore(int inc) {
+        score += inc;
     }
 
     public int[] getX() {
@@ -142,5 +162,36 @@ public class Snake {
 
     public void setBodyImg(ImageIcon bodyImg) {
         this.bodyImg = bodyImg;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+        if (dead) {
+            dieSequence.push(false);
+            dieSequence.push(true);
+            dieSequence.push(false);
+            dieSequence.push(true);
+            dieSequence.push(false);
+        }
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public Stack<Boolean> getDieSequence() {
+        return dieSequence;
+    }
+
+    public void setDieSequence(Stack<Boolean> dieSequence) {
+        this.dieSequence = dieSequence;
     }
 }
