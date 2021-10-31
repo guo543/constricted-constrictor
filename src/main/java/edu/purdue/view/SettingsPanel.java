@@ -13,17 +13,43 @@ public class SettingsPanel extends JTabbedPane {
 
     private JSlider difficultySlider;
 
-    private JButton back;
+    private JButton difficultyBack;
 
-    private JButton save;
+    private JButton difficultySave;
+
+    private JPanel mapPanel;
+
+    private JLabel mapLabel;
+
+    private JButton mapBack;
+
+    private JButton mapSave;
+
+    private JRadioButton mapA;
+
+    private JRadioButton mapB;
+
+    private JRadioButton mapC;
+
+    private ImageIcon imageA = new ImageIcon("images/A.png");
+
+    private ImageIcon imageB = new ImageIcon("images/B.png");
+
+    private ImageIcon imageC = new ImageIcon("images/C.png");
+
 
     public SettingsPanel(GameModel gameModel) {
         this.gameModel = gameModel;
-        back = new JButton("Back");
-        back.setBounds(150,500, 100, 40);
-        save = new JButton("Save");
-        save.setBounds(500,500, 100, 40);
+        difficultyBack = new JButton("Back");
+        difficultyBack.setBounds(150,500, 100, 40);
+        difficultySave = new JButton("Save");
+        difficultySave.setBounds(500,500, 100, 40);
+        mapBack = new JButton("Back");
+        mapBack.setBounds(150,500, 100, 40);
+        mapSave = new JButton("Save");
+        mapSave.setBounds(500,500, 100, 40);
         initializeDifficultyPanel();
+        initializeMapPanel();
     }
 
     private void initializeDifficultyPanel() {
@@ -37,8 +63,8 @@ public class SettingsPanel extends JTabbedPane {
         difficultySlider.setBounds(150, 250, 500, 200);
         difficultyPanel.add(difficultySlider);
         difficultyPanel.add(difficultyLabel);
-        difficultyPanel.add(back);
-        difficultyPanel.add(save);
+        difficultyPanel.add(difficultyBack);
+        difficultyPanel.add(difficultySave);
         this.add("Difficulty", difficultyPanel);
 
         difficultySlider.setMajorTickSpacing(1);
@@ -51,11 +77,98 @@ public class SettingsPanel extends JTabbedPane {
         return difficultySlider;
     }
 
-    public JButton getBack() {
-        return back;
+    public JButton getDifficultyBack() {
+        return difficultyBack;
     }
 
-    public JButton getSave() {
-        return save;
+    public JButton getDifficultySave() {
+        return difficultySave;
+    }
+
+    private void initializeMapPanel() {
+        mapPanel = new JPanel();
+        //mapPanel.setLayout(null);
+        mapLabel = new JLabel();
+        //mapLabel.setBounds(300, 0, 500, 200);
+        mapLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+        mapLabel.setIcon(imageA);
+
+        mapA = new JRadioButton("Map A");
+        mapB = new JRadioButton("Map B");
+        mapC = new JRadioButton("Map C");
+        ButtonGroup mapGroup = new ButtonGroup();
+        mapGroup.add(mapA);
+        mapGroup.add(mapB);
+        mapGroup.add(mapC);
+        mapA.setSelected(true);
+
+        mapPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(10, 10, 10, 10);
+
+        mapPanel.add(mapA, constraints);
+        constraints.gridx = 1;
+        mapPanel.add(mapB, constraints);
+        constraints.gridx = 2;
+        mapPanel.add(mapC, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 3;
+        mapPanel.add(mapLabel, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 2;
+        mapPanel.add(mapBack, constraints);
+        constraints.gridx = 2;
+        mapPanel.add(mapSave, constraints);
+
+        this.add("Map", mapPanel);
+    }
+
+    public JLabel getMapLabel() {
+        return mapLabel;
+    }
+
+    public JButton getMapBack() {
+        return mapBack;
+    }
+
+    public JButton getMapSave() {
+        return mapSave;
+    }
+
+    public JRadioButton getMapA() {
+        return mapA;
+    }
+
+    public JRadioButton getMapB() {
+        return mapB;
+    }
+
+    public JRadioButton getMapC() {
+        return mapC;
+    }
+
+    public void changeMapIcon(String mapValue) {
+        switch (mapValue) {
+            case ("A"):
+                mapLabel.setIcon(imageA);
+                break;
+            case ("B"):
+                mapLabel.setIcon(imageB);
+                break;
+            case ("C"):
+                mapLabel.setIcon(imageC);
+                break;
+            default:
+                System.out.println("invalid map");
+                break;
+        }
     }
 }
