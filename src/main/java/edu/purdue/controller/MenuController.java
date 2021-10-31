@@ -17,11 +17,22 @@ public class MenuController {
             gameView.getPausePanel().setVisible(false);
             gameView.getGamePanel().setFocusable(true);
             gameView.getGamePanel().requestFocus();
+            gameModel.setMultiplayer(false);
             gameModel.setPaused(false);
             gameView.getGamePanel().revalidate();
             gameView.getGamePanel().repaint();
         });
 
+        gameView.getMenuPanel().getOvo().addActionListener(e -> {
+            gameView.getMainFrame().setContentPane(gameView.getLayeredPane());
+            gameView.getPausePanel().setVisible(false);
+            gameView.getGamePanel().setFocusable(true);
+            gameView.getGamePanel().requestFocus();
+            gameModel.setMultiplayer(true);
+            gameModel.setPaused(false);
+            gameView.getGamePanel().revalidate();
+            gameView.getGamePanel().repaint();
+        });
 
         gameView.getMenuPanel().getSettings().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getSettingsPanel());

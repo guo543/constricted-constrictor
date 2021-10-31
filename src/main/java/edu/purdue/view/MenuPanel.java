@@ -71,4 +71,12 @@ public class MenuPanel extends JPanel {
     public JButton getManual() { return manual; }
 
     public void setManual(JButton manual) { this.manual = manual; }
+
+    public JButton getOvo() {
+        return ovo;
+    }
+
+    public void setOvo(JButton ovo) {
+        this.ovo = ovo;
+    }
 }

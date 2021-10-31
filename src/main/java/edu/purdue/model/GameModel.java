@@ -5,6 +5,7 @@ import javax.swing.Timer;
 public class GameModel {
 
     private Snake snake;
+    private Snake snake2;
     private Food food;
     private User user;
     private boolean paused;
@@ -13,6 +14,7 @@ public class GameModel {
     private Settings settings;
     private Timer timer;
     private Map map;
+    private boolean multiplayer;
 
     public GameModel() {
         highScores = new HighScores();
@@ -42,7 +44,8 @@ public class GameModel {
     }
 
     public void reset() {
-        snake = new Snake();
+        snake = new Snake(false);
+        snake2 = new Snake(true);
         food = new Food();
         score = 0;
         paused = true;
@@ -114,6 +117,22 @@ public class GameModel {
 
     public void setTimer(Timer timer) {
         this.timer = timer;
+    }
+
+    public Snake getSnake2() {
+        return snake2;
+    }
+
+    public void setSnake2(Snake snake2) {
+        this.snake2 = snake2;
+    }
+
+    public boolean isMultiplayer() {
+        return multiplayer;
+    }
+
+    public void setMultiplayer(boolean multiplayer) {
+        this.multiplayer = multiplayer;
     }
 
     /*

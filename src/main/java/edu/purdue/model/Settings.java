@@ -23,6 +23,7 @@ public class Settings {
 
     private void print() {
         System.out.println("difficulty" + " = " + settings.getProperty("difficulty"));
+        System.out.println("map" + " = " + settings.getProperty("map"));
     }
 
     public void save() {

@@ -15,23 +15,35 @@ public class Snake {
     private ImageIcon headImg;
     private ImageIcon bodyImg;
 
-    public Snake() {
+    public Snake(boolean secondSnake) {
         x = new int[1024];
         y = new int[1024];
 
         length = 3;
 
-        direction = "R";
+        if (!secondSnake) {
+            direction = "R";
 
-        x[0] = 175;
-        y[0] = 275;
+            x[0] = 175;
+            y[0] = 275;
 
-        x[1] = 150;
-        y[1] = 275;
+            x[1] = 150;
+            y[1] = 275;
 
-        x[2] = 125;
-        y[2] = 275;
+            x[2] = 125;
+            y[2] = 275;
+        } else {
+            direction = "L";
 
+            x[0] = 225;
+            y[0] = 275;
+
+            x[1] = 250;
+            y[1] = 275;
+
+            x[2] = 275;
+            y[2] = 275;
+        }
         loadImages();
     }
 

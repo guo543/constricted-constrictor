@@ -64,6 +64,15 @@ public class GamePanel extends JPanel {
             //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
             g.fillRect(snake.getX()[i] + 2, snake.getY()[i] + 2, 21, 21);
         }
+
+        if (gameModel.isMultiplayer()) {
+            Snake snake2 = gameModel.getSnake2();
+            g.fillRect(snake2.getX()[0] + 2, snake2.getY()[0] + 2, 21, 21);
+            for (int i = 1; i < snake2.getLength(); i++) {
+                //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
+                g.fillRect(snake2.getX()[i] + 2, snake2.getY()[i] + 2, 21, 21);
+            }
+        }
     }
 
     public GameModel getGameModel() {
