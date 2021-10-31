@@ -2,6 +2,7 @@ package edu.purdue.controller;
 
 import edu.purdue.model.Food;
 import edu.purdue.model.GameModel;
+import edu.purdue.model.Snake;
 import edu.purdue.view.GameView;
 
 import java.awt.event.KeyAdapter;
@@ -30,53 +31,95 @@ public class GameController {
 
     private void update() {
         if (!gameModel.isPaused()) {
-            gameModel.getSnake().move();
+            updateSnake();
 
-            int headX = gameModel.getSnake().getX()[0];
-            int headY = gameModel.getSnake().getY()[0];
-
-            int[] X = gameModel.getSnake().getX();
-            int[] Y = gameModel.getSnake().getY();
-
-            int length = gameModel.getSnake().getLength();
-
-            Food food = gameModel.getFood();
-
-            // check if the food is eaten
-            if (headX == food.getX() && headY == food.getY()) {
-                gameModel.incrementScore(1);
-                gameModel.getSnake().incrementLength();
-                boolean overlap = true;
-                while (overlap) {
-                    overlap = false;
-                    food.generateNewFood();
-                    for (int i = 0; i < length; i++) {
-                        if (food.getX() == X[i] && food.getY() == Y[i]) {
-                            overlap = true;
-                            break;
-                        }
-                    }
-                }
-            }
+            Snake snake = gameModel.getSnake();
+            Snake snake2 = gameModel.getSnake2();
 
             // check if the snake's head collide with its body
-            for (int i = 1; i < length; i++) {
-                if (headX == X[i] && headY == Y[i]) {
-                    gameModel.setPaused(true);
-                    gameModel.getHighScores().add(gameModel.getScore());
-                    System.out.println(gameModel.getHighScores().getScores());
-                    gameView.getMainFrame().setContentPane(gameView.getLostPanel());
-                    gameView.getMainFrame().revalidate();
-                    gameView.getMainFrame().repaint();
-                }
+            checkCollision(snake);
+            if (gameModel.isMultiplayer()) {
+                checkCollision(snake2);
+                checkCollision(snake, snake2);
             }
 
-            if (gameModel.isMultiplayer()) {
-                gameModel.getSnake2().move();
-            }
+            // check if the food is eaten
+            checkEatFood();
 
             gameView.getGamePanel().repaint();
 
+        }
+    }
+
+    private void updateSnake() {
+        gameModel.getSnake().move();
+        if (gameModel.isMultiplayer()) {
+            gameModel.getSnake2().move();
+        }
+    }
+
+
+    private void checkCollision(Snake snake) {
+        int[] X = snake.getX();
+        int[] Y = snake.getY();
+
+        int headX = X[0];
+        int headY = Y[0];
+
+        int length = gameModel.getSnake().getLength();
+
+        for (int i = 1; i < length; i++) {
+            if (headX == X[i] && headY == Y[i]) {
+                gameModel.setPaused(true);
+                gameModel.getHighScores().add(gameModel.getScore());
+                System.out.println(gameModel.getHighScores().getScores());
+                gameView.getMainFrame().setContentPane(gameView.getLostPanel());
+                gameView.getMainFrame().revalidate();
+                gameView.getMainFrame().repaint();
+            }
+        }
+    }
+
+    private void checkCollision(Snake snake, Snake snake2) {
+        int[] X = snake.getX();
+        int[] Y = snake.getY();
+        int[] X2 = snake2.getX();
+        int[] Y2 = snake2.getY();
+
+        int headX = X[0];
+        int headY = Y[0];
+        int headX2 = X[0];
+        int headY2 = Y[0];
+
+        int length = gameModel.getSnake().getLength();
+        int length2 = gameModel.getSnake2().getLength();
+    }
+
+    private void checkEatFood() {
+        int[] X = gameModel.getSnake().getX();
+        int[] Y = gameModel.getSnake().getY();
+
+        int headX = X[0];
+        int headY = Y[0];
+
+        Food food = gameModel.getFood();
+
+        int length = gameModel.getSnake().getLength();
+
+        if (headX == food.getX() && headY == food.getY()) {
+            gameModel.incrementScore(1);
+            gameModel.getSnake().incrementLength();
+            boolean overlap = true;
+            while (overlap) {
+                overlap = false;
+                food.generateNewFood();
+                for (int i = 0; i < length; i++) {
+                    if (food.getX() == X[i] && food.getY() == Y[i]) {
+                        overlap = true;
+                        break;
+                    }
+                }
+            }
         }
     }
 
