@@ -16,7 +16,6 @@ public class GamePanel extends JPanel {
 
     public GamePanel(GameModel gameModel) {
         this.gameModel = gameModel;
-
         this.setFocusable(true);
         this.requestFocus();
     }
@@ -50,7 +49,7 @@ public class GamePanel extends JPanel {
         g.fillRoundRect(food.getX() + 3, food.getY() + 3, 19, 19, 900, 900);
         //snake.getHeadImg().paintIcon(this, g, snake.getX()[0], snake.getY()[0]);
 
-        g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
+
 
         g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
         if (gameModel.getHighScores().getScores().size() > 0) {
@@ -59,6 +58,10 @@ public class GamePanel extends JPanel {
             g.drawString("Record: " + gameModel.getScore(), 530, 32);
         }
         g.drawString("Score: " + gameModel.getScore(), 650, 32);
+
+        g.setColor(new Color(Integer.parseInt(gameModel.getSettings().getSetting("snakeColor"))));
+
+        g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
 
         for (int i = 1; i < snake.getLength(); i++) {
             //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
