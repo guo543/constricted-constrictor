@@ -12,7 +12,7 @@ public class Food {
     private ImageIcon foodImg;
 
     public Food() {
-        x = 300;
+        x = 350;
         y = 200;
 
         loadImage();

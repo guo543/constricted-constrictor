@@ -16,6 +16,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel(GameModel gameModel) {
         this.gameModel = gameModel;
+
         this.setFocusable(true);
         this.requestFocus();
     }
@@ -49,23 +50,55 @@ public class GamePanel extends JPanel {
         g.fillRoundRect(food.getX() + 3, food.getY() + 3, 19, 19, 900, 900);
         //snake.getHeadImg().paintIcon(this, g, snake.getX()[0], snake.getY()[0]);
 
-
-
         g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
-        if (gameModel.getHighScores().getScores().size() > 0) {
-            g.drawString("Record: " + Math.max(gameModel.getHighScores().getScores().get(0), gameModel.getScore()), 530, 32);
+        if (gameModel.isMultiplayer()) {
+            g.drawString("Snake A: " + gameModel.getSnake().getScore(), 530, 32);
+            g.drawString("Snake B: " + gameModel.getSnake2().getScore(), 650, 32);
         } else {
-            g.drawString("Record: " + gameModel.getScore(), 530, 32);
+            if (gameModel.getHighScores().getScores().size() > 0) {
+                g.drawString("Record: " + Math.max(gameModel.getHighScores().getScores().get(0), gameModel.getSnake().getScore()), 530, 32);
+            } else {
+                g.drawString("Record: " + gameModel.getSnake().getScore(), 530, 32);
+            }
+            g.drawString("Score: " + gameModel.getSnake().getScore(), 650, 32);
         }
-        g.drawString("Score: " + gameModel.getScore(), 650, 32);
 
+        // draw snake
         g.setColor(new Color(Integer.parseInt(gameModel.getSettings().getSetting("snakeColor"))));
+        if (!gameModel.getSnake().isDead()) {
+            g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
+            for (int i = 1; i < snake.getLength(); i++) {
+                //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
+                g.fillRect(snake.getX()[i] + 2, snake.getY()[i] + 2, 21, 21);
+            }
+        } else {
+            if (gameModel.getSnake().getDieSequence().size() > 0 && gameModel.getSnake().getDieSequence().pop()) {
+                g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
+                for (int i = 1; i < snake.getLength(); i++) {
+                    //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
+                    g.fillRect(snake.getX()[i] + 2, snake.getY()[i] + 2, 21, 21);
+                }
+            }
+        }
 
-        g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
-
-        for (int i = 1; i < snake.getLength(); i++) {
-            //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
-            g.fillRect(snake.getX()[i] + 2, snake.getY()[i] + 2, 21, 21);
+        if (gameModel.isMultiplayer()) {
+            Snake snake2 = gameModel.getSnake2();
+            if (!gameModel.getSnake2().isDead()) {
+                // draw snake2
+                g.fillRect(snake2.getX()[0] + 2, snake2.getY()[0] + 2, 21, 21);
+                for (int i = 1; i < snake2.getLength(); i++) {
+                    //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
+                    g.fillRect(snake2.getX()[i] + 2, snake2.getY()[i] + 2, 21, 21);
+                }
+            } else {
+                if (gameModel.getSnake2().getDieSequence().size() > 0 && gameModel.getSnake2().getDieSequence().pop()) {
+                    g.fillRect(snake2.getX()[0] + 2, snake2.getY()[0] + 2, 21, 21);
+                    for (int i = 1; i < snake2.getLength(); i++) {
+                        //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
+                        g.fillRect(snake2.getX()[i] + 2, snake2.getY()[i] + 2, 21, 21);
+                    }
+                }
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package edu.purdue.controller;
 
 import edu.purdue.model.Food;
 import edu.purdue.model.GameModel;
+import edu.purdue.model.Snake;
 import edu.purdue.view.GameView;
 
 import java.awt.event.KeyAdapter;
@@ -30,43 +31,144 @@ public class GameController {
 
     private void update() {
         if (!gameModel.isPaused()) {
-            gameModel.getSnake().move();
+            Snake snake = gameModel.getSnake();
+            Snake snake2 = gameModel.getSnake2();
 
-            int headX = gameModel.getSnake().getX()[0];
-            int headY = gameModel.getSnake().getY()[0];
+            if (!snake.isDead()) {
+                snake.move();
+            }
+            if (gameModel.isMultiplayer() && !snake2.isDead()) {
+                snake2.move();
+            }
 
-            Food food = gameModel.getFood();
-            if (headX == food.getX() && headY == food.getY()) {
-                gameModel.incrementScore(1);
-                gameModel.getSnake().incrementLength();
-                boolean overlap = true;
-                while (overlap) {
-                    overlap = false;
-                    food.generateNewFood();
-                    for (int i = 0; i < gameModel.getSnake().getLength(); i++) {
-                        if (food.getX() == gameModel.getSnake().getX()[i] &&
-                                food.getY() == gameModel.getSnake().getY()[i]) {
-                            overlap = true;
-                            break;
-                        }
-                    }
+            // check if the snake's head collide with its body
+            if (!snake.isDead()) {
+                checkCollision(snake);
+            }
+            if (gameModel.isMultiplayer()) {
+                if (!snake2.isDead()) {
+                    checkCollision(snake2);
+                }
+
+                // check if the snakes collide with each other
+                if (!snake.isDead() && !snake2.isDead()) {
+                    checkCollision(snake, snake2);
                 }
             }
 
-            for (int i = 1; i < gameModel.getSnake().getLength(); i++) {
-                if (headX == gameModel.getSnake().getX()[i] &&
-                        headY == gameModel.getSnake().getY()[i]) {
-                    gameModel.setPaused(true);
-                    gameModel.getHighScores().add(gameModel.getScore());
-                    System.out.println(gameModel.getHighScores().getScores());
-                    gameView.getMainFrame().setContentPane(gameView.getLostPanel());
-                    gameView.getMainFrame().revalidate();
-                    gameView.getMainFrame().repaint();
-                }
+            // check if the food is eaten
+            if (!snake.isDead()) {
+                checkEatFood(snake);
+            }
+            if (gameModel.isMultiplayer() && !snake2.isDead()) {
+                checkEatFood(snake2);
+            }
+
+            if (gameModel.isMultiplayer() && snake.isDead() && snake2.isDead()) {
+                switchToLostPanel();
             }
 
             gameView.getGamePanel().repaint();
+        }
+    }
 
+    private void checkCollision(Snake snake) {
+        int[] X = snake.getX();
+        int[] Y = snake.getY();
+
+        int headX = X[0];
+        int headY = Y[0];
+
+        int length = snake.getLength();
+
+        for (int i = 1; i < length; i++) {
+            if (headX == X[i] && headY == Y[i]) {
+                if (gameModel.isMultiplayer()) {
+                    snake.setDead(true);
+                } else {
+                    gameModel.getHighScores().add(snake.getScore());
+                    System.out.println(gameModel.getHighScores().getScores());
+                    switchToLostPanel();
+                }
+            }
+        }
+    }
+
+    private void checkCollision(Snake snake, Snake snake2) {
+        int[] X = snake.getX();
+        int[] Y = snake.getY();
+        int[] X2 = snake2.getX();
+        int[] Y2 = snake2.getY();
+
+        int headX = X[0];
+        int headY = Y[0];
+        int headX2 = X2[0];
+        int headY2 = Y2[0];
+
+        if (headX == headX2 && headY == headY2) {
+            switchToLostPanel();
+        }
+
+        int length = gameModel.getSnake().getLength();
+        int length2 = gameModel.getSnake2().getLength();
+
+        boolean snakeCollidesSnake2 = false;
+        boolean snake2CollidesSnake = false;
+
+        for (int i = 1; i < length2; i++) {
+            if (headX == X2[i] && headY == Y2[i]) {
+                snakeCollidesSnake2 = true;
+                break;
+            }
+        }
+
+        for (int i = 1; i < length; i++) {
+            if (headX2 == X[i] && headY2 == Y[i]) {
+                snake2CollidesSnake = true;
+                break;
+            }
+        }
+
+        if (snakeCollidesSnake2 && snake2CollidesSnake) {
+            switchToLostPanel();
+            return;
+        }
+
+        if (snakeCollidesSnake2) {
+            snake.setDead(true);
+            return;
+        }
+
+        if (snake2CollidesSnake) {
+            snake2.setDead(true);
+        }
+    }
+
+    private void checkEatFood(Snake snake) {
+        int[] X = snake.getX();
+        int[] Y = snake.getY();
+
+        int headX = X[0];
+        int headY = Y[0];
+
+        Food food = gameModel.getFood();
+
+        int length = snake.getLength();
+
+        if (headX == food.getX() && headY == food.getY()) {
+            snake.incrementScore(1);
+            snake.incrementLength();
+            boolean overlap = true;
+            while (overlap) {
+                overlap = false;
+                food.generateNewFood();
+                for (int i = 0; i < length; i++) {
+                    if (food.getX() == X[i] && food.getY() == Y[i]) {
+                        overlap = true;
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -80,7 +182,6 @@ public class GameController {
             gameView.getGamePanel().revalidate();
             gameView.getGamePanel().repaint();
         }
-
         if (keyCode == KeyEvent.VK_UP) {
             if ((!"U".equals(currentDirection)) && (!"D".equals(currentDirection))) {
                 gameModel.getSnake().setDirection("U");
@@ -104,7 +205,39 @@ public class GameController {
                 gameModel.getSnake().setDirection("R");
             }
         }
+
+        if (gameModel.isMultiplayer()) {
+            String currentDirection2 = gameModel.getSnake2().getDirection();
+            if (keyCode == KeyEvent.VK_W) {
+                if ((!"U".equals(currentDirection2)) && (!"D".equals(currentDirection2))) {
+                    gameModel.getSnake2().setDirection("U");
+                }
+            }
+
+            if (keyCode == KeyEvent.VK_S) {
+                if ((!"U".equals(currentDirection2)) && (!"D".equals(currentDirection2))) {
+                    gameModel.getSnake2().setDirection("D");
+                }
+            }
+
+            if (keyCode == KeyEvent.VK_A) {
+                if ((!"L".equals(currentDirection2)) && (!"R".equals(currentDirection2))) {
+                    gameModel.getSnake2().setDirection("L");
+                }
+            }
+
+            if (keyCode == KeyEvent.VK_D) {
+                if ((!"L".equals(currentDirection2)) && (!"R".equals(currentDirection2))) {
+                    gameModel.getSnake2().setDirection("R");
+                }
+            }
+        }
     }
 
-
+    private void switchToLostPanel() {
+        gameModel.setPaused(true);
+        gameView.getMainFrame().setContentPane(gameView.getLostPanel());
+        gameView.getMainFrame().revalidate();
+        gameView.getMainFrame().repaint();
+    }
 }
