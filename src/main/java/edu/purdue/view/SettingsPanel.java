@@ -39,22 +39,28 @@ public class SettingsPanel extends JTabbedPane {
 
     private JPanel graphicsPanel;
 
-    private JColorChooser colorChooser;
+    private JColorChooser headColorChooser;
+
+    private JColorChooser bodyColorChooser;
+
+    private JButton graphicsBack;
 
     private JButton graphicsSave;
 
     public SettingsPanel(GameModel gameModel) {
         this.gameModel = gameModel;
         difficultyBack = new JButton("Back");
-        difficultyBack.setBounds(150,500, 100, 40);
+        difficultyBack.setBounds(150,600, 100, 40);
         difficultySave = new JButton("Save");
-        difficultySave.setBounds(500,500, 100, 40);
+        difficultySave.setBounds(500,600, 100, 40);
         mapBack = new JButton("Back");
-        mapBack.setBounds(150,500, 100, 40);
+        mapBack.setBounds(150,600, 100, 40);
         mapSave = new JButton("Save");
-        mapSave.setBounds(500,500, 100, 40);
+        mapSave.setBounds(500,600, 100, 40);
+        graphicsBack = new JButton("Back");
+        graphicsBack.setBounds(150,600, 100, 40);
         graphicsSave = new JButton("Save");
-        graphicsSave.setBounds(500, 500, 100, 40);
+        graphicsSave.setBounds(500, 600, 100, 40);
         initializeDifficultyPanel();
         initializeMapPanel();
         initializeGraphicsPanel();
@@ -182,14 +188,30 @@ public class SettingsPanel extends JTabbedPane {
 
     private void initializeGraphicsPanel() {
         graphicsPanel = new JPanel();
-        colorChooser = new JColorChooser();
-        graphicsPanel.add(colorChooser);
+        graphicsPanel.setLayout(null);
+        headColorChooser = new JColorChooser();
+        headColorChooser.setBounds(20, 0, 760, 300);
+        bodyColorChooser = new JColorChooser();
+        bodyColorChooser.setBounds(20, 300, 760, 300);
+        graphicsPanel.add(headColorChooser);
+        graphicsPanel.add(bodyColorChooser);
         graphicsPanel.add(graphicsSave);
-        add("Graphics", graphicsPanel);
+        graphicsPanel.add(graphicsBack);
+        headColorChooser.setPreviewPanel(new JPanel());
+        bodyColorChooser.setPreviewPanel(new JPanel());
+        add("Customize Snake", graphicsPanel);
     }
 
-    public JColorChooser getColorChooser() {
-        return colorChooser;
+    public JColorChooser getHeadColorChooser() {
+        return headColorChooser;
+    }
+
+    public JColorChooser getBodyColorChooser() {
+        return bodyColorChooser;
+    }
+
+    public JButton getGraphicsBack() {
+        return graphicsBack;
     }
 
     public JButton getGraphicsSave() {

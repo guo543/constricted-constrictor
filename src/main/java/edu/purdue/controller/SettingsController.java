@@ -31,7 +31,7 @@ public class SettingsController {
             gameView.getMenuPanel().repaint();
         });
 
-        gameView.getSettingsPanel().getMapBack().addActionListener( e -> {
+        gameView.getSettingsPanel().getMapBack().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
@@ -51,6 +51,12 @@ public class SettingsController {
         gameView.getSettingsPanel().getMapB().addActionListener(mapButtonListener);
 
         gameView.getSettingsPanel().getMapC().addActionListener(mapButtonListener);
+
+        gameView.getSettingsPanel().getGraphicsBack().addActionListener(e -> {
+            gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+            gameView.getMenuPanel().revalidate();
+            gameView.getMenuPanel().repaint();
+        });
 
         gameView.getSettingsPanel().getGraphicsSave().addActionListener(e -> {
             saveColor();
@@ -122,10 +128,15 @@ public class SettingsController {
     }
 
     private void saveColor() {
-        Color color = gameView.getSettingsPanel().getColorChooser().getColor();
-        int colorRGB = color.getRGB();
-        gameModel.getSettings().setSetting("snakeColor", Integer.toString(colorRGB));
+        Color headColor = gameView.getSettingsPanel().getHeadColorChooser().getColor();
+        int headRGB = headColor.getRGB();
+        gameModel.getSettings().setSetting("headColor", Integer.toString(headRGB));
+        Color bodyColor = gameView.getSettingsPanel().getBodyColorChooser().getColor();
+        int bodyRGB = bodyColor.getRGB();
+        gameModel.getSettings().setSetting("bodyColor", Integer.toString(bodyRGB));
         gameModel.getSettings().save();
 
+        gameModel.getSnake().setHeadColor(headColor);
+        gameModel.getSnake().setBodyColor(bodyColor);
     }
 }

@@ -38,10 +38,10 @@ public class MenuPanel extends JPanel {
         ovo.setBounds(300, 420, 200, 50);
 
         this.add(manual);
-        manual.setBounds(300, 560, 200, 50);
+        manual.setBounds(300, 540, 200, 50);
 
         this.add(settings);
-        settings.setBounds(300, 620, 200, 50);
+        settings.setBounds(300, 480, 200, 50);
     }
 
     public JLabel getGreeting() {

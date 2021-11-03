@@ -64,16 +64,19 @@ public class GamePanel extends JPanel {
         }
 
         // draw snake
-        g.setColor(new Color(Integer.parseInt(gameModel.getSettings().getSetting("snakeColor"))));
         if (!gameModel.getSnake().isDead()) {
+            g.setColor(gameModel.getSnake().getHeadColor());
             g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
+            g.setColor(gameModel.getSnake().getBodyColor());
             for (int i = 1; i < snake.getLength(); i++) {
                 //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
                 g.fillRect(snake.getX()[i] + 2, snake.getY()[i] + 2, 21, 21);
             }
         } else {
             if (gameModel.getSnake().getDieSequence().size() > 0 && gameModel.getSnake().getDieSequence().pop()) {
+                g.setColor(gameModel.getSnake().getHeadColor());
                 g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
+                g.setColor(gameModel.getSnake().getBodyColor());
                 for (int i = 1; i < snake.getLength(); i++) {
                     //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
                     g.fillRect(snake.getX()[i] + 2, snake.getY()[i] + 2, 21, 21);

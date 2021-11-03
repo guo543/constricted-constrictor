@@ -1,6 +1,7 @@
 package edu.purdue.model;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,8 @@ public class Snake {
 
     private int score;
 
-    private ImageIcon headImg;
-    private ImageIcon bodyImg;
+    private Color headColor;
+    private Color bodyColor;
 
     public Snake(boolean secondSnake) {
         x = new int[1024];
@@ -60,17 +61,6 @@ public class Snake {
             x[2] = 575;
             y[2] = 275;
         }
-        loadImages();
-    }
-
-    private void loadImages() {
-        File head = new File("images/head.jpg");
-        String headPath = head.getAbsolutePath();
-        headImg = new ImageIcon(headPath);
-
-        File body = new File("images/body.jpg");
-        String bodyPath = body.getAbsolutePath();
-        bodyImg = new ImageIcon(bodyPath);
     }
 
     public void move() {
@@ -148,20 +138,20 @@ public class Snake {
         this.direction = direction;
     }
 
-    public ImageIcon getHeadImg() {
-        return headImg;
+    public Color getHeadColor() {
+        return headColor;
     }
 
-    public void setHeadImg(ImageIcon headImg) {
-        this.headImg = headImg;
+    public void setHeadColor(Color headColor) {
+        this.headColor = headColor;
     }
 
-    public ImageIcon getBodyImg() {
-        return bodyImg;
+    public Color getBodyColor() {
+        return bodyColor;
     }
 
-    public void setBodyImg(ImageIcon bodyImg) {
-        this.bodyImg = bodyImg;
+    public void setBodyColor(Color bodyColor) {
+        this.bodyColor = bodyColor;
     }
 
     public boolean isDead() {
