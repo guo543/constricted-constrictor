@@ -89,6 +89,7 @@ public class StartGame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 System.out.println("trying to close");
+                gameModel.getSettings().save();
                 /*
                     In the future check if game state is home, playing or paused
                     If game state is playing, pause game then prompt warning

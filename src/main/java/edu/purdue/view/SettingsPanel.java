@@ -1,6 +1,7 @@
 package edu.purdue.view;
 
 import edu.purdue.model.GameModel;
+import javafx.scene.canvas.GraphicsContext;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,9 +44,25 @@ public class SettingsPanel extends JTabbedPane {
 
     private JColorChooser bodyColorChooser;
 
+    private JRadioButton snakeButton;
+
+    private JRadioButton snake2Button;
+
     private JButton graphicsBack;
 
     private JButton graphicsSave;
+
+    private JPanel stylePanel;
+
+    private JButton styleBack;
+
+    private JButton styleSave;
+
+    private JLabel styleLabel;
+
+    private JRadioButton styleDefault;
+
+    private JRadioButton styleClassic;
 
     public SettingsPanel(GameModel gameModel) {
         this.gameModel = gameModel;
@@ -61,9 +78,14 @@ public class SettingsPanel extends JTabbedPane {
         graphicsBack.setBounds(150,600, 100, 40);
         graphicsSave = new JButton("Save");
         graphicsSave.setBounds(500, 600, 100, 40);
+        styleBack = new JButton("Back");
+        styleBack.setBounds(150,600, 100, 40);
+        styleSave = new JButton("Save");
+        styleSave.setBounds(500, 600, 100, 40);
         initializeDifficultyPanel();
         initializeMapPanel();
         initializeGraphicsPanel();
+        initializeStylePanel();
     }
 
     private void initializeDifficultyPanel() {
@@ -114,7 +136,20 @@ public class SettingsPanel extends JTabbedPane {
         mapGroup.add(mapA);
         mapGroup.add(mapB);
         mapGroup.add(mapC);
-        mapA.setSelected(true);
+        switch (gameModel.getSettings().getSetting("map")) {
+            case "A":
+                mapA.setSelected(true);
+                changeMapIcon("A");
+                break;
+            case "B":
+                mapB.setSelected(true);
+                changeMapIcon("B");
+                break;
+            case "C":
+                mapC.setSelected(true);
+                changeMapIcon("C");
+                break;
+        }
 
         mapPanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -186,17 +221,33 @@ public class SettingsPanel extends JTabbedPane {
         }
     }
 
+    public void changeStyleIcon(boolean defaultStyle) {
+        if (defaultStyle) {
+            styleLabel.setIcon(imageA);
+        } else {
+            styleLabel.setIcon(imageB);
+        }
+    }
+
     private void initializeGraphicsPanel() {
         graphicsPanel = new JPanel();
         graphicsPanel.setLayout(null);
+        snakeButton = new JRadioButton();
+        snake2Button = new JRadioButton();
         headColorChooser = new JColorChooser();
-        headColorChooser.setBounds(20, 0, 760, 300);
+        headColorChooser.setBounds(100, 0, 650, 300);
         bodyColorChooser = new JColorChooser();
-        bodyColorChooser.setBounds(20, 300, 760, 300);
+        bodyColorChooser.setBounds(100, 300, 650, 300);
+        JLabel headLabel = new JLabel("HEAD COLOR");
+        headLabel.setBounds(10, 130, 100, 40);
+        JLabel bodyLabel = new JLabel("BODY COLOR");
+        bodyLabel.setBounds(10, 430, 100, 40);
         graphicsPanel.add(headColorChooser);
         graphicsPanel.add(bodyColorChooser);
         graphicsPanel.add(graphicsSave);
         graphicsPanel.add(graphicsBack);
+        graphicsPanel.add(headLabel);
+        graphicsPanel.add(bodyLabel);
         headColorChooser.setPreviewPanel(new JPanel());
         bodyColorChooser.setPreviewPanel(new JPanel());
         add("Customize Snake", graphicsPanel);
@@ -216,5 +267,86 @@ public class SettingsPanel extends JTabbedPane {
 
     public JButton getGraphicsSave() {
         return graphicsSave;
+    }
+
+    public JRadioButton getSnakeButton() {
+        return snakeButton;
+    }
+
+    public JRadioButton getSnake2Button() {
+        return snake2Button;
+    }
+
+    private void initializeStylePanel() {
+        stylePanel = new JPanel();
+        styleLabel = new JLabel();
+        styleLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+        styleLabel.setIcon(imageA);
+
+        styleDefault = new JRadioButton("Default");
+        styleClassic = new JRadioButton("Classical");
+        ButtonGroup styleGroup = new ButtonGroup();
+        styleGroup.add(styleDefault);
+        styleGroup.add(styleClassic);
+        switch (gameModel.getSettings().getSetting("defaultStyle")) {
+            case "1":
+                styleDefault.setSelected(true);
+                changeStyleIcon(true);
+                break;
+            case "0":
+                styleClassic.setSelected(true);
+                changeStyleIcon(false);
+                break;
+        }
+
+        stylePanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(10, 10, 10, 10);
+
+        stylePanel.add(styleDefault, constraints);
+        constraints.gridx = 1;
+        stylePanel.add(styleClassic, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 2;
+        stylePanel.add(styleLabel, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 2;
+        stylePanel.add(styleBack, constraints);
+        constraints.gridx = 2;
+        stylePanel.add(styleSave, constraints);
+
+        this.add("Style", stylePanel);
+    }
+
+    public JPanel getStylePanel() {
+        return stylePanel;
+    }
+
+    public JButton getStyleBack() {
+        return styleBack;
+    }
+
+    public JButton getStyleSave() {
+        return styleSave;
+    }
+
+    public JLabel getStyleLabel() {
+        return styleLabel;
+    }
+
+    public JRadioButton getStyleDefault() {
+        return styleDefault;
+    }
+
+    public JRadioButton getStyleClassic() {
+        return styleClassic;
     }
 }

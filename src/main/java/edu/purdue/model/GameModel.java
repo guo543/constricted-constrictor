@@ -15,13 +15,13 @@ public class GameModel {
     private Timer timer;
     private Map map;
     private boolean multiplayer;
+    private boolean defaultStyle;
 
     public GameModel() {
         highScores = new HighScores();
         settings = new Settings();
         int delay = 0;
         map = new Map(settings.getSetting("map"));
-        settings.setSetting("snakeColor", Integer.toString(-256));
         settings.save();
         switch (settings.getSetting("difficulty")) {
             case "1":
@@ -40,13 +40,25 @@ public class GameModel {
                 delay = 50;
                 break;
         }
+        switch (settings.getSetting("defaultStyle")) {
+            case "1":
+                defaultStyle = true;
+                break;
+            case "0":
+                defaultStyle = false;
+                break;
+        }
         timer = new Timer(delay, e -> {});
         reset();
     }
 
     public void reset() {
         snake = new Snake(false);
+        snake.setHeadColor(new Color(Integer.parseInt(settings.getSetting("headColor"))));
+        snake.setBodyColor(new Color(Integer.parseInt(settings.getSetting("bodyColor"))));
         snake2 = new Snake(true);
+        snake2.setHeadColor(new Color(Integer.parseInt(settings.getSetting("headColor2"))));
+        snake2.setBodyColor(new Color(Integer.parseInt(settings.getSetting("bodyColor2"))));
         food = new Food();
         paused = true;
     }
@@ -121,6 +133,22 @@ public class GameModel {
 
     public void setMultiplayer(boolean multiplayer) {
         this.multiplayer = multiplayer;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    public boolean isDefaultStyle() {
+        return defaultStyle;
+    }
+
+    public void setDefaultStyle(boolean defaultStyle) {
+        this.defaultStyle = defaultStyle;
     }
 
     /*
