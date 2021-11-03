@@ -64,6 +64,7 @@ public class GamePanel extends JPanel {
         }
 
         // draw snake
+        g.setColor(new Color(Integer.parseInt(gameModel.getSettings().getSetting("snakeColor"))));
         if (!gameModel.getSnake().isDead()) {
             g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
             for (int i = 1; i < snake.getLength(); i++) {

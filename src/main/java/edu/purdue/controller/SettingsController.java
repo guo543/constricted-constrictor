@@ -5,6 +5,7 @@ import edu.purdue.view.GameView;
 import edu.purdue.view.SettingsPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -50,6 +51,13 @@ public class SettingsController {
         gameView.getSettingsPanel().getMapB().addActionListener(mapButtonListener);
 
         gameView.getSettingsPanel().getMapC().addActionListener(mapButtonListener);
+
+        gameView.getSettingsPanel().getGraphicsSave().addActionListener(e -> {
+            saveColor();
+            gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+            gameView.getMenuPanel().revalidate();
+            gameView.getMenuPanel().repaint();
+        });
     }
 
     private void saveDifficulty() {
@@ -111,5 +119,13 @@ public class SettingsController {
                 gameView.getSettingsPanel().changeMapIcon("C");
             }
         }
+    }
+
+    private void saveColor() {
+        Color color = gameView.getSettingsPanel().getColorChooser().getColor();
+        int colorRGB = color.getRGB();
+        gameModel.getSettings().setSetting("snakeColor", Integer.toString(colorRGB));
+        gameModel.getSettings().save();
+
     }
 }

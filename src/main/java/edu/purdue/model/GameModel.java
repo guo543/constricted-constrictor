@@ -1,6 +1,7 @@
 package edu.purdue.model;
 
 import javax.swing.Timer;
+import java.awt.*;
 
 public class GameModel {
 
@@ -20,7 +21,8 @@ public class GameModel {
         settings = new Settings();
         int delay = 0;
         map = new Map(settings.getSetting("map"));
-
+        settings.setSetting("snakeColor", Integer.toString(-256));
+        settings.save();
         switch (settings.getSetting("difficulty")) {
             case "1":
                 delay = 170;

@@ -37,6 +37,11 @@ public class SettingsPanel extends JTabbedPane {
 
     private ImageIcon imageC = new ImageIcon("images/C.png");
 
+    private JPanel graphicsPanel;
+
+    private JColorChooser colorChooser;
+
+    private JButton graphicsSave;
 
     public SettingsPanel(GameModel gameModel) {
         this.gameModel = gameModel;
@@ -48,8 +53,11 @@ public class SettingsPanel extends JTabbedPane {
         mapBack.setBounds(150,500, 100, 40);
         mapSave = new JButton("Save");
         mapSave.setBounds(500,500, 100, 40);
+        graphicsSave = new JButton("Save");
+        graphicsSave.setBounds(500, 500, 100, 40);
         initializeDifficultyPanel();
         initializeMapPanel();
+        initializeGraphicsPanel();
     }
 
     private void initializeDifficultyPanel() {
@@ -170,5 +178,21 @@ public class SettingsPanel extends JTabbedPane {
                 System.out.println("invalid map");
                 break;
         }
+    }
+
+    private void initializeGraphicsPanel() {
+        graphicsPanel = new JPanel();
+        colorChooser = new JColorChooser();
+        graphicsPanel.add(colorChooser);
+        graphicsPanel.add(graphicsSave);
+        add("Graphics", graphicsPanel);
+    }
+
+    public JColorChooser getColorChooser() {
+        return colorChooser;
+    }
+
+    public JButton getGraphicsSave() {
+        return graphicsSave;
     }
 }
