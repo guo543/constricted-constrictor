@@ -172,13 +172,22 @@ public class SettingsController {
     private void saveColor() {
         Color headColor = gameView.getSettingsPanel().getHeadColorChooser().getColor();
         int headRGB = headColor.getRGB();
-        gameModel.getSettings().setSetting("headColor", Integer.toString(headRGB));
         Color bodyColor = gameView.getSettingsPanel().getBodyColorChooser().getColor();
         int bodyRGB = bodyColor.getRGB();
-        gameModel.getSettings().setSetting("bodyColor", Integer.toString(bodyRGB));
+        if (gameView.getSettingsPanel().getSnakeButton().isSelected()) {
+            gameModel.getSettings().setSetting("headColor", Integer.toString(headRGB));
+            gameModel.getSettings().setSetting("bodyColor", Integer.toString(bodyRGB));
+            gameModel.getSnake().setHeadColor(headColor);
+            gameModel.getSnake().setBodyColor(bodyColor);
+        } else {
+            gameModel.getSettings().setSetting("headColor2", Integer.toString(headRGB));
+            gameModel.getSettings().setSetting("bodyColor2", Integer.toString(bodyRGB));
+            gameModel.getSnake2().setHeadColor(headColor);
+            gameModel.getSnake2().setBodyColor(bodyColor);
+        }
+
         gameModel.getSettings().save();
 
-        gameModel.getSnake().setHeadColor(headColor);
-        gameModel.getSnake().setBodyColor(bodyColor);
+
     }
 }
