@@ -38,6 +38,10 @@ public class SettingsPanel extends JTabbedPane {
 
     private ImageIcon imageC = new ImageIcon("images/C.png");
 
+    private ImageIcon imageDefault = new ImageIcon("images/default.png");
+
+    private ImageIcon imageClassic = new ImageIcon("images/classical.png");
+
     private JPanel graphicsPanel;
 
     private JColorChooser headColorChooser;
@@ -244,9 +248,9 @@ public class SettingsPanel extends JTabbedPane {
 
     public void changeStyleIcon(boolean defaultStyle) {
         if (defaultStyle) {
-            styleLabel.setIcon(imageA);
+            styleLabel.setIcon(imageDefault);
         } else {
-            styleLabel.setIcon(imageB);
+            styleLabel.setIcon(imageClassic);
         }
     }
 
