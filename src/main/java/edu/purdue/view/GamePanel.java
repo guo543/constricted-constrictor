@@ -2,10 +2,12 @@ package edu.purdue.view;
 
 import edu.purdue.model.Food;
 import edu.purdue.model.GameModel;
+import edu.purdue.model.Obstacle;
 import edu.purdue.model.Snake;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * The JPanel object used for the main game screen
@@ -30,25 +32,121 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Snake snake = gameModel.getSnake();
-        Food food = gameModel.getFood();
+        if (gameModel.isDefaultStyle()) {
+            paintDefault(g);
+        } else {
+            paintClassic(g);
+        }
+    }
 
-        //this.setBackground(new Color(0, 10, 151));
+    private void paintDefault(Graphics g) {
+        this.setOpaque(true);
+
+        Snake snake = gameModel.getSnake();
+        Snake snake2 = gameModel.getSnake2();
+        Food food = gameModel.getFood();
+        Color wordColor = new Color(255, 255, 255);
+        Color backgroundColor = new Color(0, 10, 151);
+        Color grid = new Color(246, 246, 246);
+        Color headColor = snake.getHeadColor();
+        Color bodyColor = snake.getBodyColor();
+        Color headColor2 = snake2.getHeadColor();
+        Color bodyColor2 = snake2.getBodyColor();
+        Color foodColor = new Color(14, 107, 183);
+        Color obstaclesColor = new Color(73, 32, 32);
+        if (gameModel.isPaused()) {
+            wordColor = wordColor.darker();
+            backgroundColor = backgroundColor.darker();
+            headColor = headColor.darker();
+            bodyColor = bodyColor.darker();
+            headColor2 = headColor2.darker();
+            bodyColor2 = bodyColor2.darker();
+            foodColor = foodColor.darker();
+            obstaclesColor = obstaclesColor.darker();
+            grid = grid.darker();
+        }
+
+        this.setBackground(backgroundColor);
+
+        // paint border
+        g.setColor(new Color(0, 0, 0));
+        g.drawRect(25, 50, 725, 675);
+        g.setColor(wordColor);
+        g.fillRect(25, 50, 725, 675);
+
+        for (int i = 1; i < 30; i++) {
+            for (int j = 2; j < 29; j++) {
+                if (((i - 1) % 2 == 0 && (j - 2) % 2 == 0) || ((i - 1) % 2 != 0 && (j - 2) % 2 != 0)) {
+                    g.setColor(grid);
+                    g.fillRect(i * 25, j * 25, 25, 25);
+                }
+            }
+        }
+
+        ArrayList<Obstacle> obstacles = gameModel.getMap().getObstacles();
+        for (int i = 0; i < obstacles.size(); i++) {
+            int x = obstacles.get(i).getX();
+            int y = obstacles.get(i).getY();
+            g.setColor(obstaclesColor);
+            g.fillRect(x, y, 25, 25);
+        }
+
+        g.setColor(wordColor);
+        g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
+        if (gameModel.isMultiplayer()) {
+            g.drawString("Snake A: " + gameModel.getSnake().getScore(), 530, 32);
+            g.drawString("Snake B: " + gameModel.getSnake2().getScore(), 650, 32);
+        } else {
+            if (gameModel.getHighScores().getScores().size() > 0) {
+                g.drawString("Record: " + Math.max(gameModel.getHighScores().getScores().get(0), gameModel.getSnake().getScore()), 530, 32);
+            } else {
+                g.drawString("Record: " + gameModel.getSnake().getScore(), 530, 32);
+            }
+            g.drawString("Score: " + gameModel.getSnake().getScore(), 650, 32);
+        }
+
+        g.setColor(foodColor);
+        // paint food
+        g.fillRoundRect(food.getX() + 3, food.getY() + 3, 19, 19, 900, 900);
+
+        // draw snake
+        if (!snake.isDead()) {
+            paintSnaKe(g, snake, headColor, bodyColor);
+        } else {
+            if (gameModel.getSnake().getDieSequence().size() > 0 && gameModel.getSnake().getDieSequence().pop()) {
+                paintSnaKe(g, snake, headColor, bodyColor);
+            }
+        }
+
+        if (gameModel.isMultiplayer()) {
+            if (!snake2.isDead()) {
+                // draw snake2
+                paintSnaKe(g, snake2, headColor2, bodyColor2);
+            } else {
+                if (gameModel.getSnake2().getDieSequence().size() > 0 && gameModel.getSnake2().getDieSequence().pop()) {
+                    paintSnaKe(g, snake2, headColor2, bodyColor2);
+                }
+            }
+        }
+    }
+
+    private void paintClassic(Graphics g) {
         this.setOpaque(true);
         this.setBackground(new Color(0, 0, 0));
 
-        //darken screen when paused
+        Snake snake = gameModel.getSnake();
+        Food food = gameModel.getFood();
+        Color color = new Color(255, 255, 255);
+        Color pausedColor = color.darker();
+
+        // darken when game is paused
         if (gameModel.isPaused()) {
-            g.setColor(new Color(255, 255, 255, 122));
+            g.setColor(pausedColor);
         } else {
-            g.setColor(new Color(255, 255, 255));
+            g.setColor(color);
         }
 
         g.drawRect(25, 50, 725, 675);
-
-        //food.getFoodImg().paintIcon(this, g, food.getX(), food.getY());
-        g.fillRoundRect(food.getX() + 3, food.getY() + 3, 19, 19, 900, 900);
-        //snake.getHeadImg().paintIcon(this, g, snake.getX()[0], snake.getY()[0]);
 
         g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
         if (gameModel.isMultiplayer()) {
@@ -63,42 +161,269 @@ public class GamePanel extends JPanel {
             g.drawString("Score: " + gameModel.getSnake().getScore(), 650, 32);
         }
 
+        g.fillRoundRect(food.getX() + 3, food.getY() + 3, 19, 19, 900, 900);
+
         // draw snake
-        g.setColor(new Color(Integer.parseInt(gameModel.getSettings().getSetting("snakeColor"))));
-        if (!gameModel.getSnake().isDead()) {
-            g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
-            for (int i = 1; i < snake.getLength(); i++) {
-                //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
-                g.fillRect(snake.getX()[i] + 2, snake.getY()[i] + 2, 21, 21);
-            }
+        if (!snake.isDead()) {
+            paintSnaKe(g, snake, null, null);
         } else {
             if (gameModel.getSnake().getDieSequence().size() > 0 && gameModel.getSnake().getDieSequence().pop()) {
-                g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
-                for (int i = 1; i < snake.getLength(); i++) {
-                    //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
-                    g.fillRect(snake.getX()[i] + 2, snake.getY()[i] + 2, 21, 21);
-                }
+                paintSnaKe(g, snake, null, null);
             }
         }
 
         if (gameModel.isMultiplayer()) {
             Snake snake2 = gameModel.getSnake2();
-            if (!gameModel.getSnake2().isDead()) {
+            if (!snake2.isDead()) {
                 // draw snake2
-                g.fillRect(snake2.getX()[0] + 2, snake2.getY()[0] + 2, 21, 21);
-                for (int i = 1; i < snake2.getLength(); i++) {
-                    //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
-                    g.fillRect(snake2.getX()[i] + 2, snake2.getY()[i] + 2, 21, 21);
-                }
+                paintSnaKe(g, snake2, null, null);
             } else {
                 if (gameModel.getSnake2().getDieSequence().size() > 0 && gameModel.getSnake2().getDieSequence().pop()) {
-                    g.fillRect(snake2.getX()[0] + 2, snake2.getY()[0] + 2, 21, 21);
-                    for (int i = 1; i < snake2.getLength(); i++) {
-                        //snake.getBodyImg().paintIcon(this, g, snake.getX()[i], snake.getY()[i]);
-                        g.fillRect(snake2.getX()[i] + 2, snake2.getY()[i] + 2, 21, 21);
-                    }
+                    paintSnaKe(g, snake2, null, null);
                 }
             }
+        }
+    }
+
+    private void paintSnaKe(Graphics g, Snake snake, Color headColor, Color bodyColor) {
+        if (gameModel.isDefaultStyle()) {
+            paintDefaultSnake(g, snake, headColor, bodyColor);
+        } else {
+            paintClassicSnake(g, snake);
+        }
+    }
+
+    private void paintDefaultSnake(Graphics g, Snake snake, Color headColor, Color bodyColor) {
+        Color white = new Color(255, 255, 255);
+        Color black = new Color(0, 0, 0);
+        if (gameModel.isPaused()) {
+            white = white.darker();
+        }
+        g.setColor(headColor);
+        paintHead(g, snake, white, black);
+
+        int[] X = snake.getX();
+        int[] Y = snake.getY();
+        int length = snake.getLength();
+
+        g.setColor(bodyColor);
+        for (int i = 1; i < length ; i++) {
+            int y_up = Y[i] - 25;
+            int y_down = Y[i] + 25;
+            int x_left = X[i] - 25;
+            int x_right = X[i] + 25;
+            if (x_right == 750) {
+                x_right = 25;
+            }
+            if (x_left < 25) {
+                x_left = 725;
+            }
+            if (y_up < 50) {
+                y_up = 700;
+            }
+            if (y_down == 725) {
+                y_down = 50;
+            }
+            if (i == length - 1) {
+                String direction = "";
+                if (X[i - 1] == X[i] && Y[i - 1] == y_up) {
+                    direction = "D";
+                }
+                if (X[i - 1] == X[i] && Y[i - 1] == y_down) {
+                    direction = "U";
+                }
+                if (X[i - 1] == x_left && Y[i - 1] == Y[i]) {
+                    direction = "R";
+                }
+                if (X[i - 1] == x_right && Y[i - 1] == Y[i]) {
+                    direction = "L";
+                }
+                paintTail(g, X[i], Y[i], direction);
+            } else {
+                String pos = "";
+                if (X[i - 1] == X[i] && Y[i - 1] == y_up) {
+                    pos += "U";
+                }
+                if (X[i - 1] == X[i] && Y[i - 1] == y_down) {
+                    pos += "D";
+                }
+                if (X[i - 1] == x_left && Y[i - 1] == Y[i]) {
+                    pos += "L";
+                }
+                if (X[i - 1] == x_right && Y[i - 1] == Y[i]) {
+                    pos += "R";
+                }
+                if (X[i + 1] == X[i] && Y[i + 1] == y_up) {
+                    pos += "U";
+                }
+                if (X[i + 1] == X[i] && Y[i + 1] == y_down) {
+                    pos += "D";
+                }
+                if (X[i + 1] == x_left && Y[i + 1] == Y[i]) {
+                    pos += "L";
+                }
+                if (X[i + 1] == x_right && Y[i + 1] == Y[i]) {
+                    pos += "R";
+                }
+                paintBody(g, X[i], Y[i], pos);
+            }
+        }
+    }
+
+    private void paintBody(Graphics g, int x, int y, String pos) {
+        if ("UD".equals(pos) || "DU".equals(pos)) {
+            g.fillRect(x + 3, y, 19, 25);
+        } else if (("LR".equals(pos) || "RL".equals(pos))) {
+            g.fillRect(x, y + 3, 25, 19);
+        } else if ("UL".equals(pos) || "LU".equals(pos)) {
+            g.fillRect(x + 3, y, 19, 15);
+            g.fillRect(x, y + 3, 15, 19);
+            g.fillRect(x + 15, y + 15, 2, 6);
+            g.fillRect(x + 15, y + 15, 4, 5);
+            g.fillRect(x + 15, y + 15, 5, 4);
+            g.fillRect(x + 15, y + 15, 6, 2);
+        } else if ("UR".equals(pos) || "RU".equals(pos)) {
+            g.fillRect(x + 3, y, 19, 15);
+            g.fillRect(x + 10, y + 3, 15, 19);
+            g.fillRect(x + 8, y + 15, 2, 6);
+            g.fillRect(x + 6, y + 15, 4, 5);
+            g.fillRect(x + 5, y + 15, 5, 4);
+            g.fillRect(x + 4, y + 15, 6, 2);
+        } else if ("DL".equals(pos) || "LD".equals(pos)) {
+            g.fillRect(x + 3, y + 10, 19, 15);
+            g.fillRect(x, y + 3, 15, 19);
+            g.fillRect(x + 15, y + 4, 2, 6);
+            g.fillRect(x + 15, y + 5, 4, 5);
+            g.fillRect(x + 15, y + 6, 5, 4);
+            g.fillRect(x + 15, y + 8, 6, 2);
+        } else if ("DR".equals(pos) || "RD".equals(pos)) {
+            g.fillRect(x + 3, y + 10, 19, 15);
+            g.fillRect(x + 10, y + 3, 15, 19);
+            g.fillRect(x + 8, y + 4, 2, 6);
+            g.fillRect(x + 6, y + 5, 4, 5);
+            g.fillRect(x + 5, y + 6, 5, 4);
+            g.fillRect(x + 4, y + 8, 6, 2);
+        }
+    }
+
+    private void paintTail(Graphics g, int x, int y, String direction) {
+        switch (direction) {
+            case "U":
+                g.fillRect(x + 3, y + 8, 19, 17);
+                g.fillRect(x + 4, y + 6, 17, 2);
+                g.fillRect(x + 5, y + 5, 15, 1);
+                g.fillRect(x + 6, y + 4, 13, 1);
+                g.fillRect(x + 7, y + 3, 11, 1);
+                g.fillRect(x + 9, y + 2, 7, 1);
+                break;
+            case "D":
+                g.fillRect(x + 3, y, 19, 17);
+                g.fillRect(x + 4, y + 17, 17, 2);
+                g.fillRect(x + 5, y + 19, 15, 1);
+                g.fillRect(x + 6, y + 20, 13, 1);
+                g.fillRect(x + 7, y + 21, 11, 1);
+                g.fillRect(x + 9, y + 22, 7, 1);
+                break;
+            case "L":
+                g.fillRect(x + 8, y + 3, 17, 19);
+                g.fillRect(x + 6, y + 4, 2, 17);
+                g.fillRect(x + 5, y + 5, 1, 15);
+                g.fillRect(x + 4, y + 6, 1, 13);
+                g.fillRect(x + 3, y + 7, 1, 11);
+                g.fillRect(x + 2, y + 9, 1, 7);
+                break;
+            case "R":
+                g.fillRect(x, y + 3, 17, 19);
+                g.fillRect(x + 17, y + 4, 2, 17);
+                g.fillRect(x + 19, y + 5, 1, 15);
+                g.fillRect(x + 20, y + 6, 1, 13);
+                g.fillRect(x + 21, y + 7, 1, 11);
+                g.fillRect(x + 22, y + 9, 1, 7);
+                break;
+        }
+    }
+
+    private void paintHead(Graphics g, Snake snake, Color white, Color black) {
+        switch (snake.getDirection()) {
+            case "U":
+                g.fillRect(snake.getX()[0] + 3, snake.getY()[0] + 8, 19, 17);
+                g.fillRect(snake.getX()[0] + 4, snake.getY()[0] + 6, 17, 2);
+                g.fillRect(snake.getX()[0] + 5, snake.getY()[0] + 5, 15, 1);
+                g.fillRect(snake.getX()[0] + 6, snake.getY()[0] + 4, 13, 1);
+                g.fillRect(snake.getX()[0] + 7, snake.getY()[0] + 3, 11, 1);
+                g.fillRect(snake.getX()[0] + 9, snake.getY()[0] + 2, 7, 1);
+                g.setColor(white);
+                g.fillRect(snake.getX()[0] + 4, snake.getY()[0] + 11, 6, 2);
+                g.fillRect(snake.getX()[0] + 5, snake.getY()[0] + 10, 4, 4);
+                g.fillRect(snake.getX()[0] + 6, snake.getY()[0] + 9, 2, 6);
+                g.fillRect(snake.getX()[0] + 15, snake.getY()[0] + 11, 6, 2);
+                g.fillRect(snake.getX()[0] + 16, snake.getY()[0] + 10, 4, 4);
+                g.fillRect(snake.getX()[0] + 17, snake.getY()[0] + 9, 2, 6);
+                g.setColor(black);
+                g.fillRect(snake.getX()[0] + 6, snake.getY()[0] + 10, 2, 3);
+                g.fillRect(snake.getX()[0] + 17, snake.getY()[0] + 10, 2, 3);
+                break;
+            case "D":
+                g.fillRect(snake.getX()[0] + 3, snake.getY()[0], 19, 17);
+                g.fillRect(snake.getX()[0] + 4, snake.getY()[0] + 17, 17, 2);
+                g.fillRect(snake.getX()[0] + 5, snake.getY()[0] + 19, 15, 1);
+                g.fillRect(snake.getX()[0] + 6, snake.getY()[0] + 20, 13, 1);
+                g.fillRect(snake.getX()[0] + 7, snake.getY()[0] + 21, 11, 1);
+                g.fillRect(snake.getX()[0] + 9, snake.getY()[0] + 22, 7, 1);
+                g.setColor(white);
+                g.fillRect(snake.getX()[0] + 4, snake.getY()[0] + 12, 6, 2);
+                g.fillRect(snake.getX()[0] + 5, snake.getY()[0] + 11, 4, 4);
+                g.fillRect(snake.getX()[0] + 6, snake.getY()[0] + 10, 2, 6);
+                g.fillRect(snake.getX()[0] + 15, snake.getY()[0] + 12, 6, 2);
+                g.fillRect(snake.getX()[0] + 16, snake.getY()[0] + 11, 4, 4);
+                g.fillRect(snake.getX()[0] + 17, snake.getY()[0] + 10, 2, 6);
+                g.setColor(black);
+                g.fillRect(snake.getX()[0] + 6, snake.getY()[0] + 12, 2, 3);
+                g.fillRect(snake.getX()[0] + 17, snake.getY()[0] + 12, 2, 3);
+                break;
+            case "L":
+                g.fillRect(snake.getX()[0] + 8, snake.getY()[0] + 3, 17, 19);
+                g.fillRect(snake.getX()[0] + 6, snake.getY()[0] + 4, 2, 17);
+                g.fillRect(snake.getX()[0] + 5, snake.getY()[0] + 5, 1, 15);
+                g.fillRect(snake.getX()[0] + 4, snake.getY()[0] + 6, 1, 13);
+                g.fillRect(snake.getX()[0] + 3, snake.getY()[0] + 7, 1, 11);
+                g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 9, 1, 7);
+                g.setColor(white);
+                g.fillRect(snake.getX()[0] + 9, snake.getY()[0] + 6, 6, 2);
+                g.fillRect(snake.getX()[0] + 10, snake.getY()[0] + 5, 4, 4);
+                g.fillRect(snake.getX()[0] + 11, snake.getY()[0] + 4, 2, 6);
+                g.fillRect(snake.getX()[0] + 9, snake.getY()[0] + 17, 6, 2);
+                g.fillRect(snake.getX()[0] + 10, snake.getY()[0] + 16, 4, 4);
+                g.fillRect(snake.getX()[0] + 11, snake.getY()[0] + 15, 2, 6);
+                g.setColor(black);
+                g.fillRect(snake.getX()[0] + 10, snake.getY()[0] + 6, 3, 2);
+                g.fillRect(snake.getX()[0] + 10, snake.getY()[0] + 17, 3, 2);
+                break;
+            case "R":
+                g.fillRect(snake.getX()[0], snake.getY()[0] + 3, 17, 19);
+                g.fillRect(snake.getX()[0] + 17, snake.getY()[0] + 4, 2, 17);
+                g.fillRect(snake.getX()[0] + 19, snake.getY()[0] + 5, 1, 15);
+                g.fillRect(snake.getX()[0] + 20, snake.getY()[0] + 6, 1, 13);
+                g.fillRect(snake.getX()[0] + 21, snake.getY()[0] + 7, 1, 11);
+                g.fillRect(snake.getX()[0] + 22, snake.getY()[0] + 9, 1, 7);
+                g.setColor(white);
+                g.fillRect(snake.getX()[0] + 10, snake.getY()[0] + 6, 6, 2);
+                g.fillRect(snake.getX()[0] + 11, snake.getY()[0] + 5, 4, 4);
+                g.fillRect(snake.getX()[0] + 12, snake.getY()[0] + 4, 2, 6);
+                g.fillRect(snake.getX()[0] + 10, snake.getY()[0] + 17, 6, 2);
+                g.fillRect(snake.getX()[0] + 11, snake.getY()[0] + 16, 4, 4);
+                g.fillRect(snake.getX()[0] + 12, snake.getY()[0] + 15, 2, 6);
+                g.setColor(black);
+                g.fillRect(snake.getX()[0] + 12, snake.getY()[0] + 6, 3, 2);
+                g.fillRect(snake.getX()[0] + 12, snake.getY()[0] + 17, 3, 2);
+                break;
+        }
+    }
+
+    private void paintClassicSnake(Graphics g, Snake snake) {
+        g.fillRect(snake.getX()[0] + 2, snake.getY()[0] + 2, 21, 21);
+        for (int i = 1; i < snake.getLength(); i++) {
+            g.fillRect(snake.getX()[i] + 2, snake.getY()[i] + 2, 21, 21);
         }
     }
 
