@@ -51,7 +51,7 @@ public class HelpPanel extends JPanel{
 
         //image
         try {
-            image = ImageIO.read(new File("/Users/chichi/snake_game/constricted-constrictor/images/body.jpg"));
+            image = ImageIO.read(new File("/Users/chichi/snake_game/constricted-constrictor/images/Controls.jpg"));
         } catch (IOException ex) {
             // handle exception...
         }
@@ -60,7 +60,7 @@ public class HelpPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image,400,400,this);
+        g.drawImage(image,50,200,this);
     }
 
     public JLabel getInstructions() { return instructions; }
