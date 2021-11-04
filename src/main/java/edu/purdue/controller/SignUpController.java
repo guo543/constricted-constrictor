@@ -30,6 +30,12 @@ public class SignUpController {
             signUpAction();
             gameView.getMainFrame().setContentPane(gameView.getLoginPanel());
         });
+
+        gameView.getSignUpPanel().getBack().addActionListener(e -> {
+            gameView.getMainFrame().setContentPane(gameView.getLoginPanel());
+            gameView.getLoginPanel().revalidate();
+            gameView.getLoginPanel().repaint();
+        });
     }
 
     private boolean signUpAction() {

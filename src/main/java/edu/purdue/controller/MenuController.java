@@ -62,5 +62,11 @@ public class MenuController {
 
         });
 
+        gameView.getMenuPanel().getHighScores().addActionListener(e -> {
+            gameView.getMainFrame().setContentPane(gameView.getHighScoresPanel());
+            gameView.getHighScoresPanel().revalidate();
+            gameView.getHighScoresPanel().repaint();
+        });
+
     }
 }

@@ -28,6 +28,7 @@ public class Settings {
         System.out.println("bodyColor" + " = " + settings.getProperty("bodyColor"));
         System.out.println("headColor2" + " = " + settings.getProperty("headColor2"));
         System.out.println("bodyColor2" + " = " + settings.getProperty("bodyColor2"));
+        System.out.println("defaultStyle" + " = " + settings.getProperty("defaultStyle"));
     }
 
     public void save() {

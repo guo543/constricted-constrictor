@@ -1,6 +1,8 @@
 package edu.purdue.controller;
 
+import edu.purdue.dao.UserDao;
 import edu.purdue.model.GameModel;
+import edu.purdue.model.User;
 import edu.purdue.view.GameView;
 import edu.purdue.view.SettingsPanel;
 
@@ -8,13 +10,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.attribute.UserPrincipal;
+import java.sql.SQLException;
 
 public class SettingsController {
 
+    private UserDao userDao;
     private GameView gameView;
     private GameModel gameModel;
 
-    public SettingsController(GameView gameView, GameModel gameModel) {
+    public SettingsController(UserDao userDao, GameView gameView, GameModel gameModel) {
+        this.userDao = userDao;
         this.gameView = gameView;
         this.gameModel = gameModel;
 
@@ -92,6 +98,75 @@ public class SettingsController {
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
         });
+
+        gameView.getSettingsPanel().getCredentialsSave().addActionListener(e -> {
+            if (!saveCredentials()) {
+                return;
+            }
+            gameView.getSettingsPanel().getCredentialsError().setVisible(false);
+            gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+            gameView.getMenuPanel().revalidate();
+            gameView.getMenuPanel().repaint();
+        });
+
+        gameView.getSettingsPanel().getCredentialsBack().addActionListener(e -> {
+            gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+            gameView.getMenuPanel().revalidate();
+            gameView.getMenuPanel().repaint();
+        });
+    }
+
+    private boolean saveCredentials() {
+        JLabel error = gameView.getSettingsPanel().getCredentialsError();
+
+        if (!checkUsername(gameView.getSettingsPanel().getUsername().getText())) {
+            error.setText("Invalid Username");
+            error.setVisible(true);
+            return false;
+        }
+
+        if (!checkPassword(gameView.getSettingsPanel().getPassword().getText())) {
+            error.setText("Invalid Password");
+            error.setVisible(true);
+            return false;
+        }
+
+        User user = new User();
+        user.setUsername(gameModel.getUser().getUsername());
+        user.setPassword(gameView.getSettingsPanel().getConfirmIdentity().getText());
+        User u = null;
+        try {
+            u = userDao.getUser(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (u == null) {
+            error.setText("Password Incorrect");
+            error.setVisible(true);
+            return false;
+        }
+
+        try {
+            User modifiedUser = userDao.modifyUser(u,
+                    gameView.getSettingsPanel().getUsername().getText(),
+                    gameView.getSettingsPanel().getPassword().getText(),
+                    gameView.getSettingsPanel().getEmail().getText());
+            gameModel.setUser(modifiedUser);
+            System.out.println(gameModel.getUser());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    private boolean checkUsername(String username) {
+        return username.length() >= 3;
+    }
+
+    private boolean checkPassword(String password) {
+        return password.length() >= 6;
     }
 
     private void saveStyle() {

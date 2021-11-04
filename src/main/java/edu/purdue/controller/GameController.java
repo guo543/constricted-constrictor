@@ -1,5 +1,6 @@
 package edu.purdue.controller;
 
+import edu.purdue.dao.UserDao;
 import edu.purdue.model.Food;
 import edu.purdue.model.GameModel;
 import edu.purdue.model.Obstacle;
@@ -8,14 +9,17 @@ import edu.purdue.view.GameView;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GameController {
 
+    private UserDao userDao;
     private GameView gameView;
     private GameModel gameModel;
 
-    public GameController(GameView gameView, GameModel gameModel) {
+    public GameController(UserDao userDao, GameView gameView, GameModel gameModel) {
+        this.userDao = userDao;
         this.gameView = gameView;
         this.gameModel = gameModel;
 
@@ -96,8 +100,9 @@ public class GameController {
                 if (gameModel.isMultiplayer()) {
                     snake.setDead(true);
                 } else {
-                    gameModel.getHighScores().add(snake.getScore());
-                    System.out.println(gameModel.getHighScores().getScores());
+                    if (gameModel.getUser() != null) {
+                        saveScores(snake);
+                    }
                     switchToLostPanel();
                     gameModel.setPaused(true);
                 }
@@ -114,12 +119,25 @@ public class GameController {
 
         for (Obstacle obstacle : obstacles) {
             if (headX == obstacle.getX() && headY == obstacle.getY()) {
-                gameModel.getHighScores().add(snake.getScore());
-                System.out.println(gameModel.getHighScores().getScores());
+                if (gameModel.getUser() != null) {
+                    saveScores(snake);
+                }
                 switchToLostPanel();
                 gameModel.setPaused(true);
             }
         }
+    }
+
+    private void saveScores(Snake snake) {
+        gameModel.getUser().getHighScores().add(snake.getScore());
+        System.out.println(gameModel.getUser().getHighScores().getScores());
+        gameView.getHighScoresPanel().updateScores(gameModel.getUser().getHighScores().getScores());
+        try {
+            userDao.saveScores(gameModel.getUser());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void checkCollision(Snake snake, Snake snake2) {

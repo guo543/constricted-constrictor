@@ -9,8 +9,6 @@ public class Food {
     private int x;
     private int y;
 
-    private ImageIcon foodImg;
-
     public Food() {
         x = 350;
         y = 200;
@@ -21,7 +19,6 @@ public class Food {
     public void loadImage() {
         File food = new File("images/food.jpg");
         String bodyPath = food.getAbsolutePath();
-        foodImg = new ImageIcon(bodyPath);
     }
 
     public void generateNewFood() {
@@ -44,13 +41,5 @@ public class Food {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    public ImageIcon getFoodImg() {
-        return foodImg;
-    }
-
-    public void setFoodImg(ImageIcon foodImg) {
-        this.foodImg = foodImg;
     }
 }

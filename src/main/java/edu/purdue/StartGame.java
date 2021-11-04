@@ -4,6 +4,7 @@ import com.formdev.flatlaf.*;
 import edu.purdue.controller.*;
 import edu.purdue.dao.UserDao;
 import edu.purdue.model.GameModel;
+import edu.purdue.model.HighScores;
 import edu.purdue.model.Settings;
 import edu.purdue.view.*;
 
@@ -51,6 +52,7 @@ public class StartGame {
         LostPanel lostPanel = new LostPanel();
         SettingsPanel settingsPanel = new SettingsPanel(gameModel);
         HelpPanel helpPanel = new HelpPanel();
+        HighScoresPanel highScoresPanel = new HighScoresPanel();
 
         GameView gameView = new GameView();
         gameView.setMainFrame(jFrame);
@@ -63,19 +65,21 @@ public class StartGame {
         gameView.setLostPanel(lostPanel);
         gameView.initializeLayeredPane();
         gameView.setSettingsPanel(settingsPanel);
+        gameView.setHighScoresPanel(highScoresPanel);
 
         // initialize dao
         UserDao userDao = new UserDao();
 
         // initialize controller
-        new GameController(gameView, gameModel);
+        new GameController(userDao, gameView, gameModel);
         new SignUpController(userDao, gameView);
         new LoginController(userDao, gameView, gameModel);
         new PauseController(gameView, gameModel);
         new MenuController(gameView, gameModel);
         new LostController(gameView, gameModel);
-        new SettingsController(gameView, gameModel);
+        new SettingsController(userDao, gameView, gameModel);
         new HelpController(gameView, gameModel);
+        new HighScoresController(gameView, gameModel);
 
         jFrame.setContentPane(loginPanel);
 

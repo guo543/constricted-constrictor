@@ -27,6 +27,8 @@ public class GameView {
 
     private HelpPanel helpPanel;
 
+    private HighScoresPanel highScoresPanel;
+
     public GameView() {
     }
 
@@ -112,5 +114,17 @@ public class GameView {
 
     public void setSettingsPanel(SettingsPanel settingsPanel) {
         this.settingsPanel = settingsPanel;
+    }
+
+    public void setLayeredPane(JLayeredPane layeredPane) {
+        this.layeredPane = layeredPane;
+    }
+
+    public HighScoresPanel getHighScoresPanel() {
+        return highScoresPanel;
+    }
+
+    public void setHighScoresPanel(HighScoresPanel highScoresPanel) {
+        this.highScoresPanel = highScoresPanel;
     }
 }
