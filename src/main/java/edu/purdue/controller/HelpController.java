@@ -23,7 +23,12 @@ public class HelpController {
             gameView.getGamePanel().requestFocus();
             //gameView.getLayeredPane().setFocusable(true);
             //gameView.getLayeredPane().requestFocus();
-            gameModel.setPaused(false);
+            gameModel.getTimer().setDelay(1000);
+            gameModel.getCountDownSequence().push("Go!");
+            gameModel.getCountDownSequence().push("1");
+            gameModel.getCountDownSequence().push("2");
+            gameModel.getCountDownSequence().push("3");
+            gameModel.getCountDownSequence().push("4");
 
 
         });

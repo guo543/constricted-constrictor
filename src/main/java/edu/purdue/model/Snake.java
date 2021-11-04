@@ -41,13 +41,13 @@ public class Snake {
         if (!secondSnake) {
             direction = "R";
 
-            x[0] = 200;
+            x[0] = 225;
             y[0] = 375;
 
-            x[1] = 175;
+            x[1] = 200;
             y[1] = 375;
 
-            x[2] = 150;
+            x[2] = 175;
             y[2] = 375;
         } else {
             direction = "L";

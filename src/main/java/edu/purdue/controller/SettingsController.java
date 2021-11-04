@@ -135,6 +135,7 @@ public class SettingsController {
                 break;
         }
 
+        gameModel.setDelay(delay);
         gameModel.getTimer().setDelay(delay);
     }
 

@@ -131,6 +131,17 @@ public class GamePanel extends JPanel {
                 }
             }
         }
+
+        g.setColor(new Color(0, 0, 0));
+        if (!gameModel.getCountDownSequence().isEmpty()) {
+            g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 60));
+            g.drawString(gameModel.getCountDownSequence().pop(), 350, 350);
+
+            if (gameModel.getCountDownSequence().isEmpty()) {
+                gameModel.setPaused(false);
+                gameModel.getTimer().setDelay(gameModel.getDelay());
+            }
+        }
     }
 
     private void paintClassic(Graphics g) {
@@ -193,6 +204,16 @@ public class GamePanel extends JPanel {
                 if (gameModel.getSnake2().getDieSequence().size() > 0 && gameModel.getSnake2().getDieSequence().pop()) {
                     paintSnaKe(g, snake2, null, null);
                 }
+            }
+        }
+
+        if (!gameModel.getCountDownSequence().isEmpty()) {
+            g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 60));
+            g.drawString(gameModel.getCountDownSequence().pop(), 350, 350);
+
+            if (gameModel.getCountDownSequence().isEmpty()) {
+                gameModel.setPaused(false);
+                gameModel.getTimer().setDelay(gameModel.getDelay());
             }
         }
     }
