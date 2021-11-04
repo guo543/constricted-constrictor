@@ -77,7 +77,7 @@ public class StartGame {
         new PauseController(gameView, gameModel);
         new MenuController(gameView, gameModel);
         new LostController(gameView, gameModel);
-        new SettingsController(gameView, gameModel);
+        new SettingsController(userDao, gameView, gameModel);
         new HelpController(gameView, gameModel);
         new HighScoresController(gameView, gameModel);
 

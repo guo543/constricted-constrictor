@@ -64,6 +64,22 @@ public class SettingsPanel extends JTabbedPane {
 
     private JRadioButton styleClassic;
 
+    private JPanel credentialsPanel;
+
+    private JTextField username;
+
+    private JTextField password;
+
+    private JTextField email;
+
+    private JTextField confirmIdentity;
+
+    private JButton credentialsBack;
+
+    private JButton credentialsSave;
+
+    private JLabel credentialsError;
+
     public SettingsPanel(GameModel gameModel) {
         this.gameModel = gameModel;
         difficultyBack = new JButton("Back");
@@ -82,10 +98,15 @@ public class SettingsPanel extends JTabbedPane {
         styleBack.setBounds(150,600, 100, 40);
         styleSave = new JButton("Save");
         styleSave.setBounds(500, 600, 100, 40);
+        credentialsBack = new JButton("Back");
+        credentialsBack.setBounds(150,600, 100, 40);
+        credentialsSave = new JButton("Save");
+        credentialsSave.setBounds(500, 600, 100, 40);
         initializeDifficultyPanel();
         initializeMapPanel();
         initializeGraphicsPanel();
         initializeStylePanel();
+        initializeCredentialsPanel();
     }
 
     private void initializeDifficultyPanel() {
@@ -356,5 +377,96 @@ public class SettingsPanel extends JTabbedPane {
 
     public JRadioButton getStyleClassic() {
         return styleClassic;
+    }
+
+    private void initializeCredentialsPanel() {
+        credentialsPanel = new JPanel();
+        credentialsPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        JLabel usernameLabel = new JLabel("Enter you new username:");
+        JLabel passwordLabel = new JLabel("Enter you new password:");
+        JLabel emailLabel = new JLabel("Enter you new email:");
+        JLabel confirmLabel = new JLabel("Confirm your current password:");
+        username = new JTextField(20);
+        password = new JTextField(20);
+        email = new JTextField(20);
+        confirmIdentity = new JTextField(20);
+        credentialsError = new JLabel();
+        credentialsError.setVisible(false);
+        credentialsError.setForeground(new Color(191, 48, 63));
+
+        constraints.insets = new Insets(0, 7, 7, 0);
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 2;
+        credentialsPanel.add(credentialsError, constraints);
+        constraints.gridwidth = 1;
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        credentialsPanel.add(usernameLabel, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        credentialsPanel.add(passwordLabel, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        credentialsPanel.add(emailLabel, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        credentialsPanel.add(confirmLabel, constraints);
+
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        credentialsPanel.add(username, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+        credentialsPanel.add(password, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+        credentialsPanel.add(email, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 4;
+        credentialsPanel.add(confirmIdentity, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        credentialsPanel.add(credentialsBack, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 5;
+        credentialsPanel.add(credentialsSave, constraints);
+
+        this.add("Change Login Information", credentialsPanel);
+    }
+
+    public JPanel getCredentialsPanel() {
+        return credentialsPanel;
+    }
+
+    public JTextField getUsername() {
+        return username;
+    }
+
+    public JTextField getPassword() {
+        return password;
+    }
+
+    public JTextField getEmail() {
+        return email;
+    }
+
+    public JTextField getConfirmIdentity() {
+        return confirmIdentity;
+    }
+
+    public JButton getCredentialsBack() {
+        return credentialsBack;
+    }
+
+    public JButton getCredentialsSave() {
+        return credentialsSave;
+    }
+
+    public JLabel getCredentialsError() {
+        return credentialsError;
     }
 }

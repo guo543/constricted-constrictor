@@ -107,4 +107,22 @@ public class UserDao {
             preparedStatement.execute();
         }
     }
+
+    public User modifyUser(User user, String username, String password, String email) throws SQLException {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("UPDATE user SET username=?, password=?, email=? where id=?");
+
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+        preparedStatement.setString(3, email);
+        preparedStatement.setString(4, user.getId() + "");
+
+        preparedStatement.execute();
+
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+
+        return user;
+    }
 }

@@ -13,6 +13,7 @@ public class SignUpPanel extends JPanel {
     private JTextField password;
     private JTextField email;
     private JButton signUp;
+    private JButton back;
 
     public SignUpPanel() {
 //        this.setBackground(new Color(255, 249, 236));
@@ -25,7 +26,10 @@ public class SignUpPanel extends JPanel {
         username = new JTextField(20);
         password = new JTextField(20);
         email = new JTextField(20);
-        signUp = new JButton("signUp");
+        signUp = new JButton("Sign Up");
+        signUp.setPreferredSize(new Dimension(200, 30));
+        back = new JButton("Back");
+        back.setPreferredSize(new Dimension(200, 30));
 
         JLabel usernameLabel = new JLabel("username: ");
         JLabel passwordLabel = new JLabel("password: ");
@@ -57,9 +61,13 @@ public class SignUpPanel extends JPanel {
         constraints.gridx = 1;
         constraints.gridy = 3;
         this.add(email, constraints);
-        constraints.gridx = 1;
+        constraints.gridwidth = 2;
+        constraints.gridx = 0;
         constraints.gridy = 4;
         this.add(signUp, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        this.add(back, constraints);
     }
 
     public JTextField getUsername() {
@@ -100,5 +108,13 @@ public class SignUpPanel extends JPanel {
 
     public void setError(JLabel error) {
         this.error = error;
+    }
+
+    public JButton getBack() {
+        return back;
+    }
+
+    public void setBack(JButton back) {
+        this.back = back;
     }
 }

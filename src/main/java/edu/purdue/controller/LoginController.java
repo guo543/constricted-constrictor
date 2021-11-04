@@ -64,6 +64,7 @@ public class LoginController {
             gameModel.setUser(null);
             gameView.getMenuPanel().getGreeting().setText("Welcome, Guest");
             gameView.getMenuPanel().getHighScores().setVisible(false);
+            gameView.getSettingsPanel().remove(gameView.getSettingsPanel().getCredentialsPanel());
 //            gameView.getGamePanel().setFocusable(true);
 //            gameView.getGamePanel().requestFocus();
 //            gameModel.setPaused(false);
