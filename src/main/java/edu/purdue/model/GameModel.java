@@ -11,7 +11,6 @@ public class GameModel {
     private Food food;
     private User user;
     private boolean paused;
-    private HighScores highScores;
     private Settings settings;
     private Timer timer;
     private Map map;
@@ -21,7 +20,6 @@ public class GameModel {
     private Stack<String> countDownSequence;
 
     public GameModel() {
-        highScores = new HighScores();
         settings = new Settings();
         map = new Map(settings.getSetting("map"));
         map.generateObstacles();
@@ -97,14 +95,6 @@ public class GameModel {
 
     public void setPaused(boolean paused) {
         this.paused = paused;
-    }
-
-    public HighScores getHighScores() {
-        return highScores;
-    }
-
-    public void setHighScores(HighScores highScores) {
-        this.highScores = highScores;
     }
 
     public Settings getSettings() {

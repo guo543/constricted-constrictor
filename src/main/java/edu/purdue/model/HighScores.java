@@ -31,4 +31,11 @@ public class HighScores {
     public void setScores(List<Integer> scores) {
         this.scores = scores;
     }
+
+    @Override
+    public String toString() {
+        return "HighScores{" +
+                "scores=" + scores +
+                '}';
+    }
 }

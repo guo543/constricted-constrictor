@@ -68,7 +68,7 @@ public class StartGame {
         UserDao userDao = new UserDao();
 
         // initialize controller
-        new GameController(gameView, gameModel);
+        new GameController(userDao, gameView, gameModel);
         new SignUpController(userDao, gameView);
         new LoginController(userDao, gameView, gameModel);
         new PauseController(gameView, gameModel);

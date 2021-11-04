@@ -100,10 +100,12 @@ public class GamePanel extends JPanel {
             g.drawString("Snake A: " + gameModel.getSnake().getScore(), 530, 32);
             g.drawString("Snake B: " + gameModel.getSnake2().getScore(), 650, 32);
         } else {
-            if (gameModel.getHighScores().getScores().size() > 0) {
-                g.drawString("Record: " + Math.max(gameModel.getHighScores().getScores().get(0), gameModel.getSnake().getScore()), 530, 32);
-            } else {
-                g.drawString("Record: " + gameModel.getSnake().getScore(), 530, 32);
+            if (gameModel.getUser() != null) {
+                if (gameModel.getUser().getHighScores().getScores().size() > 0) {
+                    g.drawString("Record: " + Math.max(gameModel.getUser().getHighScores().getScores().get(0), gameModel.getSnake().getScore()), 530, 32);
+                } else {
+                    g.drawString("Record: " + gameModel.getSnake().getScore(), 530, 32);
+                }
             }
             g.drawString("Score: " + gameModel.getSnake().getScore(), 650, 32);
         }
@@ -176,10 +178,12 @@ public class GamePanel extends JPanel {
             g.drawString("Snake A: " + gameModel.getSnake().getScore(), 530, 32);
             g.drawString("Snake B: " + gameModel.getSnake2().getScore(), 650, 32);
         } else {
-            if (gameModel.getHighScores().getScores().size() > 0) {
-                g.drawString("Record: " + Math.max(gameModel.getHighScores().getScores().get(0), gameModel.getSnake().getScore()), 530, 32);
-            } else {
-                g.drawString("Record: " + gameModel.getSnake().getScore(), 530, 32);
+            if (gameModel.getUser() != null) {
+                if (gameModel.getUser().getHighScores().getScores().size() > 0) {
+                    g.drawString("Record: " + Math.max(gameModel.getUser().getHighScores().getScores().get(0), gameModel.getSnake().getScore()), 530, 32);
+                } else {
+                    g.drawString("Record: " + gameModel.getSnake().getScore(), 530, 32);
+                }
             }
             g.drawString("Score: " + gameModel.getSnake().getScore(), 650, 32);
         }
