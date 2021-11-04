@@ -14,7 +14,12 @@ public class PauseController {
         gameView.getPausePanel().getResume().addActionListener(e -> {
             gameView.getPausePanel().setVisible(false);
             gameView.getGamePanel().requestFocus();
-            gameModel.setPaused(false);
+            gameModel.getTimer().setDelay(1000);
+            gameModel.getCountDownSequence().push("Go!");
+            gameModel.getCountDownSequence().push("1");
+            gameModel.getCountDownSequence().push("2");
+            gameModel.getCountDownSequence().push("3");
+            gameModel.getCountDownSequence().push("4");
             gameView.getGamePanel().revalidate();
             gameView.getGamePanel().repaint();
         });
@@ -23,9 +28,13 @@ public class PauseController {
             gameModel.reset();
             gameView.getPausePanel().setVisible(false);
             gameView.getGamePanel().requestFocus();
-            gameModel.setPaused(false);
+            gameModel.getTimer().setDelay(1000);
+            gameModel.getCountDownSequence().push("Go!");
+            gameModel.getCountDownSequence().push("1");
+            gameModel.getCountDownSequence().push("2");
+            gameModel.getCountDownSequence().push("3");
+            gameModel.getCountDownSequence().push("4");
             gameView.getGamePanel().revalidate();
-            gameView.getGamePanel().repaint();
         });
 
         gameView.getPausePanel().getQuit().addActionListener(e -> {

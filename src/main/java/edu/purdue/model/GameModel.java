@@ -2,6 +2,7 @@ package edu.purdue.model;
 
 import javax.swing.Timer;
 import java.awt.*;
+import java.util.Stack;
 
 public class GameModel {
 
@@ -16,11 +17,12 @@ public class GameModel {
     private Map map;
     private boolean multiplayer;
     private boolean defaultStyle;
+    private int delay;
+    private Stack<String> countDownSequence;
 
     public GameModel() {
         highScores = new HighScores();
         settings = new Settings();
-        int delay = 0;
         map = new Map(settings.getSetting("map"));
         map.generateObstacles();
         settings.save();
@@ -49,6 +51,7 @@ public class GameModel {
                 defaultStyle = false;
                 break;
         }
+        countDownSequence = new Stack<>();
         timer = new Timer(delay, e -> {});
         reset();
     }
@@ -152,13 +155,15 @@ public class GameModel {
         this.defaultStyle = defaultStyle;
     }
 
-    /*
-    public Map getMap() {
-        return map;
+    public Stack<String> getCountDownSequence() {
+        return countDownSequence;
     }
 
-    public void setMap(Map map) {
-        this.map = map;
+    public int getDelay() {
+        return delay;
     }
-     */
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
 }
