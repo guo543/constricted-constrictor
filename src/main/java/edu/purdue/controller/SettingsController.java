@@ -26,6 +26,8 @@ public class SettingsController {
 
         gameView.getSettingsPanel().getDifficultySave().addActionListener(e -> {
             saveDifficulty();
+            saveMap();
+            saveStyle();
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
@@ -38,7 +40,9 @@ public class SettingsController {
         });
 
         gameView.getSettingsPanel().getMapSave().addActionListener(e -> {
+            saveDifficulty();
             saveMap();
+            saveStyle();
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
@@ -65,7 +69,10 @@ public class SettingsController {
         });
 
         gameView.getSettingsPanel().getGraphicsSave().addActionListener(e -> {
+            saveDifficulty();
+            saveMap();
             saveColor();
+            saveStyle();
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
@@ -78,6 +85,8 @@ public class SettingsController {
         });
 
         gameView.getSettingsPanel().getStyleSave().addActionListener(e -> {
+            saveDifficulty();
+            saveMap();
             saveStyle();
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
@@ -133,14 +142,19 @@ public class SettingsController {
         //System.out.println("save map pressed");
         if (gameView.getSettingsPanel().getMapA().isSelected()) {
             gameModel.getSettings().setSetting("map", "A");
+            gameModel.getMap().setType("A");
             gameModel.getSettings().save();
         } else if (gameView.getSettingsPanel().getMapB().isSelected()) {
             gameModel.getSettings().setSetting("map", "B");
+            gameModel.getMap().setType("B");
             gameModel.getSettings().save();
         } else if (gameView.getSettingsPanel().getMapC().isSelected()) {
             gameModel.getSettings().setSetting("map", "C");
+            gameModel.getMap().setType("C");
             gameModel.getSettings().save();
         }
+
+        gameModel.getMap().generateObstacles();
     }
 
     private class MapButtonListener implements ActionListener {

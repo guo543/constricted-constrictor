@@ -2,11 +2,13 @@ package edu.purdue.controller;
 
 import edu.purdue.model.Food;
 import edu.purdue.model.GameModel;
+import edu.purdue.model.Obstacle;
 import edu.purdue.model.Snake;
 import edu.purdue.view.GameView;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class GameController {
 
@@ -34,6 +36,8 @@ public class GameController {
             Snake snake = gameModel.getSnake();
             Snake snake2 = gameModel.getSnake2();
 
+            ArrayList<Obstacle> obstacles = gameModel.getMap().getObstacles();
+
             if (!snake.isDead()) {
                 snake.move();
             }
@@ -44,6 +48,7 @@ public class GameController {
             // check if the snake's head collide with its body
             if (!snake.isDead()) {
                 checkCollision(snake);
+
             }
             if (gameModel.isMultiplayer()) {
                 if (!snake2.isDead()) {
@@ -54,6 +59,8 @@ public class GameController {
                 if (!snake.isDead() && !snake2.isDead()) {
                     checkCollision(snake, snake2);
                 }
+            } else {
+                checkCollision(snake, obstacles);
             }
 
             // check if the food is eaten
@@ -89,7 +96,25 @@ public class GameController {
                     gameModel.getHighScores().add(snake.getScore());
                     System.out.println(gameModel.getHighScores().getScores());
                     switchToLostPanel();
+                    gameModel.setPaused(true);
                 }
+            }
+        }
+    }
+
+    private void checkCollision(Snake snake, ArrayList<Obstacle> obstacles) {
+        int[] X = snake.getX();
+        int[] Y = snake.getY();
+
+        int headX = X[0];
+        int headY = Y[0];
+
+        for (Obstacle obstacle : obstacles) {
+            if (headX == obstacle.getX() && headY == obstacle.getY()) {
+                gameModel.getHighScores().add(snake.getScore());
+                System.out.println(gameModel.getHighScores().getScores());
+                switchToLostPanel();
+                gameModel.setPaused(true);
             }
         }
     }
@@ -105,38 +130,28 @@ public class GameController {
         int headX2 = X2[0];
         int headY2 = Y2[0];
 
-        if (headX == headX2 && headY == headY2) {
-            switchToLostPanel();
-        }
-
         int length = gameModel.getSnake().getLength();
         int length2 = gameModel.getSnake2().getLength();
 
         boolean snakeCollidesSnake2 = false;
         boolean snake2CollidesSnake = false;
 
-        for (int i = 1; i < length2; i++) {
+        for (int i = 0; i < length2; i++) {
             if (headX == X2[i] && headY == Y2[i]) {
                 snakeCollidesSnake2 = true;
                 break;
             }
         }
 
-        for (int i = 1; i < length; i++) {
+        for (int i = 0; i < length; i++) {
             if (headX2 == X[i] && headY2 == Y[i]) {
                 snake2CollidesSnake = true;
                 break;
             }
         }
 
-        if (snakeCollidesSnake2 && snake2CollidesSnake) {
-            switchToLostPanel();
-            return;
-        }
-
         if (snakeCollidesSnake2) {
             snake.setDead(true);
-            return;
         }
 
         if (snake2CollidesSnake) {
@@ -155,6 +170,8 @@ public class GameController {
 
         int length = snake.getLength();
 
+        ArrayList<Obstacle> obstacles = gameModel.getMap().getObstacles();
+
         if (headX == food.getX() && headY == food.getY()) {
             snake.incrementScore(1);
             snake.incrementLength();
@@ -164,6 +181,12 @@ public class GameController {
                 food.generateNewFood();
                 for (int i = 0; i < length; i++) {
                     if (food.getX() == X[i] && food.getY() == Y[i]) {
+                        overlap = true;
+                        break;
+                    }
+                }
+                for (Obstacle obstacle : obstacles) {
+                    if (food.getX() == obstacle.getX() && food.getY() == obstacle.getY()) {
                         overlap = true;
                         break;
                     }

@@ -2,6 +2,7 @@ package edu.purdue.model;
 
 import javax.swing.Timer;
 import java.awt.*;
+import java.util.Stack;
 
 public class GameModel {
 
@@ -16,6 +17,7 @@ public class GameModel {
     private Map map;
     private boolean multiplayer;
     private boolean defaultStyle;
+    private Stack<Integer> countDownSequence;
 
     public GameModel() {
         highScores = new HighScores();

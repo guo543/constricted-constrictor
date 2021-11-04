@@ -74,6 +74,7 @@ public class GamePanel extends JPanel {
         g.setColor(wordColor);
         g.fillRect(25, 50, 725, 675);
 
+
         for (int i = 1; i < 30; i++) {
             for (int j = 2; j < 29; j++) {
                 if (((i - 1) % 2 == 0 && (j - 2) % 2 == 0) || ((i - 1) % 2 != 0 && (j - 2) % 2 != 0)) {
@@ -83,12 +84,14 @@ public class GamePanel extends JPanel {
             }
         }
 
-        ArrayList<Obstacle> obstacles = gameModel.getMap().getObstacles();
-        for (int i = 0; i < obstacles.size(); i++) {
-            int x = obstacles.get(i).getX();
-            int y = obstacles.get(i).getY();
-            g.setColor(obstaclesColor);
-            g.fillRect(x, y, 25, 25);
+        if (!gameModel.isMultiplayer()) {
+            ArrayList<Obstacle> obstacles = gameModel.getMap().getObstacles();
+            for (Obstacle obstacle : obstacles) {
+                int x = obstacle.getX();
+                int y = obstacle.getY();
+                g.setColor(obstaclesColor);
+                g.fillRect(x + 2, y + 2, 21, 21);
+            }
         }
 
         g.setColor(wordColor);
@@ -147,6 +150,15 @@ public class GamePanel extends JPanel {
         }
 
         g.drawRect(25, 50, 725, 675);
+
+        if (!gameModel.isMultiplayer()) {
+            ArrayList<Obstacle> obstacles = gameModel.getMap().getObstacles();
+            for (Obstacle obstacle : obstacles) {
+                int x = obstacle.getX();
+                int y = obstacle.getY();
+                g.fillRect(x + 2, y + 2, 21, 21);
+            }
+        }
 
         g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
         if (gameModel.isMultiplayer()) {
