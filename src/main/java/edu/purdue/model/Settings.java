@@ -24,6 +24,10 @@ public class Settings {
     private void print() {
         System.out.println("difficulty" + " = " + settings.getProperty("difficulty"));
         System.out.println("map" + " = " + settings.getProperty("map"));
+        System.out.println("headColor" + " = " + settings.getProperty("headColor"));
+        System.out.println("bodyColor" + " = " + settings.getProperty("bodyColor"));
+        System.out.println("headColor2" + " = " + settings.getProperty("headColor2"));
+        System.out.println("bodyColor2" + " = " + settings.getProperty("bodyColor2"));
     }
 
     public void save() {

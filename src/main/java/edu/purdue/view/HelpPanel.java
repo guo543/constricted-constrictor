@@ -51,7 +51,7 @@ public class HelpPanel extends JPanel{
 
         //image
         try {
-            image = ImageIO.read(new File("/Users/chichi/snake_game/constricted-constrictor/images/Controls.jpg"));
+            image = ImageIO.read(new File("images/Controls.jpg"));
         } catch (IOException ex) {
             // handle exception...
         }
