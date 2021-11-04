@@ -41,6 +41,7 @@ public class LoginController {
                 gameView.getMenuPanel().getGreeting().setText("Welcome, " + user.getUsername());
                 gameModel.setUser(user);
                 System.out.println(gameModel.getUser());
+                gameView.getHighScoresPanel().updateScores(gameModel.getUser().getHighScores().getScores());
 
                 //                gameView.getGamePanel().setFocusable(true);
 //                gameView.getGamePanel().requestFocus();
@@ -62,6 +63,7 @@ public class LoginController {
             gameView.getMainFrame().setSize(800, 800);
             gameModel.setUser(null);
             gameView.getMenuPanel().getGreeting().setText("Welcome, Guest");
+            gameView.getMenuPanel().getHighScores().setVisible(false);
 //            gameView.getGamePanel().setFocusable(true);
 //            gameView.getGamePanel().requestFocus();
 //            gameModel.setPaused(false);

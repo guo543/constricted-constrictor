@@ -131,6 +131,7 @@ public class GameController {
     private void saveScores(Snake snake) {
         gameModel.getUser().getHighScores().add(snake.getScore());
         System.out.println(gameModel.getUser().getHighScores().getScores());
+        gameView.getHighScoresPanel().updateScores(gameModel.getUser().getHighScores().getScores());
         try {
             userDao.saveScores(gameModel.getUser());
         } catch (SQLException e) {
