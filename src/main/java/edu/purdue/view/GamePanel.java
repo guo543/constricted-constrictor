@@ -257,7 +257,7 @@ public class GamePanel extends JPanel {
             if (y_down == 725) {
                 y_down = 50;
             }
-            if (i == length - 1) {
+            if ((i == length - 2 && X[i] == X[i + 1] && Y[i] == Y[i + 1]) || (i == length - 1)) {
                 String direction = "";
                 if (X[i - 1] == X[i] && Y[i - 1] == y_up) {
                     direction = "D";
@@ -272,6 +272,7 @@ public class GamePanel extends JPanel {
                     direction = "L";
                 }
                 paintTail(g, X[i], Y[i], direction);
+                break;
             } else {
                 String pos = "";
                 if (X[i - 1] == X[i] && Y[i - 1] == y_up) {
