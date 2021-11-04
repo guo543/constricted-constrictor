@@ -22,6 +22,7 @@ public class GameModel {
         settings = new Settings();
         int delay = 0;
         map = new Map(settings.getSetting("map"));
+        map.generateObstacles();
         settings.save();
         switch (settings.getSetting("difficulty")) {
             case "1":
