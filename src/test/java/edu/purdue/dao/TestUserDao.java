@@ -43,13 +43,13 @@ public class TestUserDao {
 
         u.setUsername("test1");
         u.setPassword("123456");
+        u.setPassword("aaa@bbb.ccc");
 
         boolean result = userDao.addUser(u);
 
         System.out.println(result);
 
         assert !result;
-
     }
 
     @Test

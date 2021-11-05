@@ -283,6 +283,19 @@ public class GameController {
     }
 
     private void switchToLostPanel() {
+        if (gameModel.isMultiplayer()) {
+            if (gameModel.getSnake().getScore() > gameModel.getSnake2().getScore()) {
+                gameView.getLostPanel().getResult().setText("Snake A Won!");
+            } else if (gameModel.getSnake().getScore() < gameModel.getSnake2().getScore()) {
+                gameView.getLostPanel().getResult().setText("Snake B Won!");
+            } else {
+                gameView.getLostPanel().getResult().setText("Snake A and B got the same score.");
+            }
+
+            gameView.getLostPanel().getResult().setVisible(true);
+        } else {
+            gameView.getLostPanel().getResult().setVisible(false);
+        }
         gameModel.setPaused(true);
         gameView.getMainFrame().setContentPane(gameView.getLostPanel());
         gameView.getMainFrame().revalidate();
