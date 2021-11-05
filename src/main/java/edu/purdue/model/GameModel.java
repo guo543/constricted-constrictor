@@ -1,7 +1,10 @@
 package edu.purdue.model;
 
+import javax.sound.sampled.*;
 import javax.swing.Timer;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Stack;
 
 public class GameModel {
@@ -18,8 +21,10 @@ public class GameModel {
     private boolean defaultStyle;
     private int delay;
     private Stack<String> countDownSequence;
+    //private AudioInputStream audioInputStream;
+    private Clip bgmClip;
 
-    public GameModel() {
+    public GameModel() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         settings = new Settings();
         map = new Map(settings.getSetting("map"));
         map.generateObstacles();
@@ -51,6 +56,9 @@ public class GameModel {
         }
         countDownSequence = new Stack<>();
         timer = new Timer(delay, e -> {});
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("music/CGT_BGM.wav").getAbsoluteFile());
+        bgmClip = AudioSystem.getClip();
+        bgmClip.open(audioInputStream);
         reset();
     }
 
@@ -155,5 +163,9 @@ public class GameModel {
 
     public void setDelay(int delay) {
         this.delay = delay;
+    }
+
+    public Clip getBGMClip() {
+        return bgmClip;
     }
 }

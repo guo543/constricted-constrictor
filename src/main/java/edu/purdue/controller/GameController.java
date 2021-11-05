@@ -7,6 +7,7 @@ import edu.purdue.model.Obstacle;
 import edu.purdue.model.Snake;
 import edu.purdue.view.GameView;
 
+import javax.sound.sampled.FloatControl;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -221,6 +222,8 @@ public class GameController {
         if (!gameModel.isPaused()) {
             if (keyCode == KeyEvent.VK_ESCAPE) {
                 //gameView.getMainFrame().setContentPane(gameView.getPausePanel());
+                FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-10.0f);
                 gameView.getPausePanel().setVisible(true);
                 gameModel.setPaused(true);
                 gameView.getGamePanel().revalidate();

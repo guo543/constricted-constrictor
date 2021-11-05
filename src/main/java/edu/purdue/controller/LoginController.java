@@ -6,6 +6,7 @@ import edu.purdue.model.GameModel;
 import edu.purdue.model.User;
 import edu.purdue.view.GameView;
 
+import javax.sound.sampled.Clip;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -34,8 +35,9 @@ public class LoginController {
             if (user == null) {
                 doesNotExistAction();
             } else {
-                Thread t = new Thread(new MusicClip());
-                t.start();
+                //Thread t = new Thread(new MusicClip());
+                //t.start();
+                gameModel.getBGMClip().loop(Clip.LOOP_CONTINUOUSLY);
                 gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
                 gameView.getMainFrame().setSize(800, 800);
                 gameView.getMenuPanel().getGreeting().setText("Welcome, " + user.getUsername());
@@ -56,9 +58,9 @@ public class LoginController {
         });
 
         gameView.getLoginPanel().getSkip().addActionListener(e -> {
-            Thread t = new Thread(new MusicClip());
-            t.start();
-
+            //Thread t = new Thread(new MusicClip());
+            //t.start();
+            gameModel.getBGMClip().loop(Clip.LOOP_CONTINUOUSLY);
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMainFrame().setSize(800, 800);
             gameModel.setUser(null);

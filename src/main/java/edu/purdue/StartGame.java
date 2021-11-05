@@ -8,10 +8,13 @@ import edu.purdue.model.HighScores;
 import edu.purdue.model.Settings;
 import edu.purdue.view.*;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -19,7 +22,7 @@ import java.sql.SQLException;
  */
 public class StartGame {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, UnsupportedAudioFileException, IOException, LineUnavailableException {
         try {
             // Set System L&F
 //            UIManager.setLookAndFeel(
