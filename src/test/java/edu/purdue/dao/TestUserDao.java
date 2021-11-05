@@ -8,21 +8,28 @@ import java.sql.SQLException;
 
 public class TestUserDao {
 
+    private UserDao userDao = new UserDao();
+
+    public TestUserDao() throws SQLException {
+    }
+
     @Test
     public void testGetUser() {
         try {
-            UserDao userDao = new UserDao();
-
             User u = new User();
 
             u.setUsername("test1");
-            u.setPassword("123456");
+            u.setPassword("1234567");
 
             User user = userDao.getUser(u);
 
             System.out.println(user);
 
             assert user != null;
+
+            System.out.println(user.getHighScores());
+
+            assert !user.getHighScores().getScores().isEmpty();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -31,22 +38,42 @@ public class TestUserDao {
 
     @Test
     public void testAddUser() {
-        try {
-            UserDao userDao = new UserDao();
 
+        User u = new User();
+
+        u.setUsername("test1");
+        u.setPassword("123456");
+
+        boolean result = userDao.addUser(u);
+
+        System.out.println(result);
+
+        assert !result;
+
+    }
+
+    @Test
+    public void testModifyUser() {
+        try {
             User u = new User();
 
             u.setUsername("test1");
-            u.setPassword("123456");
+            u.setPassword("1234567");
 
-            boolean result = userDao.addUser(u);
+            User user = userDao.getUser(u);
 
-            System.out.println(result);
+            System.out.println(user);
 
-            assert !result;
+            User modifiedUser = userDao.modifyUser(user, "test1", "123456", "aaa@bbb.com");
+
+            System.out.println(modifiedUser);
+
+            assert modifiedUser != null;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
     }
 }
