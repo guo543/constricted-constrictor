@@ -12,7 +12,7 @@ public class HighScoresPanel extends JPanel {
     public HighScoresPanel () {
         this.setLayout(null);
         scores = new JLabel();
-        scores.setBounds(350, 0, 200, 400);
+        scores.setBounds(350, 100, 200, 450);
         scores.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 15));
         back = new JButton("Back");
         back.setBounds(300, 600, 200, 40);
