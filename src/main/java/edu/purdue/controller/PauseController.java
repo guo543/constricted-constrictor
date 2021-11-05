@@ -3,6 +3,7 @@ package edu.purdue.controller;
 import edu.purdue.model.GameModel;
 import edu.purdue.view.GameView;
 
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 
 public class PauseController {
@@ -14,6 +15,8 @@ public class PauseController {
         gameView.getPausePanel().getResume().addActionListener(e -> {
             gameView.getPausePanel().setVisible(false);
             gameView.getGamePanel().requestFocus();
+            FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(0.0f);
             gameModel.getTimer().setDelay(1000);
             gameModel.getCountDownSequence().push("Go!");
             gameModel.getCountDownSequence().push("1");
@@ -28,6 +31,8 @@ public class PauseController {
             gameModel.reset();
             gameView.getPausePanel().setVisible(false);
             gameView.getGamePanel().requestFocus();
+            FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(0.0f);
             gameModel.getTimer().setDelay(1000);
             gameModel.getCountDownSequence().push("Go!");
             gameModel.getCountDownSequence().push("1");
@@ -46,6 +51,8 @@ public class PauseController {
             if (quitConfirm == 0) {
                 gameModel.reset();
                 gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+                FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(0.0f);
             }
         });
     }

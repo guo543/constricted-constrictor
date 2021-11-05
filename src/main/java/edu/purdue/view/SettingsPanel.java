@@ -1,7 +1,7 @@
 package edu.purdue.view;
 
 import edu.purdue.model.GameModel;
-import javafx.scene.canvas.GraphicsContext;
+//import javafx.scene.canvas.GraphicsContext;
 
 import javax.swing.*;
 import java.awt.*;
