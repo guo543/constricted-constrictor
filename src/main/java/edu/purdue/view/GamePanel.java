@@ -46,7 +46,7 @@ public class GamePanel extends JPanel {
         Snake snake2 = gameModel.getSnake2();
         Food food = gameModel.getFood();
         Color wordColor = new Color(255, 255, 255);
-        Color backgroundColor = new Color(0, 10, 151);
+        Color backgroundColor = new Color(0, 9, 123);
         Color grid = new Color(246, 246, 246);
         Color headColor = snake.getHeadColor();
         Color bodyColor = snake.getBodyColor();

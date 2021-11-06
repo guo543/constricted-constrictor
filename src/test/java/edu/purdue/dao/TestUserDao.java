@@ -8,7 +8,15 @@ import java.sql.SQLException;
 
 public class TestUserDao {
 
-    private UserDao userDao = new UserDao();
+    private UserDao userDao;
+
+    {
+        try {
+            userDao = new UserDao();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public TestUserDao() throws SQLException {
     }
@@ -19,7 +27,7 @@ public class TestUserDao {
             User u = new User();
 
             u.setUsername("test1");
-            u.setPassword("1234567");
+            u.setPassword("123456");
 
             User user = userDao.getUser(u);
 
@@ -52,7 +60,7 @@ public class TestUserDao {
         assert !result;
     }
 
-    @Test
+/*    @Test
     public void testModifyUser() {
         try {
             User u = new User();
@@ -75,5 +83,5 @@ public class TestUserDao {
         }
 
 
-    }
+    }*/
 }
