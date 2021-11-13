@@ -201,14 +201,27 @@ public class GameController {
         if (headX == food.getX() && headY == food.getY()) {
             snake.incrementScore(1);
             snake.incrementLength();
+            if (!gameModel.isMultiplayer()) {
+                gameModel.incrementEnergy();
+            }
             boolean overlap = true;
             while (overlap) {
                 overlap = false;
                 food.generateNewFood();
-                for (int i = 0; i < length; i++) {
-                    if (food.getX() == X[i] && food.getY() == Y[i]) {
+                Snake snakeA = gameModel.getSnake();
+                Snake snakeB = gameModel.getSnake2();
+                for (int i = 0; i < snakeA.getLength(); i++) {
+                    if (food.getX() == snakeA.getX()[i] && food.getY() == snakeA.getY()[i]) {
                         overlap = true;
                         break;
+                    }
+                }
+                if (gameModel.isMultiplayer()) {
+                    for (int i = 0; i < snakeB.getLength(); i++) {
+                        if (food.getX() == snakeA.getX()[i] && food.getY() == snakeA.getY()[i]) {
+                            overlap = true;
+                            break;
+                        }
                     }
                 }
                 for (Obstacle obstacle : obstacles) {

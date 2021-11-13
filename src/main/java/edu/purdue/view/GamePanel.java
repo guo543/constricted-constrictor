@@ -110,6 +110,19 @@ public class GamePanel extends JPanel {
             g.drawString("Score: " + gameModel.getSnake().getScore(), 650, 32);
         }
 
+        if (!gameModel.isMultiplayer()) {
+            g.drawString("Energy:", 40, 32);
+            g.drawRect(130, 15, 105, 21);
+            for (int i = 0; i < gameModel.getEnergyLevel(); i++) {
+                g.fillRect(133 + i, 18, 1, 16);
+            }
+            if (gameModel.getEnergyLevel() == 100) {
+                g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 10));
+                g.drawString("Press Space to", 250, 25);
+                g.drawString("activate special skill", 250, 33);
+            }
+        }
+
         g.setColor(foodColor);
         // paint food
         g.fillRoundRect(food.getX() + 3, food.getY() + 3, 19, 19, 900, 900);
