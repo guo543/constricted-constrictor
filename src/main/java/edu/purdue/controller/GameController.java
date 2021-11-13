@@ -18,6 +18,8 @@ public class GameController {
     private UserDao userDao;
     private GameView gameView;
     private GameModel gameModel;
+    private boolean directionUpdated;
+    private boolean directionUpdated2;
 
     public GameController(UserDao userDao, GameView gameView, GameModel gameModel) {
         this.userDao = userDao;
@@ -83,6 +85,8 @@ public class GameController {
             if (gameModel.isMultiplayer() && snake.isDead() && snake2.isDead()) {
                 switchToLostPanel();
             }
+            directionUpdated = false;
+            directionUpdated2 = false;
             gameView.getGamePanel().repaint();
         }
     }
@@ -229,53 +233,63 @@ public class GameController {
                 gameView.getGamePanel().revalidate();
                 gameView.getGamePanel().repaint();
             }
-            if (keyCode == KeyEvent.VK_UP) {
-                if ((!"U".equals(currentDirection)) && (!"D".equals(currentDirection))) {
-                    gameModel.getSnake().setDirection("U");
+            if (!directionUpdated) {
+                if (keyCode == KeyEvent.VK_UP) {
+                    if ((!"U".equals(currentDirection)) && (!"D".equals(currentDirection))) {
+                        gameModel.getSnake().setDirection("U");
+                        directionUpdated = true;
+                    }
+                }
+
+                if (keyCode == KeyEvent.VK_DOWN) {
+                    if ((!"U".equals(currentDirection)) && (!"D".equals(currentDirection))) {
+                        gameModel.getSnake().setDirection("D");
+                        directionUpdated = true;
+                    }
+                }
+
+                if (keyCode == KeyEvent.VK_LEFT) {
+                    if ((!"L".equals(currentDirection)) && (!"R".equals(currentDirection))) {
+                        gameModel.getSnake().setDirection("L");
+                        directionUpdated = true;
+                    }
+                }
+
+                if (keyCode == KeyEvent.VK_RIGHT) {
+                    if ((!"L".equals(currentDirection)) && (!"R".equals(currentDirection))) {
+                        gameModel.getSnake().setDirection("R");
+                        directionUpdated = true;
+                    }
                 }
             }
 
-            if (keyCode == KeyEvent.VK_DOWN) {
-                if ((!"U".equals(currentDirection)) && (!"D".equals(currentDirection))) {
-                    gameModel.getSnake().setDirection("D");
-                }
-            }
-
-            if (keyCode == KeyEvent.VK_LEFT) {
-                if ((!"L".equals(currentDirection)) && (!"R".equals(currentDirection))) {
-                    gameModel.getSnake().setDirection("L");
-                }
-            }
-
-            if (keyCode == KeyEvent.VK_RIGHT) {
-                if ((!"L".equals(currentDirection)) && (!"R".equals(currentDirection))) {
-                    gameModel.getSnake().setDirection("R");
-                }
-            }
-
-            if (gameModel.isMultiplayer()) {
+            if (gameModel.isMultiplayer() && !directionUpdated2) {
                 String currentDirection2 = gameModel.getSnake2().getDirection();
                 if (keyCode == KeyEvent.VK_W) {
                     if ((!"U".equals(currentDirection2)) && (!"D".equals(currentDirection2))) {
                         gameModel.getSnake2().setDirection("U");
+                        directionUpdated2 = true;
                     }
                 }
 
                 if (keyCode == KeyEvent.VK_S) {
                     if ((!"U".equals(currentDirection2)) && (!"D".equals(currentDirection2))) {
                         gameModel.getSnake2().setDirection("D");
+                        directionUpdated2 = true;
                     }
                 }
 
                 if (keyCode == KeyEvent.VK_A) {
                     if ((!"L".equals(currentDirection2)) && (!"R".equals(currentDirection2))) {
                         gameModel.getSnake2().setDirection("L");
+                        directionUpdated2 = true;
                     }
                 }
 
                 if (keyCode == KeyEvent.VK_D) {
                     if ((!"L".equals(currentDirection2)) && (!"R".equals(currentDirection2))) {
                         gameModel.getSnake2().setDirection("R");
+                        directionUpdated2 = true;
                     }
                 }
             }
