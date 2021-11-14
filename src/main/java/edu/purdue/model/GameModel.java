@@ -66,7 +66,7 @@ public class GameModel {
 
     public void reset() {
         pathFindingActivated = false;
-        energyLevel = 150;
+        energyLevel = 0;
         snake = new Snake(false);
         snake.setHeadColor(new Color(Integer.parseInt(settings.getSetting("headColor"))));
         snake.setBodyColor(new Color(Integer.parseInt(settings.getSetting("bodyColor"))));

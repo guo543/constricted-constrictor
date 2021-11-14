@@ -153,7 +153,12 @@ public class GamePanel extends JPanel {
 
             if (gameModel.getCountDownSequence().isEmpty()) {
                 gameModel.setPaused(false);
-                gameModel.getTimer().setDelay(gameModel.getDelay());
+                if (gameModel.isPathFindingActivated()) {
+                    gameModel.getTimer().setDelay(20);
+                } else {
+                    gameModel.getTimer().setDelay(gameModel.getDelay());
+                }
+
             }
         }
     }
