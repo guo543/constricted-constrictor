@@ -1,6 +1,5 @@
 package edu.purdue.dao;
 
-
 import edu.purdue.model.User;
 import org.junit.Test;
 

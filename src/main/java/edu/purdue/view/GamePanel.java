@@ -111,15 +111,14 @@ public class GamePanel extends JPanel {
         }
 
         if (!gameModel.isMultiplayer()) {
-            g.drawString("Energy:", 40, 32);
-            g.drawRect(130, 15, 105, 21);
-            for (int i = 0; i < gameModel.getEnergyLevel(); i++) {
-                g.fillRect(133 + i, 18, 1, 16);
-            }
-            if (gameModel.getEnergyLevel() == 100) {
+            g.drawString("Energy:", 30, 32);
+            g.drawRect(117, 15, 155, 21);
+            g.fillRect(120, 18, gameModel.getEnergyLevel(), 16);
+
+            if (gameModel.getEnergyLevel() == 150) {
                 g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 10));
-                g.drawString("Press Space to", 250, 25);
-                g.drawString("activate special skill", 250, 33);
+                g.drawString("Press Space to", 285, 25);
+                g.drawString("activate special skill", 285, 33);
             }
         }
 

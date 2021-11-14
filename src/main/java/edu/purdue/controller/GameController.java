@@ -20,11 +20,13 @@ public class GameController {
     private GameModel gameModel;
     private boolean directionUpdated;
     private boolean directionUpdated2;
+    private PathFinder pathFinder;
 
     public GameController(UserDao userDao, GameView gameView, GameModel gameModel) {
         this.userDao = userDao;
         this.gameView = gameView;
         this.gameModel = gameModel;
+        pathFinder = new PathFinder();
 
         gameView.getGamePanel().addKeyListener(new KeyAdapter() {
             @Override
@@ -50,6 +52,20 @@ public class GameController {
             ArrayList<Obstacle> obstacles = gameModel.getMap().getObstacles();
 
             if (!snake.isDead()) {
+                if (gameModel.isPathFindingActivated()) {
+
+                    snake.setDirection(pathFinder.getNextDirection(snake.getX(),
+                            snake.getY(),
+                            snake.getLength(),
+                            gameModel.getFood().getX(),
+                            gameModel.getFood().getY(),
+                            gameModel.getMap().getObstacles()));
+                    gameModel.decrementEnergy();
+                    if (gameModel.getEnergyLevel() == 0) {
+                        gameModel.setPathFindingActivated(false);
+                        gameModel.getTimer().setDelay(gameModel.getDelay());
+                    }
+                }
                 snake.move();
             }
             if (gameModel.isMultiplayer() && !snake2.isDead()) {
@@ -201,7 +217,7 @@ public class GameController {
         if (headX == food.getX() && headY == food.getY()) {
             snake.incrementScore(1);
             snake.incrementLength();
-            if (!gameModel.isMultiplayer()) {
+            if (!gameModel.isMultiplayer() && !gameModel.isPathFindingActivated()) {
                 gameModel.incrementEnergy();
             }
             boolean overlap = true;
@@ -246,7 +262,14 @@ public class GameController {
                 gameView.getGamePanel().revalidate();
                 gameView.getGamePanel().repaint();
             }
-            if (!directionUpdated) {
+            if (gameModel.getEnergyLevel() == 150 && !gameModel.isMultiplayer()) {
+                if (keyCode == KeyEvent.VK_SPACE) {
+                    System.out.println("activate pathfinding");
+                    gameModel.getTimer().setDelay(20);
+                    gameModel.setPathFindingActivated(true);
+                }
+            }
+            if (!directionUpdated && !gameModel.isPathFindingActivated()) {
                 if (keyCode == KeyEvent.VK_UP) {
                     if ((!"U".equals(currentDirection)) && (!"D".equals(currentDirection))) {
                         gameModel.getSnake().setDirection("U");
