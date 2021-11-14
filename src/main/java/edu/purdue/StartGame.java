@@ -57,6 +57,7 @@ public class StartGame {
         SettingsPanel settingsPanel = new SettingsPanel(gameModel);
         HelpPanel helpPanel = new HelpPanel();
         HighScoresPanel highScoresPanel = new HighScoresPanel();
+        SpecialThanksPanel specialThanksPanel = new SpecialThanksPanel();
 
         GameView gameView = new GameView();
         gameView.setMainFrame(jFrame);
@@ -70,6 +71,7 @@ public class StartGame {
         gameView.initializeLayeredPane();
         gameView.setSettingsPanel(settingsPanel);
         gameView.setHighScoresPanel(highScoresPanel);
+        gameView.setSpecialThanksPanel(specialThanksPanel);
 
         // initialize dao
         UserDao userDao = null;
@@ -89,6 +91,7 @@ public class StartGame {
         new SettingsController(userDao, gameView, gameModel);
         new HelpController(gameView, gameModel);
         new HighScoresController(gameView, gameModel);
+        new SpecialThanksController(gameView,gameModel);
 
         if (userDao == null) {
             jFrame.setContentPane(menuPanel);

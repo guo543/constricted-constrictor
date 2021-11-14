@@ -11,6 +11,7 @@ public class MenuPanel extends JPanel {
     private JButton manual;
     private JButton ovo;
     private JButton highScores;
+    private JButton special_thanks;
 
     public MenuPanel() {
         this.setLayout(null);
@@ -32,6 +33,8 @@ public class MenuPanel extends JPanel {
         ovo.setPreferredSize(new Dimension(200,50));
         highScores = new JButton("MY HIGH SCORES");
         highScores.setPreferredSize(new Dimension(200,50));
+        special_thanks = new JButton("SPECIAL THANKS");
+        special_thanks.setPreferredSize(new Dimension(200,50));
         this.add(title);
         title.setBounds(180, 220, 500, 50);
 
@@ -49,6 +52,9 @@ public class MenuPanel extends JPanel {
 
         this.add(highScores);
         highScores.setBounds(300, 600, 200, 50);
+
+        this.add(special_thanks);
+        special_thanks.setBounds(300, 660, 200, 50);
     }
 
     public JLabel getGreeting() {
@@ -90,4 +96,8 @@ public class MenuPanel extends JPanel {
     public JButton getHighScores() {
         return highScores;
     }
+
+    public JButton getSpecial_thanks() { return special_thanks; }
+
+    public void setSpecial_thanks(JButton special_thanks) { this.special_thanks = special_thanks; }
 }
