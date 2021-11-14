@@ -1,5 +1,6 @@
 package edu.purdue;
 
+import com.alibaba.druid.pool.GetConnectionTimeoutException;
 import com.formdev.flatlaf.*;
 import edu.purdue.controller.*;
 import edu.purdue.dao.UserDao;
@@ -22,7 +23,7 @@ import java.sql.SQLException;
  */
 public class StartGame {
 
-    public static void main(String[] args) throws SQLException, UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public static void main(String[] args) throws Exception {
         try {
             // Set System L&F
 //            UIManager.setLookAndFeel(
@@ -71,7 +72,12 @@ public class StartGame {
         gameView.setHighScoresPanel(highScoresPanel);
 
         // initialize dao
-        UserDao userDao = new UserDao();
+        UserDao userDao = null;
+        try {
+            userDao = new UserDao();
+        } catch (GetConnectionTimeoutException e) {
+            e.printStackTrace();
+        }
 
         // initialize controller
         new GameController(userDao, gameView, gameModel);
@@ -84,10 +90,22 @@ public class StartGame {
         new HelpController(gameView, gameModel);
         new HighScoresController(gameView, gameModel);
 
-        jFrame.setContentPane(loginPanel);
+        if (userDao == null) {
+            jFrame.setContentPane(menuPanel);
 
-        jFrame.setBounds((width - 800) / 2, (height - 800) / 2, 800, 800);
-        jFrame.setSize(400, 400);
+            jFrame.setBounds((width - 800) / 2, (height - 800) / 2, 800, 800);
+            jFrame.setSize(800, 800);
+
+            gameModel.setUser(null);
+            gameView.getMenuPanel().getGreeting().setText("Welcome, Guest");
+            gameView.getMenuPanel().getHighScores().setVisible(false);
+            gameView.getSettingsPanel().remove(gameView.getSettingsPanel().getCredentialsPanel());
+        } else {
+            jFrame.setContentPane(loginPanel);
+
+            jFrame.setBounds((width - 400) / 2, (height - 400) / 2, 800, 800);
+            jFrame.setSize(400, 400);
+        }
         jFrame.setResizable(false);
         //jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

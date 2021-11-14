@@ -7,6 +7,7 @@ import edu.purdue.model.User;
 import edu.purdue.view.GameView;
 
 import javax.sound.sampled.Clip;
+import java.awt.*;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -19,6 +20,9 @@ public class LoginController {
         this.userDao = userDao;
         this.gameView = gameView;
         this.gameModel = gameModel;
+
+        int width = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int height = Toolkit.getDefaultToolkit().getScreenSize().height;
 
         gameView.getLoginPanel().getLogin().addActionListener(e -> {
             if (isEmpty()) {
@@ -39,6 +43,7 @@ public class LoginController {
                 //t.start();
                 gameModel.getBGMClip().loop(Clip.LOOP_CONTINUOUSLY);
                 gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+                gameView.getMainFrame().setBounds((width - 800) / 2, (height - 800) / 2, 800, 800);
                 gameView.getMainFrame().setSize(800, 800);
                 gameView.getMenuPanel().getGreeting().setText("Welcome, " + user.getUsername());
                 gameModel.setUser(user);
@@ -62,6 +67,7 @@ public class LoginController {
             //t.start();
             gameModel.getBGMClip().loop(Clip.LOOP_CONTINUOUSLY);
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+            gameView.getMainFrame().setBounds((width - 800) / 2, (height - 800) / 2, 800, 800);
             gameView.getMainFrame().setSize(800, 800);
             gameModel.setUser(null);
             gameView.getMenuPanel().getGreeting().setText("Welcome, Guest");

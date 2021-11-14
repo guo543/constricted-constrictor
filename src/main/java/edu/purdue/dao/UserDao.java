@@ -1,6 +1,7 @@
 package edu.purdue.dao;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 import edu.purdue.model.HighScores;
 import edu.purdue.model.User;
 
@@ -24,18 +25,22 @@ public class UserDao {
         InputStream is = UserDao.class.getClassLoader().getResourceAsStream("conf/jdbc.properties");
         try {
             properties.load(is);
+            System.out.println(properties.getProperty("init"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public UserDao() throws SQLException {
-        druidDataSource = new DruidDataSource();
-        druidDataSource.setUrl(properties.getProperty("url"));
-        druidDataSource.setDriverClassName(properties.getProperty("driver"));
-        druidDataSource.setUsername(properties.getProperty("username"));
-        druidDataSource.setPassword(properties.getProperty("password"));
+    public UserDao() throws Exception {
+//        druidDataSource = new DruidDataSource();
+//        druidDataSource.setUrl(properties.getProperty("url"));
+//        druidDataSource.setDriverClassName(properties.getProperty("driver"));
+//        druidDataSource.setUsername(properties.getProperty("username"));
+//        druidDataSource.setPassword(properties.getProperty("password"));\
 
+        druidDataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
+        druidDataSource.setBreakAfterAcquireFailure(true);
+        druidDataSource.init();
         connection = druidDataSource.getConnection();
     }
 
