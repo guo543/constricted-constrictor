@@ -16,10 +16,11 @@ public class PauseController {
             gameView.getPausePanel().setVisible(false);
             gameView.getGamePanel().requestFocus();
             FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
-            int volume = Integer.parseInt(gameModel.getSettings().getSetting("music"));
-            if (volume == 0) {
+            boolean muteMusic = Boolean.parseBoolean(gameModel.getSettings().getSetting("muteMusic"));
+            if (muteMusic) {
                 gainControl.setValue(gainControl.getMinimum());
             } else {
+                int volume = Integer.parseInt(gameModel.getSettings().getSetting("music"));
                 gainControl.setValue((float) Math.log10((double) volume / 100) * 20);
             }
             gameModel.getTimer().setDelay(1000);
@@ -37,10 +38,11 @@ public class PauseController {
             gameView.getPausePanel().setVisible(false);
             gameView.getGamePanel().requestFocus();
             FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
-            int volume = Integer.parseInt(gameModel.getSettings().getSetting("music"));
-            if (volume == 0) {
+            boolean muteMusic = Boolean.parseBoolean(gameModel.getSettings().getSetting("muteMusic"));
+            if (muteMusic) {
                 gainControl.setValue(gainControl.getMinimum());
             } else {
+                int volume = Integer.parseInt(gameModel.getSettings().getSetting("music"));
                 gainControl.setValue((float) Math.log10((double) volume / 100) * 20);
             }
             gameModel.getTimer().setDelay(1000);
@@ -62,10 +64,11 @@ public class PauseController {
                 gameModel.reset();
                 gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
                 FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
-                int volume = Integer.parseInt(gameModel.getSettings().getSetting("music"));
-                if (volume == 0) {
+                boolean muteMusic = Boolean.parseBoolean(gameModel.getSettings().getSetting("muteMusic"));
+                if (muteMusic) {
                     gainControl.setValue(gainControl.getMinimum());
                 } else {
+                    int volume = Integer.parseInt(gameModel.getSettings().getSetting("music"));
                     gainControl.setValue((float) Math.log10((double) volume / 100) * 20);
                 }
             }
