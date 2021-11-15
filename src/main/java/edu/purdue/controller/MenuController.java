@@ -68,5 +68,18 @@ public class MenuController {
             gameView.getHighScoresPanel().repaint();
         });
 
+        gameView.getMenuPanel().getSpecial_thanks().addActionListener(e -> {
+            //gameView.getMainFrame().setContentPane(gameView.getGamePanel());
+            gameView.getMainFrame().setContentPane(gameView.getSpecialThanksPanel());
+            gameView.getMainFrame().setSize(900, 900);
+            gameView.getMainFrame().setSize(800, 800);
+            gameView.getSpecialThanksPanel().setFocusable(true);
+            gameView.getSpecialThanksPanel().requestFocus();
+            //gameView.getLayeredPane().setFocusable(true);
+            //gameView.getLayeredPane().requestFocus();
+
+        });
+
+
     }
 }

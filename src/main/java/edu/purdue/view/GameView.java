@@ -29,6 +29,8 @@ public class GameView {
 
     private HighScoresPanel highScoresPanel;
 
+    private SpecialThanksPanel specialThanksPanel;
+
     public GameView() {
     }
 
@@ -96,6 +98,9 @@ public class GameView {
         this.lostPanel = lostPanel;
     }
 
+    public SpecialThanksPanel getSpecialThanksPanel() { return specialThanksPanel; }
+
+    public void setSpecialThanksPanel(SpecialThanksPanel specialThanksPanel) { this.specialThanksPanel = specialThanksPanel; }
 
     public void initializeLayeredPane() {
         layeredPane = new JLayeredPane();
