@@ -110,6 +110,18 @@ public class GamePanel extends JPanel {
             g.drawString("Score: " + gameModel.getSnake().getScore(), 650, 32);
         }
 
+        if (!gameModel.isMultiplayer()) {
+            g.drawString("Energy:", 30, 32);
+            g.drawRect(117, 15, 155, 21);
+            g.fillRect(120, 18, gameModel.getEnergyLevel(), 16);
+
+            if (gameModel.getEnergyLevel() == 150) {
+                g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 10));
+                g.drawString("Press Space to", 285, 25);
+                g.drawString("activate special skill", 285, 33);
+            }
+        }
+
         g.setColor(foodColor);
         // paint food
         g.fillRoundRect(food.getX() + 3, food.getY() + 3, 19, 19, 900, 900);
@@ -141,7 +153,12 @@ public class GamePanel extends JPanel {
 
             if (gameModel.getCountDownSequence().isEmpty()) {
                 gameModel.setPaused(false);
-                gameModel.getTimer().setDelay(gameModel.getDelay());
+                if (gameModel.isPathFindingActivated()) {
+                    gameModel.getTimer().setDelay(20);
+                } else {
+                    gameModel.getTimer().setDelay(gameModel.getDelay());
+                }
+
             }
         }
     }

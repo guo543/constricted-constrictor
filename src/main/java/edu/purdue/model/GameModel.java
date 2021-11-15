@@ -23,6 +23,8 @@ public class GameModel {
     private Stack<String> countDownSequence;
     //private AudioInputStream audioInputStream;
     private Clip bgmClip;
+    private int energyLevel;
+    private boolean pathFindingActivated;
 
     public GameModel() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         settings = new Settings();
@@ -63,6 +65,8 @@ public class GameModel {
     }
 
     public void reset() {
+        pathFindingActivated = false;
+        energyLevel = 0;
         snake = new Snake(false);
         snake.setHeadColor(new Color(Integer.parseInt(settings.getSetting("headColor"))));
         snake.setBodyColor(new Color(Integer.parseInt(settings.getSetting("bodyColor"))));
@@ -167,5 +171,35 @@ public class GameModel {
 
     public Clip getBGMClip() {
         return bgmClip;
+    }
+
+    public int getEnergyLevel() {
+        return energyLevel;
+    }
+
+    public void setEnergyLevel(int energyLevel) {
+        this.energyLevel = energyLevel;
+    }
+
+    public void incrementEnergy() {
+        energyLevel += 10;
+        if (energyLevel > 150) {
+            energyLevel = 150;
+        }
+    }
+
+    public void decrementEnergy() {
+        energyLevel -= 1;
+        if (energyLevel < 0) {
+            energyLevel = 0;
+        }
+    }
+
+    public boolean isPathFindingActivated() {
+        return pathFindingActivated;
+    }
+
+    public void setPathFindingActivated(boolean pathFindingActivated) {
+        this.pathFindingActivated = pathFindingActivated;
     }
 }
