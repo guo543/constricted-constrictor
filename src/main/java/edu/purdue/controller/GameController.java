@@ -223,7 +223,12 @@ public class GameController {
             if (keyCode == KeyEvent.VK_ESCAPE) {
                 //gameView.getMainFrame().setContentPane(gameView.getPausePanel());
                 FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(-10.0f);
+                //set to 30% of current volume
+                if (gameModel.getSettings().getSetting("muteMusic").equals("false")) {
+                    int musicVolume = Integer.parseInt(gameModel.getSettings().getSetting("music"));
+                    float pauseVolume = (float) Math.log10(0.3 * (double) musicVolume / 100) * 20;
+                    gainControl.setValue(pauseVolume);
+                }
                 gameView.getPausePanel().setVisible(true);
                 gameModel.setPaused(true);
                 gameView.getGamePanel().revalidate();

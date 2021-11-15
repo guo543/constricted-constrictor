@@ -84,6 +84,16 @@ public class SettingsPanel extends JTabbedPane {
 
     private JLabel credentialsError;
 
+    private JPanel soundPanel;
+
+    private JSlider musicSlider;
+
+    private JToggleButton musicButton;
+
+    private JSlider effectsSlider;
+
+    private JButton soundBack;
+
     public SettingsPanel(GameModel gameModel) {
         this.gameModel = gameModel;
         difficultyBack = new JButton("Back");
@@ -111,6 +121,7 @@ public class SettingsPanel extends JTabbedPane {
         initializeGraphicsPanel();
         initializeStylePanel();
         initializeCredentialsPanel();
+        initializeSoundPanel();
     }
 
     private void initializeDifficultyPanel() {
@@ -442,6 +453,35 @@ public class SettingsPanel extends JTabbedPane {
         this.add("Change Login Information", credentialsPanel);
     }
 
+    private void initializeSoundPanel() {
+        gameModel.getSettings().setSetting("muteMusic", "false");
+        gameModel.getSettings().save();
+        soundPanel = new JPanel();
+        soundPanel.setLayout(null);
+        JLabel musicLabel = new JLabel("Music:");
+        musicLabel.setBounds(160, 200, 100, 100);
+        musicLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        soundPanel.add(musicLabel);
+        musicSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
+        musicSlider.setBounds(235, 180, 300, 150);
+        soundPanel.add(musicSlider);
+        musicButton = new JToggleButton("Mute ");
+        musicButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+        musicButton.setBounds(550, 230, 100, 40);
+        soundPanel.add(musicButton);
+        JLabel effectsLabel = new JLabel("Sound Effects:");
+        effectsLabel.setBounds(100, 350, 200, 100);
+        effectsLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        soundPanel.add(effectsLabel);
+        effectsSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
+        effectsSlider.setBounds(240, 325, 300, 150);
+        soundPanel.add(effectsSlider);
+        soundBack = new JButton("Back");
+        soundBack.setBounds(350, 550, 150, 60);
+        soundPanel.add(soundBack);
+        this.add("Sound", soundPanel);
+    }
+
     public JPanel getCredentialsPanel() {
         return credentialsPanel;
     }
@@ -472,5 +512,21 @@ public class SettingsPanel extends JTabbedPane {
 
     public JLabel getCredentialsError() {
         return credentialsError;
+    }
+
+    public JSlider getMusicSlider() {
+        return musicSlider;
+    }
+
+    public JSlider getEffectsSlider() {
+        return effectsSlider;
+    }
+
+    public JToggleButton getMusicButton() {
+        return musicButton;
+    }
+
+    public JButton getSoundBack() {
+        return soundBack;
     }
 }
