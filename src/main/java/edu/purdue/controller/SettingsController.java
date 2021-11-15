@@ -6,10 +6,12 @@ import edu.purdue.model.User;
 import edu.purdue.view.GameView;
 import edu.purdue.view.SettingsPanel;
 
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.nio.file.attribute.UserPrincipal;
 import java.sql.SQLException;
 
@@ -110,6 +112,51 @@ public class SettingsController {
         });
 
         gameView.getSettingsPanel().getCredentialsBack().addActionListener(e -> {
+            gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+            gameView.getMenuPanel().revalidate();
+            gameView.getMenuPanel().repaint();
+        });
+
+        gameView.getSettingsPanel().getMusicSlider().addChangeListener(e -> {
+            int musicVolume = gameView.getSettingsPanel().getMusicSlider().getValue();
+            FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
+            if (musicVolume == 0) {
+                gameView.getSettingsPanel().getMusicButton().setSelected(true);
+                gainControl.setValue(gainControl.getMinimum());
+            } else {
+                gameView.getSettingsPanel().getMusicButton().setSelected(false);
+                float volume = (float) Math.log10((double) musicVolume / 100) * 20;
+                gainControl.setValue(volume);
+            }
+            gameModel.getSettings().setSetting("music", Integer.toString(musicVolume));
+            gameModel.getSettings().save();
+        });
+
+        gameView.getSettingsPanel().getEffectsSlider().addChangeListener(e -> {
+            int effectsVolume = gameView.getSettingsPanel().getEffectsSlider().getValue();
+            gameModel.getSettings().setSetting("effects", Integer.toString(effectsVolume));
+            gameModel.getSettings().save();
+        });
+
+        gameView.getSettingsPanel().getMusicButton().addItemListener(e ->  {
+            int state = e.getStateChange();
+            if (state == ItemEvent.SELECTED) {
+                gameView.getSettingsPanel().getMusicButton().setText("Unmute");
+                int volume = gameView.getSettingsPanel().getMusicSlider().getValue();
+                gameView.getSettingsPanel().getMusicSlider().setValue(0);
+                gameModel.getSettings().setSetting("music", Integer.toString(volume));
+                gameModel.getSettings().setSetting("muteMusic", "true");
+                gameModel.getSettings().save();
+            } else {
+                gameView.getSettingsPanel().getMusicButton().setText("Mute");
+                gameView.getSettingsPanel().getMusicSlider().setValue(
+                        Integer.parseInt(gameModel.getSettings().getSetting("music")));
+                gameModel.getSettings().setSetting("muteMusic", "false");
+                gameModel.getSettings().save();
+            }
+        });
+
+        gameView.getSettingsPanel().getSoundBack().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
