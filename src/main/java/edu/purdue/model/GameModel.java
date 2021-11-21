@@ -12,6 +12,7 @@ public class GameModel {
     private Snake snake;
     private Snake snake2;
     private Food food;
+    private SpecialFood specialFood;
     private User user;
     private boolean paused;
     private Settings settings;
@@ -25,6 +26,9 @@ public class GameModel {
     private Clip bgmClip;
     private int energyLevel;
     private boolean pathFindingActivated;
+    private int doubleScoreTime;
+    private int reduceLengthTime;
+    private int slowDownTime;
 
     public GameModel() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         settings = new Settings();
@@ -66,6 +70,9 @@ public class GameModel {
 
     public void reset() {
         pathFindingActivated = false;
+        doubleScoreTime = 0;
+        reduceLengthTime = 0;
+        slowDownTime = 0;
         energyLevel = 0;
         snake = new Snake(false);
         snake.setHeadColor(new Color(Integer.parseInt(settings.getSetting("headColor"))));
@@ -74,6 +81,7 @@ public class GameModel {
         snake2.setHeadColor(new Color(Integer.parseInt(settings.getSetting("headColor2"))));
         snake2.setBodyColor(new Color(Integer.parseInt(settings.getSetting("bodyColor2"))));
         food = new Food();
+        specialFood = new SpecialFood();
         paused = true;
     }
 
@@ -87,6 +95,14 @@ public class GameModel {
 
     public Food getFood() {
         return food;
+    }
+
+    public SpecialFood getSpecialFood() {
+        return specialFood;
+    }
+
+    public void setSpecialFood(SpecialFood specialFood) {
+        this.specialFood = specialFood;
     }
 
     public void setFood(Food food) {
@@ -202,4 +218,48 @@ public class GameModel {
     public void setPathFindingActivated(boolean pathFindingActivated) {
         this.pathFindingActivated = pathFindingActivated;
     }
+
+    public int getDoubleScoreTime() {
+        return doubleScoreTime;
+    }
+
+    public void setDoubleScoreTime(int doubleScoreTime) {
+        this.doubleScoreTime = doubleScoreTime;
+    }
+
+    public int getReduceLengthTime() {
+        return reduceLengthTime;
+    }
+
+    public void setReduceLengthTime(int reduceLengthTime) {
+        this.reduceLengthTime = reduceLengthTime;
+    }
+
+    public int getSlowDownTime() {
+        return slowDownTime;
+    }
+
+    public void setSlowDownTime(int slowDownTime) {
+        this.slowDownTime = slowDownTime;
+    }
+
+    public void decrementDoubleScoreTime() {
+        doubleScoreTime -= 1;
+        if (doubleScoreTime < 0) {
+            doubleScoreTime = 0;
+        }
+    }
+    public void decrementReduceLengthTime() {
+        reduceLengthTime -= 1;
+        if (reduceLengthTime < 0) {
+            reduceLengthTime = 0;
+        }
+    }
+    public void decrementSlowDownTime() {
+        slowDownTime -= 1;
+        if (slowDownTime < 0) {
+            slowDownTime = 0;
+        }
+    }
+
 }

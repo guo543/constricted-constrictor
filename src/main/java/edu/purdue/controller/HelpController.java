@@ -17,10 +17,10 @@ public class HelpController {
 //            gameModel.reset();
             gameView.getMainFrame().setContentPane(gameView.getLayeredPane());
             gameView.getPausePanel().setVisible(false);
-            gameView.getMainFrame().setSize(900, 900);
-            gameView.getMainFrame().setSize(800, 800);
+
 //            gameView.getGamePanel().setFocusable(true);
             gameView.getGamePanel().requestFocus();
+            gameView.getGamePanel().revalidate();
             //gameView.getLayeredPane().setFocusable(true);
             //gameView.getLayeredPane().requestFocus();
             gameModel.getTimer().setDelay(1000);
@@ -36,8 +36,8 @@ public class HelpController {
         gameView.getHelpPanel().getRet().addActionListener(e -> {
             gameModel.reset();
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
-            gameView.getMainFrame().setSize(900, 900);
-            gameView.getMainFrame().setSize(800, 800);
+            gameView.getMenuPanel().revalidate();
+            gameView.getMenuPanel().repaint();
         });
     }
 
