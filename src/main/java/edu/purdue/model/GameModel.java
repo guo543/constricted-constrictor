@@ -9,11 +9,17 @@ import java.util.Stack;
 
 public class GameModel {
 
+    public enum GameState {
+        HOME,
+        PLAYING,
+        PAUSED
+    }
+
     private Snake snake;
     private Snake snake2;
     private Food food;
     private User user;
-    private boolean paused;
+    //private boolean paused;
     private Settings settings;
     private Timer timer;
     private Map map;
@@ -21,10 +27,10 @@ public class GameModel {
     private boolean defaultStyle;
     private int delay;
     private Stack<String> countDownSequence;
-    //private AudioInputStream audioInputStream;
     private Clip bgmClip;
     private int energyLevel;
     private boolean pathFindingActivated;
+    private GameState gameState;
 
     public GameModel() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         settings = new Settings();
@@ -62,6 +68,7 @@ public class GameModel {
         bgmClip = AudioSystem.getClip();
         bgmClip.open(audioInputStream);
         reset();
+        gameState = GameState.HOME;
     }
 
     public void reset() {
@@ -74,7 +81,8 @@ public class GameModel {
         snake2.setHeadColor(new Color(Integer.parseInt(settings.getSetting("headColor2"))));
         snake2.setBodyColor(new Color(Integer.parseInt(settings.getSetting("bodyColor2"))));
         food = new Food();
-        paused = true;
+        //paused = true;
+        //gameState = GameState.PLAYING;
     }
 
     public Snake getSnake() {
@@ -101,13 +109,13 @@ public class GameModel {
         this.user = user;
     }
 
-    public boolean isPaused() {
+    /*public boolean isPaused() {
         return paused;
     }
 
     public void setPaused(boolean paused) {
         this.paused = paused;
-    }
+    }*/
 
     public Settings getSettings() {
         return settings;
@@ -201,5 +209,13 @@ public class GameModel {
 
     public void setPathFindingActivated(boolean pathFindingActivated) {
         this.pathFindingActivated = pathFindingActivated;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 }

@@ -22,11 +22,13 @@ public class LostController {
             gameModel.getCountDownSequence().push("2");
             gameModel.getCountDownSequence().push("3");
             gameModel.getCountDownSequence().push("4");
+            gameModel.setGameState(GameModel.GameState.PLAYING);
         });
 
         gameView.getLostPanel().getQuit().addActionListener(e -> {
             gameModel.reset();
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+            gameModel.setGameState(GameModel.GameState.HOME);
         });
     }
 }

@@ -54,7 +54,8 @@ public class GamePanel extends JPanel {
         Color bodyColor2 = snake2.getBodyColor();
         Color foodColor = new Color(14, 107, 183);
         Color obstaclesColor = new Color(73, 32, 32);
-        if (gameModel.isPaused()) {
+        //if (gameModel.isPaused()) {
+        if (gameModel.getGameState() == GameModel.GameState.PAUSED) {
             wordColor = wordColor.darker();
             backgroundColor = backgroundColor.darker();
             headColor = headColor.darker();
@@ -147,12 +148,11 @@ public class GamePanel extends JPanel {
         }
 
         g.setColor(new Color(0, 0, 0));
-        if (!gameModel.getCountDownSequence().isEmpty()) {
+        if (!gameModel.getCountDownSequence().isEmpty() && gameModel.getGameState() == GameModel.GameState.PLAYING) {
             g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 60));
             g.drawString(gameModel.getCountDownSequence().pop(), 350, 350);
-
             if (gameModel.getCountDownSequence().isEmpty()) {
-                gameModel.setPaused(false);
+                gameModel.setGameState(GameModel.GameState.PLAYING);
                 if (gameModel.isPathFindingActivated()) {
                     gameModel.getTimer().setDelay(20);
                 } else {
@@ -173,7 +173,7 @@ public class GamePanel extends JPanel {
         Color pausedColor = color.darker();
 
         // darken when game is paused
-        if (gameModel.isPaused()) {
+        if (gameModel.getGameState() == GameModel.GameState.PAUSED) {
             g.setColor(pausedColor);
         } else {
             g.setColor(color);
@@ -233,7 +233,7 @@ public class GamePanel extends JPanel {
             g.drawString(gameModel.getCountDownSequence().pop(), 350, 350);
 
             if (gameModel.getCountDownSequence().isEmpty()) {
-                gameModel.setPaused(false);
+                gameModel.setGameState(GameModel.GameState.PLAYING);
                 gameModel.getTimer().setDelay(gameModel.getDelay());
             }
         }
@@ -250,7 +250,7 @@ public class GamePanel extends JPanel {
     private void paintDefaultSnake(Graphics g, Snake snake, Color headColor, Color bodyColor) {
         Color white = new Color(255, 255, 255);
         Color black = new Color(0, 0, 0);
-        if (gameModel.isPaused()) {
+        if (gameModel.getGameState() == GameModel.GameState.PAUSED) {
             white = white.darker();
         }
         g.setColor(headColor);
