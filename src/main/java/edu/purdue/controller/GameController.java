@@ -70,6 +70,12 @@ public class GameController {
                 if (gameModel.getDoubleScoreTime() != 0) {
                     gameModel.decrementDoubleScoreTime();
                 }
+                if (gameModel.getReduceLengthTime() != 0) {
+                    gameModel.decrementReduceLengthTime();
+                }
+                if (gameModel.getSlowDownTime() != 0) {
+                    gameModel.decrementSlowDownTime();
+                }
                 if (gameModel.getSpecialFood().getTimeBeforeDisappear() != 0) {
                     gameModel.getSpecialFood().decrementTimeBeforeDisappear();
                     if (gameModel.getSpecialFood().getTimeBeforeDisappear() == 0) {
@@ -230,7 +236,12 @@ public class GameController {
             } else {
                 snake.incrementScore(1);
             }
-            snake.incrementLength();
+            if (!gameModel.isMultiplayer() && gameModel.getReduceLengthTime() != 0) {
+                snake.decrementLength();
+            } else {
+                snake.incrementLength();
+            }
+
             if (!gameModel.isMultiplayer() && !gameModel.isPathFindingActivated()) {
                 gameModel.incrementEnergy();
             }
@@ -266,7 +277,7 @@ public class GameController {
             if (!gameModel.isMultiplayer() && !gameModel.getSpecialFood().isVisible()) {
                 Random r = new Random();
                 int rand = r.nextInt(100);
-                if (true) {
+                if (rand < 99) {
                     overlap = true;
                     while (overlap) {
                         overlap = false;
@@ -289,7 +300,6 @@ public class GameController {
                         }
                     }
                     rand = r.nextInt(3);
-                    System.out.println(rand);
                     switch (rand) {
                         case 0:
                             if (gameModel.getDoubleScoreTime() != 0) {
