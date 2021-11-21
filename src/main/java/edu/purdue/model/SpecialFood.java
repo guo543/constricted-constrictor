@@ -14,6 +14,7 @@ public class SpecialFood extends Food {
         super();
         timeBeforeDisappear = 0;
         visible = false;
+        type = FoodType.DOUBLE_SCORE;
     }
 
     public int getTimeBeforeDisappear() {

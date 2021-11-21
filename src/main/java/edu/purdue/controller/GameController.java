@@ -240,13 +240,15 @@ public class GameController {
                 food.generateNewFood();
                 Snake snakeA = gameModel.getSnake();
                 Snake snakeB = gameModel.getSnake2();
-                for (int i = 0; i < snakeA.getLength(); i++) {
-                    if (food.getX() == snakeA.getX()[i] && food.getY() == snakeA.getY()[i]) {
-                        overlap = true;
-                        break;
+                if (!snakeA.isDead()) {
+                    for (int i = 0; i < snakeA.getLength(); i++) {
+                        if (food.getX() == snakeA.getX()[i] && food.getY() == snakeA.getY()[i]) {
+                            overlap = true;
+                            break;
+                        }
                     }
                 }
-                if (gameModel.isMultiplayer()) {
+                if (gameModel.isMultiplayer() && !snakeB.isDead()) {
                     for (int i = 0; i < snakeB.getLength(); i++) {
                         if (food.getX() == snakeA.getX()[i] && food.getY() == snakeA.getY()[i]) {
                             overlap = true;
@@ -261,16 +263,15 @@ public class GameController {
                     }
                 }
             }
-            if (!gameModel.isMultiplayer() && !gameModel.getSpecialFood().isVisible() && gameModel.getDoubleScoreTime() == 0) {
+            if (!gameModel.isMultiplayer() && !gameModel.getSpecialFood().isVisible()) {
                 Random r = new Random();
                 int rand = r.nextInt(100);
-                if (rand < 15) {
+                if (true) {
                     overlap = true;
                     while (overlap) {
                         overlap = false;
                         specialFood.generateNewFood();
                         Snake snakeA = gameModel.getSnake();
-                        Snake snakeB = gameModel.getSnake2();
                         for (int i = 0; i < snakeA.getLength(); i++) {
                             if (specialFood.getX() == snakeA.getX()[i] && specialFood.getY() == snakeA.getY()[i]) {
                                 overlap = true;
@@ -287,7 +288,28 @@ public class GameController {
                             overlap = true;
                         }
                     }
-                    gameModel.getSpecialFood().setType(SpecialFood.FoodType.DOUBLE_SCORE);
+                    rand = r.nextInt(3);
+                    System.out.println(rand);
+                    switch (rand) {
+                        case 0:
+                            if (gameModel.getDoubleScoreTime() != 0) {
+                                return;
+                            }
+                            gameModel.getSpecialFood().setType(SpecialFood.FoodType.DOUBLE_SCORE);
+                            break;
+                        case 1:
+                            if (gameModel.getReduceLengthTime() != 0) {
+                                return;
+                            }
+                            gameModel.getSpecialFood().setType(SpecialFood.FoodType.REDUCE_LENGTH);
+                            break;
+                        case 2:
+                            if (gameModel.getSlowDownTime() != 0) {
+                                return;
+                            }
+                            gameModel.getSpecialFood().setType(SpecialFood.FoodType.SLOW_DOWN);
+                            break;
+                    }
                     gameModel.getSpecialFood().setTimeBeforeDisappear(50);
                     gameModel.getSpecialFood().setVisible(true);
                 }
@@ -297,6 +319,12 @@ public class GameController {
             if (!gameModel.isMultiplayer()) {
                 if (specialFood.getType() == SpecialFood.FoodType.DOUBLE_SCORE) {
                     gameModel.setDoubleScoreTime(200);
+                }
+                if (specialFood.getType() == SpecialFood.FoodType.REDUCE_LENGTH) {
+                    gameModel.setReduceLengthTime(200);
+                }
+                if (specialFood.getType() == SpecialFood.FoodType.SLOW_DOWN) {
+                    gameModel.setSlowDownTime(200);
                 }
                 gameModel.getSpecialFood().setVisible(false);
             }

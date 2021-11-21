@@ -42,6 +42,7 @@ public class GamePanel extends JPanel {
         Snake snake = gameModel.getSnake();
         Snake snake2 = gameModel.getSnake2();
         Food food = gameModel.getFood();
+        SpecialFood specialFood = gameModel.getSpecialFood();
         Color wordColor = new Color(255, 255, 255);
         Color backgroundColor = new Color(0, 9, 123);
         Color grid = new Color(246, 246, 246);
@@ -50,7 +51,20 @@ public class GamePanel extends JPanel {
         Color headColor2 = snake2.getHeadColor();
         Color bodyColor2 = snake2.getBodyColor();
         Color foodColor = new Color(14, 107, 183);
-        Color specialFoodColor = new Color(252, 169, 88);
+        Color specialFoodColor;
+        switch (specialFood.getType()) {
+            case DOUBLE_SCORE:
+                specialFoodColor = new Color(252, 169, 88);
+                break;
+            case REDUCE_LENGTH:
+                specialFoodColor = new Color(255, 73, 150);
+                break;
+            case SLOW_DOWN:
+                specialFoodColor = new Color(113, 255, 211);
+                break;
+            default:
+                specialFoodColor = new Color(14, 107, 183);
+        }
         Color obstaclesColor = new Color(73, 32, 32);
         if (gameModel.isPaused()) {
             wordColor = wordColor.darker();
@@ -129,7 +143,7 @@ public class GamePanel extends JPanel {
         g.setColor(specialFoodColor);
         if (!gameModel.isMultiplayer()) {
             if (gameModel.getSpecialFood().isVisible()) {
-                SpecialFood specialFood = gameModel.getSpecialFood();
+
 
                 // paint food
                 g.fillRoundRect(specialFood.getX() + 5, specialFood.getY() + 5, 15, 15, 15, 15);
@@ -140,6 +154,7 @@ public class GamePanel extends JPanel {
 
             g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 15));
             if (gameModel.getDoubleScoreTime() != 0) {
+                g.setColor(new Color(252, 169, 88));
                 g.drawString("Double Score", 100, 755);
                 g.drawRect(52, 765, 205, 21);
                 g.fillRect(55, 768, gameModel.getDoubleScoreTime(), 16);
@@ -147,15 +162,17 @@ public class GamePanel extends JPanel {
             }
 
             if (gameModel.getReduceLengthTime() != 0) {
+                g.setColor(new Color(255, 73, 150));
                 g.drawString("Reduce Length", 330, 755);
                 g.drawRect(285, 765, 205, 21);
-                g.fillRect(288, 768, gameModel.getDoubleScoreTime(), 16);
+                g.fillRect(288, 768, gameModel.getReduceLengthTime(), 16);
             }
 
             if (gameModel.getSlowDownTime() != 0) {
+                g.setColor(new Color(113, 255, 211));
                 g.drawString("Slow Down", 580, 755);
                 g.drawRect(518, 765, 205, 21);
-                g.fillRect(521, 768, gameModel.getDoubleScoreTime(), 16);
+                g.fillRect(521, 768, gameModel.getSlowDownTime(), 16);
             }
         }
 
