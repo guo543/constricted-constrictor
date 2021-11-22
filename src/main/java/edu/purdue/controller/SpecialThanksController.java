@@ -15,8 +15,8 @@ public class SpecialThanksController {
         gameView.getSpecialThanksPanel().getRet().addActionListener(e -> {
             gameModel.reset();
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
-            gameView.getMainFrame().setSize(900, 900);
-            gameView.getMainFrame().setSize(800, 800);
+            gameView.getMenuPanel().revalidate();
+            gameView.getMenuPanel().repaint();
         });
     }
 }

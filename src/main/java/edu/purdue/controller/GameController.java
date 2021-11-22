@@ -1,10 +1,7 @@
 package edu.purdue.controller;
 
 import edu.purdue.dao.UserDao;
-import edu.purdue.model.Food;
-import edu.purdue.model.GameModel;
-import edu.purdue.model.Obstacle;
-import edu.purdue.model.Snake;
+import edu.purdue.model.*;
 import edu.purdue.view.GameView;
 
 import javax.sound.sampled.*;
@@ -14,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameController {
 
@@ -75,6 +73,23 @@ public class GameController {
                     }
                 }
                 snake.move();
+            }
+            if (!gameModel.isMultiplayer()) {
+                if (gameModel.getDoubleScoreTime() != 0) {
+                    gameModel.decrementDoubleScoreTime();
+                }
+                if (gameModel.getReduceLengthTime() != 0) {
+                    gameModel.decrementReduceLengthTime();
+                }
+                if (gameModel.getSlowDownTime() != 0) {
+                    gameModel.decrementSlowDownTime();
+                }
+                if (gameModel.getSpecialFood().getTimeBeforeDisappear() != 0) {
+                    gameModel.getSpecialFood().decrementTimeBeforeDisappear();
+                    if (gameModel.getSpecialFood().getTimeBeforeDisappear() == 0) {
+                        gameModel.getSpecialFood().setVisible(false);
+                    }
+                }
             }
             if (gameModel.isMultiplayer() && !snake2.isDead()) {
                 snake2.move();
@@ -225,12 +240,23 @@ public class GameController {
         int headY = Y[0];
 
         Food food = gameModel.getFood();
+        SpecialFood specialFood = gameModel.getSpecialFood();
 
         int length = snake.getLength();
 
         ArrayList<Obstacle> obstacles = gameModel.getMap().getObstacles();
 
         if (headX == food.getX() && headY == food.getY()) {
+            if (!gameModel.isMultiplayer() && gameModel.getDoubleScoreTime() != 0) {
+                snake.incrementScore(2);
+            } else {
+                snake.incrementScore(1);
+            }
+            if (!gameModel.isMultiplayer() && gameModel.getReduceLengthTime() != 0) {
+                snake.decrementLength();
+            } else {
+                snake.incrementLength();
+            }
             gameModel.getBeans().setFramePosition(0);
             gameModel.getBeans().start();
             snake.incrementScore(1);
@@ -245,13 +271,15 @@ public class GameController {
                 food.generateNewFood();
                 Snake snakeA = gameModel.getSnake();
                 Snake snakeB = gameModel.getSnake2();
-                for (int i = 0; i < snakeA.getLength(); i++) {
-                    if (food.getX() == snakeA.getX()[i] && food.getY() == snakeA.getY()[i]) {
-                        overlap = true;
-                        break;
+                if (!snakeA.isDead()) {
+                    for (int i = 0; i < snakeA.getLength(); i++) {
+                        if (food.getX() == snakeA.getX()[i] && food.getY() == snakeA.getY()[i]) {
+                            overlap = true;
+                            break;
+                        }
                     }
                 }
-                if (gameModel.isMultiplayer()) {
+                if (gameModel.isMultiplayer() && !snakeB.isDead()) {
                     for (int i = 0; i < snakeB.getLength(); i++) {
                         if (food.getX() == snakeA.getX()[i] && food.getY() == snakeA.getY()[i]) {
                             overlap = true;
@@ -265,6 +293,70 @@ public class GameController {
                         break;
                     }
                 }
+            }
+            if (!gameModel.isMultiplayer() && !gameModel.getSpecialFood().isVisible()) {
+                Random r = new Random();
+                int rand = r.nextInt(100);
+                if (rand < 99) {
+                    overlap = true;
+                    while (overlap) {
+                        overlap = false;
+                        specialFood.generateNewFood();
+                        Snake snakeA = gameModel.getSnake();
+                        for (int i = 0; i < snakeA.getLength(); i++) {
+                            if (specialFood.getX() == snakeA.getX()[i] && specialFood.getY() == snakeA.getY()[i]) {
+                                overlap = true;
+                                break;
+                            }
+                        }
+                        for (Obstacle obstacle : obstacles) {
+                            if (specialFood.getX() == obstacle.getX() && specialFood.getY() == obstacle.getY()) {
+                                overlap = true;
+                                break;
+                            }
+                        }
+                        if (specialFood.getX() == food.getX() && specialFood.getY() == food.getY()) {
+                            overlap = true;
+                        }
+                    }
+                    rand = r.nextInt(3);
+                    switch (rand) {
+                        case 0:
+                            if (gameModel.getDoubleScoreTime() != 0) {
+                                return;
+                            }
+                            gameModel.getSpecialFood().setType(SpecialFood.FoodType.DOUBLE_SCORE);
+                            break;
+                        case 1:
+                            if (gameModel.getReduceLengthTime() != 0) {
+                                return;
+                            }
+                            gameModel.getSpecialFood().setType(SpecialFood.FoodType.REDUCE_LENGTH);
+                            break;
+                        case 2:
+                            if (gameModel.getSlowDownTime() != 0) {
+                                return;
+                            }
+                            gameModel.getSpecialFood().setType(SpecialFood.FoodType.SLOW_DOWN);
+                            break;
+                    }
+                    gameModel.getSpecialFood().setTimeBeforeDisappear(50);
+                    gameModel.getSpecialFood().setVisible(true);
+                }
+            }
+        }
+        if (!gameModel.isMultiplayer() && specialFood.isVisible() && headX == specialFood.getX() && headY == specialFood.getY()) {
+            if (!gameModel.isMultiplayer()) {
+                if (specialFood.getType() == SpecialFood.FoodType.DOUBLE_SCORE) {
+                    gameModel.setDoubleScoreTime(200);
+                }
+                if (specialFood.getType() == SpecialFood.FoodType.REDUCE_LENGTH) {
+                    gameModel.setReduceLengthTime(200);
+                }
+                if (specialFood.getType() == SpecialFood.FoodType.SLOW_DOWN) {
+                    gameModel.setSlowDownTime(200);
+                }
+                gameModel.getSpecialFood().setVisible(false);
             }
         }
     }

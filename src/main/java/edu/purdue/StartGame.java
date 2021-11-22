@@ -46,7 +46,7 @@ public class StartGame {
 
         // initialize view
         GamePanel gamePanel = new GamePanel(gameModel);
-        gamePanel.setBounds(0, 0, 800, 800);
+        gamePanel.setBounds(0, 0, 800, 850);
         SignUpPanel signUpPanel = new SignUpPanel();
         LoginPanel loginPanel = new LoginPanel();
         PausePanel pausePanel = new PausePanel();
@@ -96,8 +96,8 @@ public class StartGame {
         if (userDao == null) {
             jFrame.setContentPane(menuPanel);
 
-            jFrame.setBounds((width - 800) / 2, (height - 800) / 2, 800, 800);
-            jFrame.setSize(800, 800);
+            jFrame.setBounds((width - 800) / 2, (height - 800) / 2, 800, 850);
+            jFrame.setSize(800, 850);
 
             gameModel.setUser(null);
             gameView.getMenuPanel().getGreeting().setText("Welcome, Guest");
@@ -106,7 +106,7 @@ public class StartGame {
         } else {
             jFrame.setContentPane(loginPanel);
 
-            jFrame.setBounds((width - 400) / 2, (height - 400) / 2, 800, 800);
+            jFrame.setBounds((width - 400) / 2, (height - 400) / 2, 800, 850);
             jFrame.setSize(400, 400);
         }
         jFrame.setResizable(false);

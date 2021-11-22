@@ -130,6 +130,13 @@ public class Snake {
         this.y[length - 1] = y;
     }
 
+    public void decrementLength() {
+        length -= 1;
+        if (length < 3) {
+            length = 3;
+        }
+    }
+
     public String getDirection() {
         return direction;
     }
