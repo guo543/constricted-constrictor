@@ -259,8 +259,6 @@ public class GameController {
             }
             gameModel.getBeans().setFramePosition(0);
             gameModel.getBeans().start();
-            snake.incrementScore(1);
-            snake.incrementLength();
 
             if (!gameModel.isMultiplayer() && !gameModel.isPathFindingActivated()) {
                 gameModel.incrementEnergy();
