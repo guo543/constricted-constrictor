@@ -126,8 +126,8 @@ public class GameController {
 
         for (int i = 1; i < length; i++) {
             if (headX == X[i] && headY == Y[i]) {
-                gameModel.getImpact().loop(0);
                 gameModel.getImpact().setFramePosition(0);
+                gameModel.getImpact().start();
                 if (gameModel.isMultiplayer()) {
                     snake.setDead(true);
                 } else {
@@ -150,8 +150,8 @@ public class GameController {
 
         for (Obstacle obstacle : obstacles) {
             if (headX == obstacle.getX() && headY == obstacle.getY()) {
-                gameModel.getImpact().loop(0);
                 gameModel.getImpact().setFramePosition(0);
+                gameModel.getImpact().start();
                 if (gameModel.getUser() != null) {
                     saveScores(snake);
                 }
@@ -205,14 +205,14 @@ public class GameController {
         }
 
         if (snakeCollidesSnake2) {
-            gameModel.getImpact().loop(0);
             gameModel.getImpact().setFramePosition(0);
+            gameModel.getImpact().start();
             snake.setDead(true);
         }
 
         if (snake2CollidesSnake) {
-            gameModel.getImpact().loop(0);
             gameModel.getImpact().setFramePosition(0);
+            gameModel.getImpact().start();
             snake2.setDead(true);
         }
     }
@@ -231,9 +231,8 @@ public class GameController {
         ArrayList<Obstacle> obstacles = gameModel.getMap().getObstacles();
 
         if (headX == food.getX() && headY == food.getY()) {
-            System.out.println("played");
-            gameModel.getBeans().loop(0);
             gameModel.getBeans().setFramePosition(0);
+            gameModel.getBeans().start();
             snake.incrementScore(1);
             snake.incrementLength();
 
