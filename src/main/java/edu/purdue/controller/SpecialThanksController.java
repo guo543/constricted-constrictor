@@ -17,6 +17,8 @@ public class SpecialThanksController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMainFrame().setSize(900, 900);
             gameView.getMainFrame().setSize(800, 800);
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
     }
 }

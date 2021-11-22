@@ -29,8 +29,8 @@ public class HelpController {
             gameModel.getCountDownSequence().push("2");
             gameModel.getCountDownSequence().push("3");
             gameModel.getCountDownSequence().push("4");
-
-
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getHelpPanel().getRet().addActionListener(e -> {
@@ -38,6 +38,8 @@ public class HelpController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMainFrame().setSize(900, 900);
             gameView.getMainFrame().setSize(800, 800);
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
     }
 

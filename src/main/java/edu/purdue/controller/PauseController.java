@@ -33,6 +33,8 @@ public class PauseController {
             gameView.getGamePanel().revalidate();
             gameView.getGamePanel().repaint();
             gameModel.setGameState(GameModel.GameState.PLAYING);
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getPausePanel().getRestart().addActionListener(e -> {
@@ -57,6 +59,8 @@ public class PauseController {
             gameView.getGamePanel().revalidate();
             gameView.getGamePanel().repaint();
             gameModel.setGameState(GameModel.GameState.PLAYING);
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getPausePanel().getQuit().addActionListener(e -> {
@@ -78,6 +82,8 @@ public class PauseController {
                     gainControl.setValue((float) Math.log10((double) volume / 100) * 20);
                 }
             }
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
     }
 }

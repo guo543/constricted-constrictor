@@ -1,6 +1,7 @@
 package edu.purdue.controller;
 
 import edu.purdue.dao.UserDao;
+import edu.purdue.model.GameModel;
 import edu.purdue.model.User;
 import edu.purdue.view.GameView;
 import edu.purdue.view.SignUpPanel;
@@ -9,12 +10,16 @@ public class SignUpController {
 
     private UserDao userDao;
     private GameView gameView;
+    private GameModel gameModel;
 
-    public SignUpController(UserDao userDao, GameView gameView) {
+    public SignUpController(UserDao userDao, GameView gameView, GameModel gameModel) {
         this.userDao = userDao;
         this.gameView = gameView;
+        this.gameModel = gameModel;
 
         gameView.getSignUpPanel().getSignUp().addActionListener(e -> {
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
             if (!checkUsername(gameView.getSignUpPanel().getUsername().getText())) {
                 gameView.getSignUpPanel().getError().setText("Invalid Username");
                 gameView.getSignUpPanel().getError().setVisible(true);
@@ -35,6 +40,8 @@ public class SignUpController {
             gameView.getMainFrame().setContentPane(gameView.getLoginPanel());
             gameView.getLoginPanel().revalidate();
             gameView.getLoginPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
     }
 

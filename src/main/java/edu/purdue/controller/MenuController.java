@@ -26,6 +26,8 @@ public class MenuController {
             gameModel.getCountDownSequence().push("3");
             gameModel.getCountDownSequence().push("4");
             gameModel.setGameState(GameModel.GameState.PLAYING);
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
 
         });
 
@@ -43,23 +45,27 @@ public class MenuController {
             gameModel.getCountDownSequence().push("2");
             gameModel.getCountDownSequence().push("3");
             gameModel.getCountDownSequence().push("4");
+            gameModel.setGameState(GameModel.GameState.PLAYING);
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getMenuPanel().getSettings().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getSettingsPanel());
             gameView.getSettingsPanel().revalidate();
             gameView.getSettingsPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getMenuPanel().getManual().addActionListener(e -> {
-            //gameView.getMainFrame().setContentPane(gameView.getGamePanel());
             gameView.getMainFrame().setContentPane(gameView.getHelpPanel());
             gameView.getMainFrame().setSize(900, 900);
             gameView.getMainFrame().setSize(800, 800);
             gameView.getHelpPanel().setFocusable(true);
             gameView.getHelpPanel().requestFocus();
-            //gameView.getLayeredPane().setFocusable(true);
-            //gameView.getLayeredPane().requestFocus();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
 
         });
 
@@ -67,18 +73,18 @@ public class MenuController {
             gameView.getMainFrame().setContentPane(gameView.getHighScoresPanel());
             gameView.getHighScoresPanel().revalidate();
             gameView.getHighScoresPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getMenuPanel().getSpecial_thanks().addActionListener(e -> {
-            //gameView.getMainFrame().setContentPane(gameView.getGamePanel());
             gameView.getMainFrame().setContentPane(gameView.getSpecialThanksPanel());
             gameView.getMainFrame().setSize(900, 900);
             gameView.getMainFrame().setSize(800, 800);
             gameView.getSpecialThanksPanel().setFocusable(true);
             gameView.getSpecialThanksPanel().requestFocus();
-            //gameView.getLayeredPane().setFocusable(true);
-            //gameView.getLayeredPane().requestFocus();
-
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
 

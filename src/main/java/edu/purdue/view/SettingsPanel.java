@@ -94,6 +94,8 @@ public class SettingsPanel extends JTabbedPane {
 
     private JButton soundBack;
 
+    private JToggleButton effectsButton;
+
     public SettingsPanel(GameModel gameModel) {
         this.gameModel = gameModel;
         difficultyBack = new JButton("Back");
@@ -479,6 +481,10 @@ public class SettingsPanel extends JTabbedPane {
         soundBack = new JButton("Back");
         soundBack.setBounds(350, 550, 150, 60);
         soundPanel.add(soundBack);
+        effectsButton = new JToggleButton("Mute");
+        effectsButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+        effectsButton.setBounds(550, 375, 100, 40);
+        soundPanel.add(effectsButton);
         this.add("Sound", soundPanel);
     }
 
@@ -524,6 +530,10 @@ public class SettingsPanel extends JTabbedPane {
 
     public JToggleButton getMusicButton() {
         return musicButton;
+    }
+
+    public JToggleButton getEffectsButton() {
+        return effectsButton;
     }
 
     public JButton getSoundBack() {

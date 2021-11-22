@@ -28,6 +28,7 @@ public class GameModel {
     private int delay;
     private Stack<String> countDownSequence;
     private Clip bgmClip;
+    private Clip buttonClip;
     private int energyLevel;
     private boolean pathFindingActivated;
     private GameState gameState;
@@ -64,9 +65,12 @@ public class GameModel {
         }
         countDownSequence = new Stack<>();
         timer = new Timer(delay, e -> {});
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("music/CGT_BGM.wav").getAbsoluteFile());
+        AudioInputStream musicInputStream = AudioSystem.getAudioInputStream(new File("music/CGT_BGM.wav").getAbsoluteFile());
         bgmClip = AudioSystem.getClip();
-        bgmClip.open(audioInputStream);
+        bgmClip.open(musicInputStream);
+        AudioInputStream buttonInputStream = AudioSystem.getAudioInputStream(new File("music/button.wav").getAbsoluteFile());
+        buttonClip = AudioSystem.getClip();
+        buttonClip.open(buttonInputStream);
         reset();
         gameState = GameState.HOME;
     }
@@ -217,5 +221,9 @@ public class GameModel {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public Clip getButtonClip() {
+        return buttonClip;
     }
 }

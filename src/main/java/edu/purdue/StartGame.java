@@ -83,7 +83,7 @@ public class StartGame {
 
         // initialize controller
         new GameController(userDao, gameView, gameModel);
-        new SignUpController(userDao, gameView);
+        new SignUpController(userDao, gameView, gameModel);
         new LoginController(userDao, gameView, gameModel);
         new PauseController(gameView, gameModel);
         new MenuController(gameView, gameModel);
