@@ -4,9 +4,11 @@ import edu.purdue.dao.UserDao;
 import edu.purdue.model.*;
 import edu.purdue.view.GameView;
 
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -34,11 +36,17 @@ public class GameController {
             }
         });
 
-        gameModel.getTimer().addActionListener(e -> update());
+        gameModel.getTimer().addActionListener(e -> {
+            try {
+                update();
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e1) {
+                e1.printStackTrace();
+            }
+        });
         gameModel.getTimer().start();
     }
 
-    private void update() {
+    private void update() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
         if (!gameModel.getCountDownSequence().isEmpty()) {
             gameView.getGamePanel().repaint();
             return;
@@ -122,7 +130,7 @@ public class GameController {
         }
     }
 
-    private void checkCollision(Snake snake) {
+    private void checkCollision(Snake snake) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         int[] X = snake.getX();
         int[] Y = snake.getY();
 
@@ -133,6 +141,8 @@ public class GameController {
 
         for (int i = 1; i < length; i++) {
             if (headX == X[i] && headY == Y[i]) {
+                gameModel.getImpact().setFramePosition(0);
+                gameModel.getImpact().start();
                 if (gameModel.isMultiplayer()) {
                     snake.setDead(true);
                 } else {
@@ -146,7 +156,7 @@ public class GameController {
         }
     }
 
-    private void checkCollision(Snake snake, ArrayList<Obstacle> obstacles) {
+    private void checkCollision(Snake snake, ArrayList<Obstacle> obstacles) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         int[] X = snake.getX();
         int[] Y = snake.getY();
 
@@ -155,6 +165,8 @@ public class GameController {
 
         for (Obstacle obstacle : obstacles) {
             if (headX == obstacle.getX() && headY == obstacle.getY()) {
+                gameModel.getImpact().setFramePosition(0);
+                gameModel.getImpact().start();
                 if (gameModel.getUser() != null) {
                     saveScores(snake);
                 }
@@ -176,7 +188,7 @@ public class GameController {
 
     }
 
-    private void checkCollision(Snake snake, Snake snake2) {
+    private void checkCollision(Snake snake, Snake snake2) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
         int[] X = snake.getX();
         int[] Y = snake.getY();
         int[] X2 = snake2.getX();
@@ -208,15 +220,19 @@ public class GameController {
         }
 
         if (snakeCollidesSnake2) {
+            gameModel.getImpact().setFramePosition(0);
+            gameModel.getImpact().start();
             snake.setDead(true);
         }
 
         if (snake2CollidesSnake) {
+            gameModel.getImpact().setFramePosition(0);
+            gameModel.getImpact().start();
             snake2.setDead(true);
         }
     }
 
-    private void checkEatFood(Snake snake) {
+    private void checkEatFood(Snake snake) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         int[] X = snake.getX();
         int[] Y = snake.getY();
 
@@ -241,6 +257,10 @@ public class GameController {
             } else {
                 snake.incrementLength();
             }
+            gameModel.getBeans().setFramePosition(0);
+            gameModel.getBeans().start();
+            snake.incrementScore(1);
+            snake.incrementLength();
 
             if (!gameModel.isMultiplayer() && !gameModel.isPathFindingActivated()) {
                 gameModel.incrementEnergy();

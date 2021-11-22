@@ -24,6 +24,8 @@ public class GameModel {
     private Stack<String> countDownSequence;
     //private AudioInputStream audioInputStream;
     private Clip bgmClip;
+    private Clip beans;
+    private Clip impact;
     private int energyLevel;
     private boolean pathFindingActivated;
     private int doubleScoreTime;
@@ -62,10 +64,26 @@ public class GameModel {
         }
         countDownSequence = new Stack<>();
         timer = new Timer(delay, e -> {});
+
+
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("music/CGT_BGM.wav").getAbsoluteFile());
+        System.out.println(audioInputStream.getFormat());
         bgmClip = AudioSystem.getClip();
         bgmClip.open(audioInputStream);
+//        reset();
+
+        AudioInputStream eat_sound_effect = AudioSystem.getAudioInputStream(new File("music/Beans.wav").getAbsoluteFile());
+        System.out.println(eat_sound_effect.getFormat());
+        beans = AudioSystem.getClip();
+        beans.open(eat_sound_effect);
+
+        AudioInputStream collision_sound_effect = AudioSystem.getAudioInputStream(
+                new File("music/Collision.wav").getAbsoluteFile());
+        impact = AudioSystem.getClip();
+        impact.open(collision_sound_effect);
+
         reset();
+
     }
 
     public void reset() {
@@ -195,6 +213,22 @@ public class GameModel {
 
     public void setEnergyLevel(int energyLevel) {
         this.energyLevel = energyLevel;
+    }
+
+    public Clip getBeans() {
+        return beans;
+    }
+
+    public void setBeans(Clip beans) {
+        this.beans = beans;
+    }
+
+    public Clip getImpact() {
+        return impact;
+    }
+
+    public void setImpact(Clip impact) {
+        this.impact = impact;
     }
 
     public void incrementEnergy() {
