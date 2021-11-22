@@ -25,6 +25,8 @@ public class LoginController {
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
 
         gameView.getLoginPanel().getLogin().addActionListener(e -> {
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
             if (isEmpty()) {
                 emptyAction();
                 return;
@@ -60,6 +62,8 @@ public class LoginController {
             gameView.getMainFrame().setContentPane(gameView.getSignUpPanel());
             gameView.getMainFrame().setSize(500, 500);
             gameView.getMainFrame().setSize(400, 400);
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getLoginPanel().getSkip().addActionListener(e -> {
@@ -73,9 +77,8 @@ public class LoginController {
             gameView.getMenuPanel().getGreeting().setText("Welcome, Guest");
             gameView.getMenuPanel().getHighScores().setVisible(false);
             gameView.getSettingsPanel().remove(gameView.getSettingsPanel().getCredentialsPanel());
-//            gameView.getGamePanel().setFocusable(true);
-//            gameView.getGamePanel().requestFocus();
-//            gameModel.setPaused(false);
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
     }
 

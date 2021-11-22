@@ -51,7 +51,7 @@ public class GameController {
             gameView.getGamePanel().repaint();
             return;
         }
-        if (!gameModel.isPaused()) {
+        if (gameModel.getGameState() == GameModel.GameState.PLAYING) {
             Snake snake = gameModel.getSnake();
             Snake snake2 = gameModel.getSnake2();
 
@@ -143,6 +143,8 @@ public class GameController {
             if (headX == X[i] && headY == Y[i]) {
                 gameModel.getImpact().setFramePosition(0);
                 gameModel.getImpact().start();
+                gameModel.getLostClip().setFramePosition(0);
+                gameModel.getLostClip().start();
                 if (gameModel.isMultiplayer()) {
                     snake.setDead(true);
                 } else {
@@ -150,7 +152,7 @@ public class GameController {
                         saveScores(snake);
                     }
                     switchToLostPanel();
-                    gameModel.setPaused(true);
+                    gameModel.setGameState(GameModel.GameState.PAUSED);
                 }
             }
         }
@@ -167,11 +169,13 @@ public class GameController {
             if (headX == obstacle.getX() && headY == obstacle.getY()) {
                 gameModel.getImpact().setFramePosition(0);
                 gameModel.getImpact().start();
+                gameModel.getLostClip().setFramePosition(0);
+                gameModel.getLostClip().start();
                 if (gameModel.getUser() != null) {
                     saveScores(snake);
                 }
                 switchToLostPanel();
-                gameModel.setPaused(true);
+                gameModel.setGameState(GameModel.GameState.PAUSED);
             }
         }
     }
@@ -223,12 +227,16 @@ public class GameController {
             gameModel.getImpact().setFramePosition(0);
             gameModel.getImpact().start();
             snake.setDead(true);
+            gameModel.getLostClip().setFramePosition(0);
+            gameModel.getLostClip().start();
         }
 
         if (snake2CollidesSnake) {
             gameModel.getImpact().setFramePosition(0);
             gameModel.getImpact().start();
             snake2.setDead(true);
+            gameModel.getLostClip().setFramePosition(0);
+            gameModel.getLostClip().start();
         }
     }
 
@@ -361,9 +369,8 @@ public class GameController {
 
     private void keyAction(int keyCode) {
         String currentDirection = gameModel.getSnake().getDirection();
-        if (!gameModel.isPaused()) {
+        if (gameModel.getGameState() == GameModel.GameState.PLAYING) {
             if (keyCode == KeyEvent.VK_ESCAPE) {
-                //gameView.getMainFrame().setContentPane(gameView.getPausePanel());
                 FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
                 //set to 30% of current volume
                 if (gameModel.getSettings().getSetting("muteMusic").equals("false")) {
@@ -372,7 +379,7 @@ public class GameController {
                     gainControl.setValue(pauseVolume);
                 }
                 gameView.getPausePanel().setVisible(true);
-                gameModel.setPaused(true);
+                gameModel.setGameState(GameModel.GameState.PAUSED);
                 gameView.getGamePanel().revalidate();
                 gameView.getGamePanel().repaint();
             }
@@ -460,7 +467,7 @@ public class GameController {
         } else {
             gameView.getLostPanel().getResult().setVisible(false);
         }
-        gameModel.setPaused(true);
+        gameModel.setGameState(GameModel.GameState.PAUSED);
         gameView.getMainFrame().setContentPane(gameView.getLostPanel());
         gameView.getMainFrame().revalidate();
         gameView.getMainFrame().repaint();

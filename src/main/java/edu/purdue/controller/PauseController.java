@@ -24,6 +24,7 @@ public class PauseController {
                 gainControl.setValue((float) Math.log10((double) volume / 100) * 20);
             }
             gameModel.getTimer().setDelay(1000);
+            gameModel.getCountDownSequence().clear();
             gameModel.getCountDownSequence().push("Go!");
             gameModel.getCountDownSequence().push("1");
             gameModel.getCountDownSequence().push("2");
@@ -31,6 +32,9 @@ public class PauseController {
             gameModel.getCountDownSequence().push("4");
             gameView.getGamePanel().revalidate();
             gameView.getGamePanel().repaint();
+            gameModel.setGameState(GameModel.GameState.PLAYING);
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getPausePanel().getRestart().addActionListener(e -> {
@@ -46,15 +50,22 @@ public class PauseController {
                 gainControl.setValue((float) Math.log10((double) volume / 100) * 20);
             }
             gameModel.getTimer().setDelay(1000);
+            gameModel.getCountDownSequence().clear();
             gameModel.getCountDownSequence().push("Go!");
             gameModel.getCountDownSequence().push("1");
             gameModel.getCountDownSequence().push("2");
             gameModel.getCountDownSequence().push("3");
             gameModel.getCountDownSequence().push("4");
             gameView.getGamePanel().revalidate();
+            gameView.getGamePanel().repaint();
+            gameModel.setGameState(GameModel.GameState.PLAYING);
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getPausePanel().getQuit().addActionListener(e -> {
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
             Object[] options = {"Quit anyways", "Cancel"};
             int quitConfirm = JOptionPane.showOptionDialog(gameView.getPausePanel(), "Are you sure you would like to quit?",
                     "Warning: Game in Progress", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
@@ -62,6 +73,7 @@ public class PauseController {
             //System.out.println(quitConfirm);
             if (quitConfirm == 0) {
                 gameModel.reset();
+                gameModel.setGameState(GameModel.GameState.HOME);
                 gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
                 FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
                 boolean muteMusic = Boolean.parseBoolean(gameModel.getSettings().getSetting("muteMusic"));

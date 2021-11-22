@@ -9,12 +9,18 @@ import java.util.Stack;
 
 public class GameModel {
 
+    public enum GameState {
+        HOME,
+        PLAYING,
+        PAUSED
+    }
+
     private Snake snake;
     private Snake snake2;
     private Food food;
     private SpecialFood specialFood;
     private User user;
-    private boolean paused;
+    //private boolean paused;
     private Settings settings;
     private Timer timer;
     private Map map;
@@ -22,12 +28,14 @@ public class GameModel {
     private boolean defaultStyle;
     private int delay;
     private Stack<String> countDownSequence;
-    //private AudioInputStream audioInputStream;
     private Clip bgmClip;
     private Clip beans;
     private Clip impact;
+    private Clip buttonClip;
+    private Clip lostClip;
     private int energyLevel;
     private boolean pathFindingActivated;
+    private GameState gameState;
     private int doubleScoreTime;
     private int reduceLengthTime;
     private int slowDownTime;
@@ -64,13 +72,13 @@ public class GameModel {
         }
         countDownSequence = new Stack<>();
         timer = new Timer(delay, e -> {});
-
-
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("music/CGT_BGM.wav").getAbsoluteFile());
-        System.out.println(audioInputStream.getFormat());
+        AudioInputStream musicInputStream = AudioSystem.getAudioInputStream(new File("music/CGT_BGM.wav").getAbsoluteFile());
         bgmClip = AudioSystem.getClip();
-        bgmClip.open(audioInputStream);
-//        reset();
+        bgmClip.open(musicInputStream);
+
+        AudioInputStream buttonInputStream = AudioSystem.getAudioInputStream(new File("music/button.wav").getAbsoluteFile());
+        buttonClip = AudioSystem.getClip();
+        buttonClip.open(buttonInputStream);
 
         AudioInputStream eat_sound_effect = AudioSystem.getAudioInputStream(new File("music/Beans.wav").getAbsoluteFile());
         System.out.println(eat_sound_effect.getFormat());
@@ -82,8 +90,12 @@ public class GameModel {
         impact = AudioSystem.getClip();
         impact.open(collision_sound_effect);
 
-        reset();
+        AudioInputStream lostInputStream = AudioSystem.getAudioInputStream(new File("music/lost.wav").getAbsoluteFile());
+        lostClip = AudioSystem.getClip();
+        lostClip.open(lostInputStream);
 
+        reset();
+        gameState = GameState.HOME;
     }
 
     public void reset() {
@@ -100,7 +112,6 @@ public class GameModel {
         snake2.setBodyColor(new Color(Integer.parseInt(settings.getSetting("bodyColor2"))));
         food = new Food();
         specialFood = new SpecialFood();
-        paused = true;
     }
 
     public Snake getSnake() {
@@ -135,13 +146,13 @@ public class GameModel {
         this.user = user;
     }
 
-    public boolean isPaused() {
+    /*public boolean isPaused() {
         return paused;
     }
 
     public void setPaused(boolean paused) {
         this.paused = paused;
-    }
+    }*/
 
     public Settings getSettings() {
         return settings;
@@ -296,4 +307,20 @@ public class GameModel {
         }
     }
 
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public Clip getButtonClip() {
+        return buttonClip;
+    }
+
+    public Clip getLostClip() {
+        return lostClip;
+    }
 }

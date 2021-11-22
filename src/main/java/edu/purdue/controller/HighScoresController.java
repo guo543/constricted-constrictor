@@ -17,6 +17,8 @@ public class HighScoresController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
     }

@@ -30,6 +30,8 @@ public class SettingsController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getSettingsPanel().getDifficultySave().addActionListener(e -> {
@@ -39,12 +41,16 @@ public class SettingsController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getSettingsPanel().getMapBack().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getSettingsPanel().getMapSave().addActionListener(e -> {
@@ -54,6 +60,8 @@ public class SettingsController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         MapButtonListener mapButtonListener = new MapButtonListener();
@@ -74,6 +82,8 @@ public class SettingsController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getSettingsPanel().getGraphicsSave().addActionListener(e -> {
@@ -84,12 +94,16 @@ public class SettingsController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getSettingsPanel().getStyleBack().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getSettingsPanel().getStyleSave().addActionListener(e -> {
@@ -99,9 +113,13 @@ public class SettingsController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getSettingsPanel().getCredentialsSave().addActionListener(e -> {
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
             if (!saveCredentials()) {
                 return;
             }
@@ -115,6 +133,8 @@ public class SettingsController {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
 
         gameView.getSettingsPanel().getMusicSlider().addChangeListener(e -> {
@@ -134,6 +154,25 @@ public class SettingsController {
 
         gameView.getSettingsPanel().getEffectsSlider().addChangeListener(e -> {
             int effectsVolume = gameView.getSettingsPanel().getEffectsSlider().getValue();
+            FloatControl buttonControl = (FloatControl) gameModel.getButtonClip().getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl beanControl = (FloatControl) gameModel.getBeans().getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl impactControl = (FloatControl) gameModel.getImpact().getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl lostControl = (FloatControl) gameModel.getLostClip().getControl(FloatControl.Type.MASTER_GAIN);
+            if (effectsVolume == 0) {
+                gameView.getSettingsPanel().getEffectsButton().setSelected(true);
+                buttonControl.setValue(buttonControl.getMinimum());
+                beanControl.setValue(buttonControl.getMinimum());
+                impactControl.setValue(buttonControl.getMinimum());
+                lostControl.setValue(buttonControl.getMinimum());
+
+            } else {
+                gameView.getSettingsPanel().getEffectsButton().setSelected(false);
+                float volume = (float) Math.log10((double) effectsVolume / 100) * 20;
+                buttonControl.setValue(volume);
+                beanControl.setValue(volume);
+                impactControl.setValue(volume);
+                lostControl.setValue(volume);
+            }
             gameModel.getSettings().setSetting("effects", Integer.toString(effectsVolume));
             gameModel.getSettings().save();
         });
@@ -156,10 +195,30 @@ public class SettingsController {
             }
         });
 
+        gameView.getSettingsPanel().getEffectsButton().addItemListener(e -> {
+            int state = e.getStateChange();
+            if (state == ItemEvent.SELECTED) {
+                gameView.getSettingsPanel().getEffectsButton().setText("Unmute");
+                int volume = gameView.getSettingsPanel().getEffectsSlider().getValue();
+                gameView.getSettingsPanel().getEffectsSlider().setValue(0);
+                gameModel.getSettings().setSetting("effects", Integer.toString(volume));
+                gameModel.getSettings().setSetting("muteEffects", "true");
+                gameModel.getSettings().save();
+            } else {
+                gameView.getSettingsPanel().getEffectsButton().setText("Mute");
+                gameView.getSettingsPanel().getEffectsSlider().setValue(
+                        Integer.parseInt(gameModel.getSettings().getSetting("effects")));
+                gameModel.getSettings().setSetting("muteEffects", "false");
+                gameModel.getSettings().save();
+            }
+        });
+
         gameView.getSettingsPanel().getSoundBack().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
             gameView.getMenuPanel().revalidate();
             gameView.getMenuPanel().repaint();
+            gameModel.getButtonClip().setFramePosition(0);
+            gameModel.getButtonClip().start();
         });
     }
 
