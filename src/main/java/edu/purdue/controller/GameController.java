@@ -126,7 +126,8 @@ public class GameController {
 
         for (int i = 1; i < length; i++) {
             if (headX == X[i] && headY == Y[i]) {
-                gameModel.getImpact().loop(1);
+                gameModel.getImpact().loop(0);
+                gameModel.getImpact().setFramePosition(0);
                 if (gameModel.isMultiplayer()) {
                     snake.setDead(true);
                 } else {
@@ -149,7 +150,8 @@ public class GameController {
 
         for (Obstacle obstacle : obstacles) {
             if (headX == obstacle.getX() && headY == obstacle.getY()) {
-                gameModel.getImpact().loop(1);
+                gameModel.getImpact().loop(0);
+                gameModel.getImpact().setFramePosition(0);
                 if (gameModel.getUser() != null) {
                     saveScores(snake);
                 }
@@ -191,7 +193,6 @@ public class GameController {
         for (int i = 0; i < length2; i++) {
             if (headX == X2[i] && headY == Y2[i]) {
                 snakeCollidesSnake2 = true;
-                gameModel.getImpact().loop(1);
                 break;
             }
         }
@@ -199,18 +200,19 @@ public class GameController {
         for (int i = 0; i < length; i++) {
             if (headX2 == X[i] && headY2 == Y[i]) {
                 snake2CollidesSnake = true;
-                gameModel.getImpact().loop(1);
                 break;
             }
         }
 
         if (snakeCollidesSnake2) {
-            gameModel.getImpact().loop(1);
+            gameModel.getImpact().loop(0);
+            gameModel.getImpact().setFramePosition(0);
             snake.setDead(true);
         }
 
         if (snake2CollidesSnake) {
-            gameModel.getImpact().loop(1);
+            gameModel.getImpact().loop(0);
+            gameModel.getImpact().setFramePosition(0);
             snake2.setDead(true);
         }
     }
@@ -229,7 +231,9 @@ public class GameController {
         ArrayList<Obstacle> obstacles = gameModel.getMap().getObstacles();
 
         if (headX == food.getX() && headY == food.getY()) {
-            gameModel.getBeans().loop(1);
+            System.out.println("played");
+            gameModel.getBeans().loop(0);
+            gameModel.getBeans().setFramePosition(0);
             snake.incrementScore(1);
             snake.incrementLength();
 
@@ -244,7 +248,6 @@ public class GameController {
                 Snake snakeB = gameModel.getSnake2();
                 for (int i = 0; i < snakeA.getLength(); i++) {
                     if (food.getX() == snakeA.getX()[i] && food.getY() == snakeA.getY()[i]) {
-                        gameModel.getBeans().loop(1);
                         overlap = true;
                         break;
                     }
@@ -252,7 +255,6 @@ public class GameController {
                 if (gameModel.isMultiplayer()) {
                     for (int i = 0; i < snakeB.getLength(); i++) {
                         if (food.getX() == snakeA.getX()[i] && food.getY() == snakeA.getY()[i]) {
-                            gameModel.getBeans().loop(1);
                             overlap = true;
                             break;
                         }
@@ -260,7 +262,6 @@ public class GameController {
                 }
                 for (Obstacle obstacle : obstacles) {
                     if (food.getX() == obstacle.getX() && food.getY() == obstacle.getY()) {
-                        gameModel.getBeans().loop(1);
                         overlap = true;
                         break;
                     }

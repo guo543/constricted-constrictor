@@ -60,12 +60,16 @@ public class GameModel {
         }
         countDownSequence = new Stack<>();
         timer = new Timer(delay, e -> {});
+
+
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("music/CGT_BGM.wav").getAbsoluteFile());
+        System.out.println(audioInputStream.getFormat());
         bgmClip = AudioSystem.getClip();
         bgmClip.open(audioInputStream);
-        reset();
+//        reset();
 
         AudioInputStream eat_sound_effect = AudioSystem.getAudioInputStream(new File("music/Beans.wav").getAbsoluteFile());
+        System.out.println(eat_sound_effect.getFormat());
         beans = AudioSystem.getClip();
         beans.open(eat_sound_effect);
 
@@ -73,7 +77,8 @@ public class GameModel {
                 new File("music/Collision.wav").getAbsoluteFile());
         impact = AudioSystem.getClip();
         impact.open(collision_sound_effect);
-//        reset();
+
+        reset();
 
     }
 
