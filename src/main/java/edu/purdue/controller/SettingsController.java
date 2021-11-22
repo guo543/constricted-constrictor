@@ -154,12 +154,12 @@ public class SettingsController {
 
         gameView.getSettingsPanel().getEffectsSlider().addChangeListener(e -> {
             int effectsVolume = gameView.getSettingsPanel().getEffectsSlider().getValue();
-            FloatControl gainControl = (FloatControl) gameModel.getBGMClip().getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl gainControl = (FloatControl) gameModel.getButtonClip().getControl(FloatControl.Type.MASTER_GAIN);
             if (effectsVolume == 0) {
                 gameView.getSettingsPanel().getEffectsButton().setSelected(true);
                 gainControl.setValue(gainControl.getMinimum());
             } else {
-                gameView.getSettingsPanel().getMusicButton().setSelected(false);
+                gameView.getSettingsPanel().getEffectsButton().setSelected(false);
                 float volume = (float) Math.log10((double) effectsVolume / 100) * 20;
                 gainControl.setValue(volume);
             }
@@ -188,17 +188,17 @@ public class SettingsController {
         gameView.getSettingsPanel().getEffectsButton().addItemListener(e -> {
             int state = e.getStateChange();
             if (state == ItemEvent.SELECTED) {
-                gameView.getSettingsPanel().getMusicButton().setText("Unmute");
-                int volume = gameView.getSettingsPanel().getMusicSlider().getValue();
-                gameView.getSettingsPanel().getMusicSlider().setValue(0);
-                gameModel.getSettings().setSetting("music", Integer.toString(volume));
-                gameModel.getSettings().setSetting("muteMusic", "true");
+                gameView.getSettingsPanel().getEffectsButton().setText("Unmute");
+                int volume = gameView.getSettingsPanel().getEffectsSlider().getValue();
+                gameView.getSettingsPanel().getEffectsSlider().setValue(0);
+                gameModel.getSettings().setSetting("effects", Integer.toString(volume));
+                gameModel.getSettings().setSetting("muteEffects", "true");
                 gameModel.getSettings().save();
             } else {
-                gameView.getSettingsPanel().getMusicButton().setText("Mute");
-                gameView.getSettingsPanel().getMusicSlider().setValue(
-                        Integer.parseInt(gameModel.getSettings().getSetting("music")));
-                gameModel.getSettings().setSetting("muteMusic", "false");
+                gameView.getSettingsPanel().getEffectsButton().setText("Mute");
+                gameView.getSettingsPanel().getEffectsSlider().setValue(
+                        Integer.parseInt(gameModel.getSettings().getSetting("effects")));
+                gameModel.getSettings().setSetting("muteEffects", "false");
                 gameModel.getSettings().save();
             }
         });
