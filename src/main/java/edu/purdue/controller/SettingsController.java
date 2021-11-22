@@ -154,14 +154,24 @@ public class SettingsController {
 
         gameView.getSettingsPanel().getEffectsSlider().addChangeListener(e -> {
             int effectsVolume = gameView.getSettingsPanel().getEffectsSlider().getValue();
-            FloatControl gainControl = (FloatControl) gameModel.getButtonClip().getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl buttonControl = (FloatControl) gameModel.getButtonClip().getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl beanControl = (FloatControl) gameModel.getBeans().getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl impactControl = (FloatControl) gameModel.getImpact().getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl lostControl = (FloatControl) gameModel.getLostClip().getControl(FloatControl.Type.MASTER_GAIN);
             if (effectsVolume == 0) {
                 gameView.getSettingsPanel().getEffectsButton().setSelected(true);
-                gainControl.setValue(gainControl.getMinimum());
+                buttonControl.setValue(buttonControl.getMinimum());
+                beanControl.setValue(buttonControl.getMinimum());
+                impactControl.setValue(buttonControl.getMinimum());
+                lostControl.setValue(buttonControl.getMinimum());
+
             } else {
                 gameView.getSettingsPanel().getEffectsButton().setSelected(false);
                 float volume = (float) Math.log10((double) effectsVolume / 100) * 20;
-                gainControl.setValue(volume);
+                buttonControl.setValue(volume);
+                beanControl.setValue(volume);
+                impactControl.setValue(volume);
+                lostControl.setValue(volume);
             }
             gameModel.getSettings().setSetting("effects", Integer.toString(effectsVolume));
             gameModel.getSettings().save();

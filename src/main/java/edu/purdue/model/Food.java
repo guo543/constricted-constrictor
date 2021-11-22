@@ -13,7 +13,7 @@ public class Food {
         x = 350;
         y = 200;
 
-        loadImage();
+        //loadImage();
     }
 
     public void loadImage() {

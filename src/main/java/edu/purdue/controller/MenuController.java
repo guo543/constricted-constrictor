@@ -20,6 +20,7 @@ public class MenuController {
             gameModel.setMultiplayer(false);
             gameView.getGamePanel().revalidate();
             gameModel.getTimer().setDelay(1000);
+            gameModel.getCountDownSequence().clear();
             gameModel.getCountDownSequence().push("Go!");
             gameModel.getCountDownSequence().push("1");
             gameModel.getCountDownSequence().push("2");
@@ -40,6 +41,7 @@ public class MenuController {
             gameView.getGamePanel().revalidate();
             gameView.getGamePanel().repaint();
             gameModel.getTimer().setDelay(1000);
+            gameModel.getCountDownSequence().clear();
             gameModel.getCountDownSequence().push("Go!");
             gameModel.getCountDownSequence().push("1");
             gameModel.getCountDownSequence().push("2");
@@ -60,10 +62,10 @@ public class MenuController {
 
         gameView.getMenuPanel().getManual().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getHelpPanel());
-            gameView.getMainFrame().setSize(900, 900);
-            gameView.getMainFrame().setSize(800, 800);
             gameView.getHelpPanel().setFocusable(true);
             gameView.getHelpPanel().requestFocus();
+            gameView.getHelpPanel().revalidate();
+            gameView.getHelpPanel().repaint();
             gameModel.getButtonClip().setFramePosition(0);
             gameModel.getButtonClip().start();
 
@@ -79,10 +81,10 @@ public class MenuController {
 
         gameView.getMenuPanel().getSpecial_thanks().addActionListener(e -> {
             gameView.getMainFrame().setContentPane(gameView.getSpecialThanksPanel());
-            gameView.getMainFrame().setSize(900, 900);
-            gameView.getMainFrame().setSize(800, 800);
             gameView.getSpecialThanksPanel().setFocusable(true);
             gameView.getSpecialThanksPanel().requestFocus();
+            gameView.getSpecialThanksPanel().revalidate();
+            gameView.getSpecialThanksPanel().repaint();
             gameModel.getButtonClip().setFramePosition(0);
             gameModel.getButtonClip().start();
         });

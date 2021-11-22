@@ -18,6 +18,7 @@ public class GameModel {
     private Snake snake;
     private Snake snake2;
     private Food food;
+    private SpecialFood specialFood;
     private User user;
     //private boolean paused;
     private Settings settings;
@@ -28,10 +29,16 @@ public class GameModel {
     private int delay;
     private Stack<String> countDownSequence;
     private Clip bgmClip;
+    private Clip beans;
+    private Clip impact;
     private Clip buttonClip;
+    private Clip lostClip;
     private int energyLevel;
     private boolean pathFindingActivated;
     private GameState gameState;
+    private int doubleScoreTime;
+    private int reduceLengthTime;
+    private int slowDownTime;
 
     public GameModel() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         settings = new Settings();
@@ -68,15 +75,34 @@ public class GameModel {
         AudioInputStream musicInputStream = AudioSystem.getAudioInputStream(new File("music/CGT_BGM.wav").getAbsoluteFile());
         bgmClip = AudioSystem.getClip();
         bgmClip.open(musicInputStream);
+
         AudioInputStream buttonInputStream = AudioSystem.getAudioInputStream(new File("music/button.wav").getAbsoluteFile());
         buttonClip = AudioSystem.getClip();
         buttonClip.open(buttonInputStream);
+
+        AudioInputStream eat_sound_effect = AudioSystem.getAudioInputStream(new File("music/Beans.wav").getAbsoluteFile());
+        System.out.println(eat_sound_effect.getFormat());
+        beans = AudioSystem.getClip();
+        beans.open(eat_sound_effect);
+
+        AudioInputStream collision_sound_effect = AudioSystem.getAudioInputStream(
+                new File("music/Collision.wav").getAbsoluteFile());
+        impact = AudioSystem.getClip();
+        impact.open(collision_sound_effect);
+
+        AudioInputStream lostInputStream = AudioSystem.getAudioInputStream(new File("music/lost.wav").getAbsoluteFile());
+        lostClip = AudioSystem.getClip();
+        lostClip.open(lostInputStream);
+
         reset();
         gameState = GameState.HOME;
     }
 
     public void reset() {
         pathFindingActivated = false;
+        doubleScoreTime = 0;
+        reduceLengthTime = 0;
+        slowDownTime = 0;
         energyLevel = 0;
         snake = new Snake(false);
         snake.setHeadColor(new Color(Integer.parseInt(settings.getSetting("headColor"))));
@@ -85,8 +111,7 @@ public class GameModel {
         snake2.setHeadColor(new Color(Integer.parseInt(settings.getSetting("headColor2"))));
         snake2.setBodyColor(new Color(Integer.parseInt(settings.getSetting("bodyColor2"))));
         food = new Food();
-        //paused = true;
-        //gameState = GameState.PLAYING;
+        specialFood = new SpecialFood();
     }
 
     public Snake getSnake() {
@@ -99,6 +124,14 @@ public class GameModel {
 
     public Food getFood() {
         return food;
+    }
+
+    public SpecialFood getSpecialFood() {
+        return specialFood;
+    }
+
+    public void setSpecialFood(SpecialFood specialFood) {
+        this.specialFood = specialFood;
     }
 
     public void setFood(Food food) {
@@ -193,6 +226,22 @@ public class GameModel {
         this.energyLevel = energyLevel;
     }
 
+    public Clip getBeans() {
+        return beans;
+    }
+
+    public void setBeans(Clip beans) {
+        this.beans = beans;
+    }
+
+    public Clip getImpact() {
+        return impact;
+    }
+
+    public void setImpact(Clip impact) {
+        this.impact = impact;
+    }
+
     public void incrementEnergy() {
         energyLevel += 10;
         if (energyLevel > 150) {
@@ -215,6 +264,50 @@ public class GameModel {
         this.pathFindingActivated = pathFindingActivated;
     }
 
+    public int getDoubleScoreTime() {
+        return doubleScoreTime;
+    }
+
+    public void setDoubleScoreTime(int doubleScoreTime) {
+        this.doubleScoreTime = doubleScoreTime;
+    }
+
+    public int getReduceLengthTime() {
+        return reduceLengthTime;
+    }
+
+    public void setReduceLengthTime(int reduceLengthTime) {
+        this.reduceLengthTime = reduceLengthTime;
+    }
+
+    public int getSlowDownTime() {
+        return slowDownTime;
+    }
+
+    public void setSlowDownTime(int slowDownTime) {
+        this.slowDownTime = slowDownTime;
+    }
+
+    public void decrementDoubleScoreTime() {
+        doubleScoreTime -= 1;
+        if (doubleScoreTime < 0) {
+            doubleScoreTime = 0;
+        }
+    }
+    public void decrementReduceLengthTime() {
+        reduceLengthTime -= 1;
+        if (reduceLengthTime < 0) {
+            reduceLengthTime = 0;
+        }
+    }
+    public void decrementSlowDownTime() {
+        slowDownTime -= 1;
+        if (slowDownTime < 0) {
+            slowDownTime = 0;
+        }
+    }
+
+
     public GameState getGameState() {
         return gameState;
     }
@@ -225,5 +318,9 @@ public class GameModel {
 
     public Clip getButtonClip() {
         return buttonClip;
+    }
+
+    public Clip getLostClip() {
+        return lostClip;
     }
 }

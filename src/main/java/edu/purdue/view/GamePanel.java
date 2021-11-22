@@ -1,9 +1,6 @@
 package edu.purdue.view;
 
-import edu.purdue.model.Food;
-import edu.purdue.model.GameModel;
-import edu.purdue.model.Obstacle;
-import edu.purdue.model.Snake;
+import edu.purdue.model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,6 +42,7 @@ public class GamePanel extends JPanel {
         Snake snake = gameModel.getSnake();
         Snake snake2 = gameModel.getSnake2();
         Food food = gameModel.getFood();
+        SpecialFood specialFood = gameModel.getSpecialFood();
         Color wordColor = new Color(255, 255, 255);
         Color backgroundColor = new Color(0, 9, 123);
         Color grid = new Color(246, 246, 246);
@@ -53,6 +51,20 @@ public class GamePanel extends JPanel {
         Color headColor2 = snake2.getHeadColor();
         Color bodyColor2 = snake2.getBodyColor();
         Color foodColor = new Color(14, 107, 183);
+        Color specialFoodColor;
+        switch (specialFood.getType()) {
+            case DOUBLE_SCORE:
+                specialFoodColor = new Color(252, 169, 88);
+                break;
+            case REDUCE_LENGTH:
+                specialFoodColor = new Color(255, 73, 150);
+                break;
+            case SLOW_DOWN:
+                specialFoodColor = new Color(113, 255, 211);
+                break;
+            default:
+                specialFoodColor = new Color(14, 107, 183);
+        }
         Color obstaclesColor = new Color(73, 32, 32);
         //if (gameModel.isPaused()) {
         if (gameModel.getGameState() == GameModel.GameState.PAUSED) {
@@ -63,6 +75,7 @@ public class GamePanel extends JPanel {
             headColor2 = headColor2.darker();
             bodyColor2 = bodyColor2.darker();
             foodColor = foodColor.darker();
+            specialFoodColor = specialFoodColor.darker();
             obstaclesColor = obstaclesColor.darker();
             grid = grid.darker();
         }
@@ -108,6 +121,7 @@ public class GamePanel extends JPanel {
                     g.drawString("Record: " + gameModel.getSnake().getScore(), 530, 32);
                 }
             }
+            g.drawRect(25, 737, 725, 60);
             g.drawString("Score: " + gameModel.getSnake().getScore(), 650, 32);
         }
 
@@ -125,7 +139,43 @@ public class GamePanel extends JPanel {
 
         g.setColor(foodColor);
         // paint food
-        g.fillRoundRect(food.getX() + 3, food.getY() + 3, 19, 19, 900, 900);
+        g.fillRoundRect(food.getX() + 3, food.getY() + 3, 19, 19, 19, 19);
+
+        g.setColor(specialFoodColor);
+        if (!gameModel.isMultiplayer()) {
+            if (gameModel.getSpecialFood().isVisible()) {
+
+
+                // paint food
+                g.fillRoundRect(specialFood.getX() + 5, specialFood.getY() + 5, 15, 15, 15, 15);
+
+                g.drawArc(specialFood.getX(), specialFood.getY(), 25, 25, 90,
+                        (int) ((specialFood.getTimeBeforeDisappear() / 50.0) * 360.0));
+            }
+
+            g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 15));
+            if (gameModel.getDoubleScoreTime() != 0) {
+                g.setColor(new Color(252, 169, 88));
+                g.drawString("Double Score", 100, 755);
+                g.drawRect(52, 765, 205, 21);
+                g.fillRect(55, 768, gameModel.getDoubleScoreTime(), 16);
+
+            }
+
+            if (gameModel.getReduceLengthTime() != 0) {
+                g.setColor(new Color(255, 73, 150));
+                g.drawString("Reduce Length", 330, 755);
+                g.drawRect(285, 765, 205, 21);
+                g.fillRect(288, 768, gameModel.getReduceLengthTime(), 16);
+            }
+
+            if (gameModel.getSlowDownTime() != 0) {
+                g.setColor(new Color(113, 255, 211));
+                g.drawString("Slow Down", 580, 755);
+                g.drawRect(518, 765, 205, 21);
+                g.fillRect(521, 768, gameModel.getSlowDownTime(), 16);
+            }
+        }
 
         // draw snake
         if (!snake.isDead()) {
@@ -205,7 +255,51 @@ public class GamePanel extends JPanel {
             g.drawString("Score: " + gameModel.getSnake().getScore(), 650, 32);
         }
 
+        if (!gameModel.isMultiplayer()) {
+            g.drawString("Energy:", 30, 32);
+            g.drawRect(117, 15, 155, 21);
+            g.fillRect(120, 18, gameModel.getEnergyLevel(), 16);
+
+            if (gameModel.getEnergyLevel() == 150) {
+                g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 10));
+                g.drawString("Press Space to", 285, 25);
+                g.drawString("activate special skill", 285, 33);
+            }
+        }
+
         g.fillRoundRect(food.getX() + 3, food.getY() + 3, 19, 19, 900, 900);
+
+        if (!gameModel.isMultiplayer()) {
+            if (gameModel.getSpecialFood().isVisible()) {
+                SpecialFood specialFood = gameModel.getSpecialFood();
+
+                // paint food
+                g.fillRoundRect(specialFood.getX() + 5, specialFood.getY() + 5, 15, 15, 15, 15);
+
+                g.drawArc(specialFood.getX(), specialFood.getY(), 25, 25, 90,
+                        (int) ((specialFood.getTimeBeforeDisappear() / 50.0) * 360.0));
+            }
+
+            g.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 15));
+            if (gameModel.getDoubleScoreTime() != 0) {
+                g.drawString("Double Score", 100, 755);
+                g.drawRect(52, 765, 205, 21);
+                g.fillRect(55, 768, gameModel.getDoubleScoreTime(), 16);
+
+            }
+
+            if (gameModel.getReduceLengthTime() != 0) {
+                g.drawString("Reduce Length", 330, 755);
+                g.drawRect(285, 765, 205, 21);
+                g.fillRect(288, 768, gameModel.getDoubleScoreTime(), 16);
+            }
+
+            if (gameModel.getSlowDownTime() != 0) {
+                g.drawString("Slow Down", 580, 755);
+                g.drawRect(518, 765, 205, 21);
+                g.fillRect(521, 768, gameModel.getDoubleScoreTime(), 16);
+            }
+        }
 
         // draw snake
         if (!snake.isDead()) {
