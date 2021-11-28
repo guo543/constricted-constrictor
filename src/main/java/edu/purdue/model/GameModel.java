@@ -82,7 +82,6 @@ public class GameModel {
         buttonClip.open(buttonInputStream);
 
         AudioInputStream eat_sound_effect = AudioSystem.getAudioInputStream(new File("music/Beans.wav").getAbsoluteFile());
-        System.out.println(eat_sound_effect.getFormat());
         beans = AudioSystem.getClip();
         beans.open(eat_sound_effect);
 
