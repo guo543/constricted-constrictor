@@ -158,12 +158,14 @@ public class SettingsController {
             FloatControl beanControl = (FloatControl) gameModel.getBeans().getControl(FloatControl.Type.MASTER_GAIN);
             FloatControl impactControl = (FloatControl) gameModel.getImpact().getControl(FloatControl.Type.MASTER_GAIN);
             FloatControl lostControl = (FloatControl) gameModel.getLostClip().getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl powerUpsControl = (FloatControl) gameModel.getPowerUpsClip().getControl(FloatControl.Type.MASTER_GAIN);
             if (effectsVolume == 0) {
                 gameView.getSettingsPanel().getEffectsButton().setSelected(true);
                 buttonControl.setValue(buttonControl.getMinimum());
                 beanControl.setValue(buttonControl.getMinimum());
                 impactControl.setValue(buttonControl.getMinimum());
                 lostControl.setValue(buttonControl.getMinimum());
+                powerUpsControl.setValue(buttonControl.getMinimum());
 
             } else {
                 gameView.getSettingsPanel().getEffectsButton().setSelected(false);

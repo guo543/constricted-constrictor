@@ -363,6 +363,8 @@ public class GameController {
                 if (specialFood.getType() == SpecialFood.FoodType.SLOW_DOWN) {
                     gameModel.setSlowDownTime(200);
                 }
+                gameModel.getPowerUpsClip().setFramePosition(0);
+                gameModel.getPowerUpsClip().start();
                 gameModel.getSpecialFood().setVisible(false);
             }
         }
@@ -386,6 +388,8 @@ public class GameController {
             }
             if (gameModel.getEnergyLevel() == 150 && !gameModel.isMultiplayer()) {
                 if (keyCode == KeyEvent.VK_SPACE) {
+                    gameModel.getPowerUpsClip().setFramePosition(0);
+                    gameModel.getPowerUpsClip().start();
                     System.out.println("activate pathfinding");
                     gameModel.getTimer().setDelay(20);
                     gameModel.setPathFindingActivated(true);

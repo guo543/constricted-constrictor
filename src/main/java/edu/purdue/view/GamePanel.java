@@ -177,7 +177,7 @@ public class GamePanel extends JPanel {
 
             if (gameModel.getSlowDownTime() != 0) {
                 g.setColor(slowDownColor);
-                g.drawString("Slow Down", 580, 755);
+                g.drawString("Intangible", 580, 755);
                 g.drawRect(518, 765, 205, 21);
                 g.fillRect(521, 768, gameModel.getSlowDownTime(), 16);
             }

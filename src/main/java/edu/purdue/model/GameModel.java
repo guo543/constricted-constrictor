@@ -33,6 +33,7 @@ public class GameModel {
     private Clip impact;
     private Clip buttonClip;
     private Clip lostClip;
+    private Clip powerUpsClip;
     private int energyLevel;
     private boolean pathFindingActivated;
     private GameState gameState;
@@ -93,6 +94,10 @@ public class GameModel {
         AudioInputStream lostInputStream = AudioSystem.getAudioInputStream(new File("music/lost.wav").getAbsoluteFile());
         lostClip = AudioSystem.getClip();
         lostClip.open(lostInputStream);
+
+        AudioInputStream powerUpsInputStream = AudioSystem.getAudioInputStream(new File("music/powerups.wav").getAbsoluteFile());
+        powerUpsClip = AudioSystem.getClip();
+        powerUpsClip.open(powerUpsInputStream);
 
         reset();
         gameState = GameState.HOME;
@@ -322,5 +327,13 @@ public class GameModel {
 
     public Clip getLostClip() {
         return lostClip;
+    }
+
+    public Clip getPowerUpsClip() {
+        return powerUpsClip;
+    }
+
+    public void setPowerUpsClip(Clip powerUpsClip) {
+        this.powerUpsClip = powerUpsClip;
     }
 }
