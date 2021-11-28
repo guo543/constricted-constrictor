@@ -98,7 +98,6 @@ public class GameController {
             // check if the snake's head collide with its body
             if (!snake.isDead()) {
                 checkCollision(snake);
-
             }
             if (gameModel.isMultiplayer()) {
                 if (!snake2.isDead()) {

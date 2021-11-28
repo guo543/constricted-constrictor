@@ -67,7 +67,7 @@ public class GamePanel extends JPanel {
         }
         Color obstaclesColor = new Color(73, 32, 32);
         //if (gameModel.isPaused()) {
-        if (gameModel.getGameState() == GameModel.GameState.PAUSED) {
+        if (gameModel.getGameState() == GameModel.GameState.PAUSED || !gameModel.getCountDownSequence().isEmpty()) {
             wordColor = wordColor.darker();
             backgroundColor = backgroundColor.darker();
             headColor = headColor.darker();
@@ -223,7 +223,7 @@ public class GamePanel extends JPanel {
         Color pausedColor = color.darker();
 
         // darken when game is paused
-        if (gameModel.getGameState() == GameModel.GameState.PAUSED) {
+        if (gameModel.getGameState() == GameModel.GameState.PAUSED || !gameModel.getCountDownSequence().isEmpty()) {
             g.setColor(pausedColor);
         } else {
             g.setColor(color);
@@ -291,13 +291,13 @@ public class GamePanel extends JPanel {
             if (gameModel.getReduceLengthTime() != 0) {
                 g.drawString("Reduce Length", 330, 755);
                 g.drawRect(285, 765, 205, 21);
-                g.fillRect(288, 768, gameModel.getDoubleScoreTime(), 16);
+                g.fillRect(288, 768, gameModel.getReduceLengthTime(), 16);
             }
 
             if (gameModel.getSlowDownTime() != 0) {
                 g.drawString("Slow Down", 580, 755);
                 g.drawRect(518, 765, 205, 21);
-                g.fillRect(521, 768, gameModel.getDoubleScoreTime(), 16);
+                g.fillRect(521, 768, gameModel.getSlowDownTime(), 16);
             }
         }
 
@@ -344,7 +344,7 @@ public class GamePanel extends JPanel {
     private void paintDefaultSnake(Graphics g, Snake snake, Color headColor, Color bodyColor) {
         Color white = new Color(255, 255, 255);
         Color black = new Color(0, 0, 0);
-        if (gameModel.getGameState() == GameModel.GameState.PAUSED) {
+        if (gameModel.getGameState() == GameModel.GameState.PAUSED || !gameModel.getCountDownSequence().isEmpty()) {
             white = white.darker();
         }
         g.setColor(headColor);
