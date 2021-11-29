@@ -11,31 +11,30 @@ public class HelpPanel extends JPanel{
     private JLabel instructions;
     private JButton ret;
     private JButton start;
-    private BufferedImage image;
+    private BufferedImage controls_img;
+    private BufferedImage instruction_img;
     public HelpPanel() {
         //header
+        JPanel jPanel = new JPanel();
         instructions = new JLabel("How to play");
-        this.add(instructions,BOTTOM_ALIGNMENT);
+        instructions.setFont(new Font("Serif", Font.PLAIN, 24));
+//        jPanel.add(instructions, TOP_ALIGNMENT);
+//        this.setBorder(BorderFactory.createEmptyBorder(30, 10, 50, 10));
+
+        //image
 
 
-        instructions.setFont(new Font("Serif", Font.PLAIN, 18));
-//        instructions.setBounds(300, 220, 500, 60);
+        try {
+            controls_img = ImageIO.read(new File("images/Controls.jpg"));
+        } catch (IOException ex) {
+            // handle exception...
+        }
+        try {
+            instruction_img = ImageIO.read(new File("images/instructions.png"));
+        } catch (IOException ex) {
+            // handle exception...
+        }
 
-//        setLayout(new BorderLayout());
-
-        //text
-        JTextArea txt = new JTextArea();
-        txt.setEditable(false);
-//        txt.setLineWrap(true);
-        txt.setWrapStyleWord(true);
-        txt.setBorder(new EmptyBorder(0,10,10,10));
-        txt.setFont(UIManager.getFont("Label.font"));
-        txt.setBackground(Color.WHITE);
-        JScrollPane scr = new JScrollPane(txt);
-        this.add(txt);
-        this.add(scr);
-        txt.setText("Use the arrow keys on your keyboard to navigate " +
-                "the snake to collect beans and increase your score as you progress. ");
 
         //buttons
         ret = new JButton("Return to Main Screen");
@@ -45,22 +44,25 @@ public class HelpPanel extends JPanel{
         start.setBackground(Color.red);
         start.setForeground(Color.white);
 
-        this.add(ret,BOTTOM_ALIGNMENT);
-        this.add(start,BOTTOM_ALIGNMENT);
 
+//        this.add(Box.createHorizontalGlue());
+        jPanel.add(ret);
+//        jPanel.add(Box.createRigidArea(new Dimension(2, 0)));
+        jPanel.add(start);
+        setLayout(new BorderLayout());
+        this.add(instructions, BorderLayout.NORTH);
+        add(jPanel,BorderLayout.SOUTH);
+//        this.add(ret,BOTTOM_ALIGNMENT);
+//        this.add(start,BOTTOM_ALIGNMENT);
 
-        //image
-        try {
-            image = ImageIO.read(new File("images/Controls.jpg"));
-        } catch (IOException ex) {
-            // handle exception...
-        }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image,50,200,this);
+        g.drawImage(controls_img,50,200,this);
+        g.drawImage(instruction_img,50,50,this);
+
     }
 
     public JLabel getInstructions() { return instructions; }
@@ -75,7 +77,13 @@ public class HelpPanel extends JPanel{
 
     public void setStart(JButton start) { this.start = start; }
 
-    public BufferedImage getImage() { return image; }
+    public BufferedImage getControls_img() { return controls_img; }
 
-    public void setImage(BufferedImage image) { this.image = image; }
+    public void setControls_img(BufferedImage controls_img) { this.controls_img = controls_img; }
+
+    public BufferedImage getInstruction_img() { return instruction_img; }
+
+    public void setInstruction_img(BufferedImage instruction_img) { this.instruction_img = instruction_img; }
+
+//    public Container getContentPane() { return contentPane; }
 }
