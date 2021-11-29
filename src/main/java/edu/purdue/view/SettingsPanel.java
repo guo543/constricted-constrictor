@@ -457,7 +457,9 @@ public class SettingsPanel extends JTabbedPane {
 
     private void initializeSoundPanel() {
         gameModel.getSettings().setSetting("muteMusic", "false");
-        gameModel.getSettings().save();
+        gameModel.getSettings().setSetting("muteEffects", "false");
+        gameModel.getSettings().setSetting("music", "100");
+        gameModel.getSettings().setSetting("effects", "100");
         soundPanel = new JPanel();
         soundPanel.setLayout(null);
         JLabel musicLabel = new JLabel("Music:");

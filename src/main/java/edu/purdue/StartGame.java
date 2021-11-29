@@ -117,7 +117,7 @@ public class StartGame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 System.out.println("trying to close");
-                gameModel.getSettings().save();
+                //gameModel.getSettings().save();
                 if (gameModel.getGameState() != GameModel.GameState.HOME) {
                     if (gameModel.getGameState() == GameModel.GameState.PLAYING) {
                         gameView.getPausePanel().setVisible(true);

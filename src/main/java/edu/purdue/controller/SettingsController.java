@@ -149,7 +149,7 @@ public class SettingsController {
                 gainControl.setValue(volume);
             }
             gameModel.getSettings().setSetting("music", Integer.toString(musicVolume));
-            gameModel.getSettings().save();
+//            gameModel.getSettings().save();
         });
 
         gameView.getSettingsPanel().getEffectsSlider().addChangeListener(e -> {
@@ -158,12 +158,14 @@ public class SettingsController {
             FloatControl beanControl = (FloatControl) gameModel.getBeans().getControl(FloatControl.Type.MASTER_GAIN);
             FloatControl impactControl = (FloatControl) gameModel.getImpact().getControl(FloatControl.Type.MASTER_GAIN);
             FloatControl lostControl = (FloatControl) gameModel.getLostClip().getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl powerUpsControl = (FloatControl) gameModel.getPowerUpsClip().getControl(FloatControl.Type.MASTER_GAIN);
             if (effectsVolume == 0) {
                 gameView.getSettingsPanel().getEffectsButton().setSelected(true);
                 buttonControl.setValue(buttonControl.getMinimum());
                 beanControl.setValue(buttonControl.getMinimum());
                 impactControl.setValue(buttonControl.getMinimum());
                 lostControl.setValue(buttonControl.getMinimum());
+                powerUpsControl.setValue(buttonControl.getMinimum());
 
             } else {
                 gameView.getSettingsPanel().getEffectsButton().setSelected(false);
@@ -172,9 +174,10 @@ public class SettingsController {
                 beanControl.setValue(volume);
                 impactControl.setValue(volume);
                 lostControl.setValue(volume);
+                powerUpsControl.setValue(volume);
             }
             gameModel.getSettings().setSetting("effects", Integer.toString(effectsVolume));
-            gameModel.getSettings().save();
+            //gameModel.getSettings().save();
         });
 
         gameView.getSettingsPanel().getMusicButton().addItemListener(e ->  {
@@ -191,7 +194,7 @@ public class SettingsController {
                 gameView.getSettingsPanel().getMusicSlider().setValue(
                         Integer.parseInt(gameModel.getSettings().getSetting("music")));
                 gameModel.getSettings().setSetting("muteMusic", "false");
-                gameModel.getSettings().save();
+                //gameModel.getSettings().save();
             }
         });
 
@@ -203,13 +206,13 @@ public class SettingsController {
                 gameView.getSettingsPanel().getEffectsSlider().setValue(0);
                 gameModel.getSettings().setSetting("effects", Integer.toString(volume));
                 gameModel.getSettings().setSetting("muteEffects", "true");
-                gameModel.getSettings().save();
+                //gameModel.getSettings().save();
             } else {
                 gameView.getSettingsPanel().getEffectsButton().setText("Mute");
                 gameView.getSettingsPanel().getEffectsSlider().setValue(
                         Integer.parseInt(gameModel.getSettings().getSetting("effects")));
                 gameModel.getSettings().setSetting("muteEffects", "false");
-                gameModel.getSettings().save();
+                //gameModel.getSettings().save();
             }
         });
 
