@@ -105,6 +105,7 @@ public class StartGame {
             gameView.getMenuPanel().getHighScores().setVisible(false);
             gameView.getSettingsPanel().remove(gameView.getSettingsPanel().getCredentialsPanel());
             gameModel.getBGMClip().loop(Clip.LOOP_CONTINUOUSLY);
+            gameView.getMenuPanel().getSpecial_thanks().setBounds(300, 600, 200, 50);
         } else {
             jFrame.setContentPane(loginPanel);
 
