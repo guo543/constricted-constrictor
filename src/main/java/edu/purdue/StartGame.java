@@ -9,6 +9,7 @@ import edu.purdue.model.HighScores;
 import edu.purdue.model.Settings;
 import edu.purdue.view.*;
 
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -103,6 +104,7 @@ public class StartGame {
             gameView.getMenuPanel().getGreeting().setText("Welcome, Guest");
             gameView.getMenuPanel().getHighScores().setVisible(false);
             gameView.getSettingsPanel().remove(gameView.getSettingsPanel().getCredentialsPanel());
+            gameModel.getBGMClip().loop(Clip.LOOP_CONTINUOUSLY);
         } else {
             jFrame.setContentPane(loginPanel);
 
