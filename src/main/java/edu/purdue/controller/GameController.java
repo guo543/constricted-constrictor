@@ -20,13 +20,13 @@ public class GameController {
     private GameModel gameModel;
     private boolean directionUpdated;
     private boolean directionUpdated2;
-    private PathFinder pathFinder;
+    private PathSolver pathSolver;
 
     public GameController(UserDao userDao, GameView gameView, GameModel gameModel) {
         this.userDao = userDao;
         this.gameView = gameView;
         this.gameModel = gameModel;
-        pathFinder = new PathFinder();
+        pathSolver = new PathSolver();
 
         gameView.getGamePanel().addKeyListener(new KeyAdapter() {
             @Override
@@ -60,17 +60,17 @@ public class GameController {
             if (!snake.isDead()) {
                 if (gameModel.isPathFindingActivated()) {
 
-                    snake.setDirection(pathFinder.getNextDirection(snake.getX(),
+                    snake.setDirection(pathSolver.getNextDirection(snake.getX(),
                             snake.getY(),
                             snake.getLength(),
                             gameModel.getFood().getX(),
                             gameModel.getFood().getY(),
                             gameModel.getMap().getObstacles()));
-                    gameModel.decrementEnergy();
-                    if (gameModel.getEnergyLevel() == 0) {
-                        gameModel.setPathFindingActivated(false);
-                        gameModel.getTimer().setDelay(gameModel.getDelay());
-                    }
+//                    gameModel.decrementEnergy();
+//                    if (gameModel.getEnergyLevel() == 0) {
+//                        gameModel.setPathFindingActivated(false);
+//                        gameModel.getTimer().setDelay(gameModel.getDelay());
+//                    }
                 }
                 snake.move();
             }

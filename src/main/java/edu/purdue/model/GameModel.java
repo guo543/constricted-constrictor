@@ -103,7 +103,7 @@ public class GameModel {
     }
 
     public void reset() {
-        pathFindingActivated = false;
+        pathFindingActivated = true;
         doubleScoreTime = 0;
         reduceLengthTime = 0;
         slowDownTime = 0;

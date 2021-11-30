@@ -3,10 +3,8 @@ package edu.purdue.model;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
 
 public class Snake {
 
@@ -91,6 +89,23 @@ public class Snake {
         }
         if (y[0] == 725) {
             y[0] = 50;
+        }
+    }
+
+    public static Snake copy(int[] X, int[] Y, int length) {
+        Snake copy = new Snake(false);
+        copy.length = length;
+        for (int i = 0; i < length; i++) {
+            copy.x[i] = X[i];
+            copy.y[i] = Y[i];
+        }
+        return copy;
+    }
+
+    public void moveAlongPath(LinkedList<String> path) {
+        for (String direc : path) {
+            direction = direc;
+            move();
         }
     }
 

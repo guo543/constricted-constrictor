@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class TestPathFinder {
 
-    PathFinder pathFinder = new PathFinder();
+    PathSolver pathSolver = new PathSolver();
 
     @Test
     public void testGetNextDirection() {
@@ -17,7 +17,7 @@ public class TestPathFinder {
         int foodX = 350;
         int foodY = 200;
         ArrayList<Obstacle> obstacles = new ArrayList<>();
-        String direction = pathFinder.getNextDirection(X, Y, length, foodX, foodY, obstacles);
+        String direction = pathSolver.getNextDirection(X, Y, length, foodX, foodY, obstacles);
         System.out.println(direction);
     }
 }
