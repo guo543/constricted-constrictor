@@ -18,11 +18,11 @@ public class MenuPanel extends JPanel {
 
         greeting = new JLabel("Welcome");
         this.add(greeting);
-        greeting.setBounds(620, 32, 100, 20);
+        greeting.setBounds(570, 150, 200, 20);
 
-        JLabel title = new JLabel("CONSTRICTED CONSTRICTOR");
+        JLabel title = new JLabel("<html>CONSTRICTED CONSTRICTOR</html>");
         title.setForeground(new Color(7, 2, 175));
-        title.setFont(new Font("Dialog", Font.BOLD, 30));
+        title.setFont(new Font("Gill Sans Ultra Bold", Font.BOLD, 35));
         start = new JButton("START");
         start.setPreferredSize(new Dimension(200, 50));
         settings = new JButton("SETTINGS");
@@ -36,7 +36,7 @@ public class MenuPanel extends JPanel {
         special_thanks = new JButton("SPECIAL THANKS");
         special_thanks.setPreferredSize(new Dimension(200,50));
         this.add(title);
-        title.setBounds(180, 220, 500, 50);
+        title.setBounds(65, 150, 800, 200);
 
         this.add(start);
         start.setBounds(300, 360, 200, 50);
@@ -55,6 +55,25 @@ public class MenuPanel extends JPanel {
 
         this.add(special_thanks);
         special_thanks.setBounds(300, 660, 200, 50);
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        this.setBackground(new Color(0, 9, 123).darker());
+
+        g.setColor(new Color(255, 255, 255));
+        g.fillRect(25, 50, 725, 700);
+        Color grid = new Color(250, 250, 250);
+
+        for (int i = 1; i < 30; i++) {
+            for (int j = 2; j < 30; j++) {
+                if (((i - 1) % 2 == 0 && (j - 2) % 2 == 0) || ((i - 1) % 2 != 0 && (j - 2) % 2 != 0)) {
+                    g.setColor(grid);
+                    g.fillRect(i * 25, j * 25, 25, 25);
+                }
+            }
+        }
     }
 
     public JLabel getGreeting() {

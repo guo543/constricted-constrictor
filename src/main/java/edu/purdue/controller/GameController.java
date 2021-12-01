@@ -66,11 +66,11 @@ public class GameController {
                             gameModel.getFood().getX(),
                             gameModel.getFood().getY(),
                             gameModel.getMap().getObstacles()));
-//                    gameModel.decrementEnergy();
-//                    if (gameModel.getEnergyLevel() == 0) {
-//                        gameModel.setPathFindingActivated(false);
-//                        gameModel.getTimer().setDelay(gameModel.getDelay());
-//                    }
+                    gameModel.decrementEnergy();
+                    if (gameModel.getEnergyLevel() == 0) {
+                        gameModel.setPathFindingActivated(false);
+                        gameModel.getTimer().setDelay(gameModel.getDelay());
+                    }
                 }
                 snake.move();
             }
@@ -241,7 +241,7 @@ public class GameController {
         }
     }
 
-    private void checkEatFood(Snake snake) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    private void checkEatFood(Snake snake) {
         int[] X = snake.getX();
         int[] Y = snake.getY();
 
@@ -304,7 +304,7 @@ public class GameController {
             if (!gameModel.isMultiplayer() && !gameModel.getSpecialFood().isVisible()) {
                 Random r = new Random();
                 int rand = r.nextInt(100);
-                if (rand < 99) {
+                if (rand < 20) {
                     overlap = true;
                     while (overlap) {
                         overlap = false;
