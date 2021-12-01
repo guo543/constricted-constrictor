@@ -53,7 +53,9 @@ public class StartGame {
         pausePanel.setBounds(275, 275, 250, 250);
         pausePanel.setVisible(false);
         MenuPanel menuPanel = new MenuPanel();
-        LostPanel lostPanel = new LostPanel();
+        LostPanel lostPanel = new LostPanel(gameModel);
+        lostPanel.setBounds(225, 200, 350, 350);
+        lostPanel.setVisible(false);
         SettingsPanel settingsPanel = new SettingsPanel(gameModel);
         HelpPanel helpPanel = new HelpPanel();
         HighScoresPanel highScoresPanel = new HighScoresPanel();

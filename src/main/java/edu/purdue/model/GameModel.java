@@ -40,6 +40,7 @@ public class GameModel {
     private int doubleScoreTime;
     private int reduceLengthTime;
     private int slowDownTime;
+    private boolean isHighScore;
 
     public GameModel() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         settings = new Settings();
@@ -334,5 +335,13 @@ public class GameModel {
 
     public void setPowerUpsClip(Clip powerUpsClip) {
         this.powerUpsClip = powerUpsClip;
+    }
+
+    public void setIsHighScore(boolean isHighScore) {
+        this.isHighScore = isHighScore;
+    }
+
+    public boolean getIsHighScore() {
+        return isHighScore;
     }
 }
