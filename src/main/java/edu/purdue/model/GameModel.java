@@ -46,7 +46,6 @@ public class GameModel {
         settings = new Settings();
         map = new Map(settings.getSetting("map"));
         map.generateObstacles();
-        settings.save();
         switch (settings.getSetting("difficulty")) {
             case "1":
                 delay = 170;
@@ -80,6 +79,10 @@ public class GameModel {
                 solvePathForever = false;
                 break;
         }
+        settings.setSetting("muteMusic", "false");
+        settings.setSetting("muteEffects", "false");
+        settings.setSetting("music", "100");
+        settings.setSetting("effects", "100");
         countDownSequence = new Stack<>();
         timer = new Timer(delay, e -> {});
         AudioInputStream musicInputStream = AudioSystem.getAudioInputStream(new File("music/CGT_BGM.wav").getAbsoluteFile());

@@ -25,7 +25,6 @@ public class UserDao {
         InputStream is = UserDao.class.getClassLoader().getResourceAsStream("conf/jdbc.properties");
         try {
             properties.load(is);
-            System.out.println(properties.getProperty("init"));
         } catch (IOException e) {
             e.printStackTrace();
         }
