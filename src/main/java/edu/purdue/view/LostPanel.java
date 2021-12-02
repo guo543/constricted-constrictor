@@ -41,12 +41,12 @@ public class LostPanel extends JPanel {
 
         restart = new JButton("Restart");
         restart.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
-        restart.setBounds(100, 180, 150, 45);
+        restart.setBounds(50, 180, 250, 45);
         add(restart);
 
         quit = new JButton("Quit");
         quit.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
-        quit.setBounds(100, 255, 150, 45);
+        quit.setBounds(50, 255, 250, 45);
         add(quit);
 
         revalidate();
