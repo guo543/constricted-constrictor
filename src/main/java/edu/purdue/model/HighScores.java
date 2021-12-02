@@ -38,4 +38,11 @@ public class HighScores {
                 "scores=" + scores +
                 '}';
     }
+
+    public int getHighScore() {
+        if (!scores.isEmpty()) {
+            return scores.get(0);
+        }
+        return 0;
+    }
 }

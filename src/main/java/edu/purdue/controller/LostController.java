@@ -12,8 +12,8 @@ public class LostController {
 
         gameView.getLostPanel().getRestart().addActionListener(e -> {
             gameModel.reset();
-            gameView.getMainFrame().setContentPane(gameView.getLayeredPane());
-            gameView.getPausePanel().setVisible(false);
+            //gameView.getMainFrame().setContentPane(gameView.getLayeredPane());
+            gameView.getLostPanel().setVisible(false);
             gameView.getGamePanel().requestFocus();
             gameView.getGamePanel().revalidate();
             gameModel.getTimer().setDelay(1000);
@@ -30,6 +30,9 @@ public class LostController {
         gameView.getLostPanel().getQuit().addActionListener(e -> {
             gameModel.reset();
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
+            gameView.getLostPanel().setVisible(false);
+            gameView.getGamePanel().requestFocus();
+            gameView.getGamePanel().revalidate();
             gameModel.setGameState(GameModel.GameState.HOME);
             gameModel.getButtonClip().setFramePosition(0);
             gameModel.getButtonClip().start();

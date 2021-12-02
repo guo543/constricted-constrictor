@@ -1,5 +1,7 @@
 package edu.purdue.view;
 
+import edu.purdue.model.GameModel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,24 +13,56 @@ public class LostPanel extends JPanel {
 
     private JLabel result;
 
-    public LostPanel() {
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
+    private JLabel highScoreLabel;
+
+    public LostPanel(GameModel gameModel) {
+        //this.setLayout(new GridBagLayout());
+        //GridBagConstraints constraints = new GridBagConstraints();
+
+        this.setLayout(null);
 
         JLabel msg = new JLabel("Game Over");
+        add(msg);
+        msg.setBounds(90, 25, 175, 25);
+        msg.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+
+
+        result = new JLabel("score: ");
+        add(result);
+        //result.setSize(new Dimension(150, 25));
+        //result.setLocation(105, 75);
+        result.setBounds(105, 75, 150, 25);
+        result.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 15));
+
+        highScoreLabel = new JLabel();
+        add(highScoreLabel);
+        highScoreLabel.setBounds(105, 100, 150, 25);
+        highScoreLabel.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 15));
+
         restart = new JButton("Restart");
+        restart.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+        restart.setBounds(50, 180, 250, 45);
+        add(restart);
+
         quit = new JButton("Quit");
+        quit.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+        quit.setBounds(50, 255, 250, 45);
+        add(quit);
 
-        result = new JLabel();
+        revalidate();
+        repaint();
 
+
+
+        /*
         constraints.gridx = 0;
         constraints.gridy = 0;
         this.add(msg, constraints);
 
-        constraints.gridx = 0;
+        //constraints.gridx = 0;
         constraints.gridy = 1;
         this.add(result, constraints);
-        result.setVisible(false);
+        //result.setVisible(false);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
@@ -36,7 +70,7 @@ public class LostPanel extends JPanel {
 
         constraints.gridx = 0;
         constraints.gridy = 3;
-        this.add(quit, constraints);
+        this.add(quit, constraints);*/
     }
 
     public JButton getRestart() {
@@ -61,5 +95,9 @@ public class LostPanel extends JPanel {
 
     public void setResult(JLabel result) {
         this.result = result;
+    }
+
+    public JLabel getHighScoreLabel() {
+        return highScoreLabel;
     }
 }
