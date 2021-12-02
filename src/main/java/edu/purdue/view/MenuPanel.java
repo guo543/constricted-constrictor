@@ -40,22 +40,22 @@ public class MenuPanel extends JPanel {
         title.setBounds(65, 150, 800, 200);
 
         this.add(start);
-        start.setBounds(300, 360, 200, 50);
+        start.setBounds(288, 360, 200, 50);
 
         this.add(ovo);
-        ovo.setBounds(300, 420, 200, 50);
+        ovo.setBounds(288, 420, 200, 50);
 
         this.add(manual);
-        manual.setBounds(300, 480, 200, 50);
+        manual.setBounds(288, 480, 200, 50);
 
         this.add(settings);
-        settings.setBounds(300, 540, 200, 50);
+        settings.setBounds(288, 540, 200, 50);
 
         this.add(highScores);
-        highScores.setBounds(300, 600, 200, 50);
+        highScores.setBounds(288, 600, 200, 50);
 
         this.add(special_thanks);
-        special_thanks.setBounds(300, 660, 200, 50);
+        special_thanks.setBounds(288, 660, 200, 50);
     }
 
     public void paintComponent(Graphics g) {
