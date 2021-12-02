@@ -45,8 +45,8 @@ public class LoginController {
                 //t.start();
                 gameModel.getBGMClip().loop(Clip.LOOP_CONTINUOUSLY);
                 gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
-                gameView.getMainFrame().setBounds((width - 800) / 2, (height - 800) / 2, 800, 850);
-                gameView.getMainFrame().setSize(800, 850);
+                gameView.getMainFrame().setBounds((width - 790) / 2, (height - 850) / 2, 790, 850);
+                gameView.getMainFrame().setSize(790, 850);
                 gameView.getMenuPanel().getGreeting().setText("Welcome, " + user.getUsername());
                 gameModel.setUser(user);
                 System.out.println(gameModel.getUser());
@@ -70,10 +70,10 @@ public class LoginController {
             //Thread t = new Thread(new MusicClip());
             //t.start();
             gameModel.getBGMClip().loop(Clip.LOOP_CONTINUOUSLY);
-            gameView.getMenuPanel().getSpecial_thanks().setBounds(300, 600, 200, 50);
+            gameView.getMenuPanel().getSpecial_thanks().setBounds(288, 600, 200, 50);
             gameView.getMainFrame().setContentPane(gameView.getMenuPanel());
-            gameView.getMainFrame().setBounds((width - 800) / 2, (height - 800) / 2, 800, 850);
-            gameView.getMainFrame().setSize(800, 850);
+            gameView.getMainFrame().setBounds((width - 790) / 2, (height - 850) / 2, 790, 850);
+            gameView.getMainFrame().setSize(790, 850);
             gameModel.setUser(null);
             gameView.getMenuPanel().getGreeting().setText("Welcome, Guest");
             gameView.getMenuPanel().getHighScores().setVisible(false);

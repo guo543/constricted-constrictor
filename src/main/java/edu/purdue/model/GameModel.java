@@ -40,13 +40,13 @@ public class GameModel {
     private int doubleScoreTime;
     private int reduceLengthTime;
     private int slowDownTime;
+    private boolean solvePathForever;
     private boolean isHighScore;
 
     public GameModel() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         settings = new Settings();
         map = new Map(settings.getSetting("map"));
         map.generateObstacles();
-        settings.save();
         switch (settings.getSetting("difficulty")) {
             case "1":
                 delay = 170;
@@ -72,6 +72,18 @@ public class GameModel {
                 defaultStyle = false;
                 break;
         }
+        switch (settings.getSetting("solvePathForever")) {
+            case "1":
+                solvePathForever = true;
+                break;
+            case "0":
+                solvePathForever = false;
+                break;
+        }
+        settings.setSetting("muteMusic", "false");
+        settings.setSetting("muteEffects", "false");
+        settings.setSetting("music", "100");
+        settings.setSetting("effects", "100");
         countDownSequence = new Stack<>();
         timer = new Timer(delay, e -> {});
         AudioInputStream musicInputStream = AudioSystem.getAudioInputStream(new File("music/CGT_BGM.wav").getAbsoluteFile());
@@ -104,7 +116,7 @@ public class GameModel {
     }
 
     public void reset() {
-        pathFindingActivated = false;
+        pathFindingActivated = solvePathForever;
         doubleScoreTime = 0;
         reduceLengthTime = 0;
         slowDownTime = 0;
@@ -335,6 +347,10 @@ public class GameModel {
 
     public void setPowerUpsClip(Clip powerUpsClip) {
         this.powerUpsClip = powerUpsClip;
+    }
+
+    public boolean isSolvePathForever() {
+        return solvePathForever;
     }
 
     public void setIsHighScore(boolean isHighScore) {

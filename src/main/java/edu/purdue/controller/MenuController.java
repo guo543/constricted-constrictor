@@ -3,6 +3,8 @@ package edu.purdue.controller;
 import edu.purdue.model.GameModel;
 import edu.purdue.view.GameView;
 
+import javax.swing.*;
+
 public class MenuController {
 
     private GameView gameView;
@@ -33,6 +35,11 @@ public class MenuController {
         });
 
         gameView.getMenuPanel().getOvo().addActionListener(e -> {
+            if (gameModel.isSolvePathForever()) {
+                JOptionPane.showMessageDialog(gameView.getMenuPanel(), "Cannot enter 1-on-1 mode with solvePathForever=1",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             gameView.getMainFrame().setContentPane(gameView.getLayeredPane());
             gameView.getPausePanel().setVisible(false);
             gameView.getGamePanel().setFocusable(true);

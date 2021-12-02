@@ -34,7 +34,19 @@ public class Settings {
     public void save() {
         try {
             OutputStream os = new FileOutputStream("conf/settings.properties");
+            String music = settings.getProperty("music");
+            String effects = settings.getProperty("effects");
+            String muteMusic = settings.getProperty("muteMusic");
+            String muteEffects = settings.getProperty("muteEffects");
+            settings.remove("music");
+            settings.remove("effects");
+            settings.remove("muteMusic");
+            settings.remove("muteEffects");
             settings.store(os, null);
+            setSetting("music", music);
+            setSetting("effects", effects);
+            setSetting("muteMusic", muteMusic);
+            setSetting("muteEffects", muteEffects);
         } catch (Exception e) {
             e.printStackTrace();
         }

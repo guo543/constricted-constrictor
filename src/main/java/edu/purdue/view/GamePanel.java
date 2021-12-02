@@ -131,7 +131,7 @@ public class GamePanel extends JPanel {
             g.drawString("Score: " + gameModel.getSnake().getScore(), 650, 32);
         }
 
-        if (!gameModel.isMultiplayer()) {
+        if (!gameModel.isMultiplayer() && !gameModel.isSolvePathForever()) {
             g.drawString("Energy:", 30, 32);
             g.drawRect(117, 15, 155, 21);
             g.fillRect(120, 18, gameModel.getEnergyLevel(), 16);
