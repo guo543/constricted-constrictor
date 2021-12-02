@@ -40,6 +40,7 @@ public class GameModel {
     private int doubleScoreTime;
     private int reduceLengthTime;
     private int slowDownTime;
+    private boolean solvePathForever;
 
     public GameModel() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         settings = new Settings();
@@ -69,6 +70,14 @@ public class GameModel {
                 break;
             case "0":
                 defaultStyle = false;
+                break;
+        }
+        switch (settings.getSetting("solvePathForever")) {
+            case "1":
+                solvePathForever = true;
+                break;
+            case "0":
+                solvePathForever = false;
                 break;
         }
         countDownSequence = new Stack<>();
@@ -103,7 +112,7 @@ public class GameModel {
     }
 
     public void reset() {
-        pathFindingActivated = false;
+        pathFindingActivated = solvePathForever;
         doubleScoreTime = 0;
         reduceLengthTime = 0;
         slowDownTime = 0;
@@ -335,4 +344,9 @@ public class GameModel {
     public void setPowerUpsClip(Clip powerUpsClip) {
         this.powerUpsClip = powerUpsClip;
     }
+
+    public boolean isSolvePathForever() {
+        return solvePathForever;
+    }
+
 }

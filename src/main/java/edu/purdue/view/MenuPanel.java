@@ -19,6 +19,7 @@ public class MenuPanel extends JPanel {
         greeting = new JLabel("Welcome");
         this.add(greeting);
         greeting.setBounds(570, 150, 200, 20);
+        greeting.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 
         JLabel title = new JLabel("<html>CONSTRICTED CONSTRICTOR</html>");
         title.setForeground(new Color(7, 2, 175));

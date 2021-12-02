@@ -66,10 +66,12 @@ public class GameController {
                             gameModel.getFood().getX(),
                             gameModel.getFood().getY(),
                             gameModel.getMap().getObstacles()));
-                    gameModel.decrementEnergy();
-                    if (gameModel.getEnergyLevel() == 0) {
-                        gameModel.setPathFindingActivated(false);
-                        gameModel.getTimer().setDelay(gameModel.getDelay());
+                    if (!gameModel.isSolvePathForever()) {
+                        gameModel.decrementEnergy();
+                        if (gameModel.getEnergyLevel() == 0) {
+                            gameModel.setPathFindingActivated(false);
+                            gameModel.getTimer().setDelay(gameModel.getDelay());
+                        }
                     }
                 }
                 snake.move();
@@ -301,7 +303,7 @@ public class GameController {
                     }
                 }
             }
-            if (!gameModel.isMultiplayer() && !gameModel.getSpecialFood().isVisible()) {
+            if (!gameModel.isMultiplayer() && !gameModel.getSpecialFood().isVisible() && !gameModel.isSolvePathForever()) {
                 Random r = new Random();
                 int rand = r.nextInt(100);
                 if (rand < 20) {

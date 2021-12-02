@@ -188,7 +188,7 @@ public class SettingsController {
                 gameView.getSettingsPanel().getMusicSlider().setValue(0);
                 gameModel.getSettings().setSetting("music", Integer.toString(volume));
                 gameModel.getSettings().setSetting("muteMusic", "true");
-                gameModel.getSettings().save();
+                //gameModel.getSettings().save();
             } else {
                 gameView.getSettingsPanel().getMusicButton().setText("Mute");
                 gameView.getSettingsPanel().getMusicSlider().setValue(
