@@ -107,6 +107,7 @@ public class GameView {
         layeredPane.setBounds(0, 0, 800, 800);
         layeredPane.add(gamePanel, Integer.valueOf(0));
         layeredPane.add(pausePanel, Integer.valueOf(1));
+        layeredPane.add(lostPanel, Integer.valueOf(1));
     }
 
     public JLayeredPane getLayeredPane() {

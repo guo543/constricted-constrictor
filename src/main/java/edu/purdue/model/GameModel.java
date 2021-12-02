@@ -41,6 +41,7 @@ public class GameModel {
     private int reduceLengthTime;
     private int slowDownTime;
     private boolean solvePathForever;
+    private boolean isHighScore;
 
     public GameModel() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         settings = new Settings();
@@ -352,4 +353,11 @@ public class GameModel {
         return solvePathForever;
     }
 
+    public void setIsHighScore(boolean isHighScore) {
+        this.isHighScore = isHighScore;
+    }
+
+    public boolean getIsHighScore() {
+        return isHighScore;
+    }
 }

@@ -29,6 +29,7 @@ public class HelpController {
             gameModel.getCountDownSequence().push("2");
             gameModel.getCountDownSequence().push("3");
             gameModel.getCountDownSequence().push("4");
+            gameModel.setGameState(GameModel.GameState.PLAYING);
             gameModel.getButtonClip().setFramePosition(0);
             gameModel.getButtonClip().start();
         });

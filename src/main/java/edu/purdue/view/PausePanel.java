@@ -19,6 +19,29 @@ public class PausePanel extends JPanel {
     private JButton quit;
 
     public PausePanel() {
+        this.setLayout(null);
+
+        JLabel pause = new JLabel("Paused");
+        pause.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
+        pause.setBounds(95, 25, 125, 25);
+        add(pause);
+
+        resume = new JButton("Resume");
+        resume.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+        resume.setBounds(50, 75, 200, 45);
+        add(resume);
+
+        restart = new JButton("Restart");
+        restart.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+        restart.setBounds(50, 150, 200, 45);
+        add(restart);
+
+        quit = new JButton("quit");
+        quit.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+        quit.setBounds(50, 225, 200, 45);
+        add(quit);
+
+        /*
         this.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -36,7 +59,7 @@ public class PausePanel extends JPanel {
 
         constraints.gridx = 0;
         constraints.gridy = 3;
-        this.add(quit, constraints);
+        this.add(quit, constraints);*/
     }
 
     public JButton getResume() {

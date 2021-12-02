@@ -184,6 +184,11 @@ public class GameController {
     }
 
     private void saveScores(Snake snake) {
+        if (snake.getScore() > gameModel.getUser().getHighScores().getHighScore()) {
+            gameModel.setIsHighScore(true);
+        } else {
+            gameModel.setIsHighScore(false);
+        }
         gameModel.getUser().getHighScores().add(snake.getScore());
         System.out.println(gameModel.getUser().getHighScores().getScores());
         gameView.getHighScoresPanel().updateScores(gameModel.getUser().getHighScores().getScores());
@@ -475,8 +480,22 @@ public class GameController {
             gameView.getLostPanel().getResult().setVisible(false);
         }
         gameModel.setGameState(GameModel.GameState.PAUSED);
-        gameView.getMainFrame().setContentPane(gameView.getLostPanel());
-        gameView.getMainFrame().revalidate();
-        gameView.getMainFrame().repaint();
+        gameView.getLostPanel().getResult().setText("Your score was: " + gameModel.getSnake().getScore());
+        if (gameModel.getUser() != null) {
+            if (gameModel.getIsHighScore()) {
+                gameView.getLostPanel().getHighScoreLabel().setText("New High Score!");
+            } else {
+                gameView.getLostPanel().getHighScoreLabel().setText("");
+            }
+        }
+        System.out.println(gameView.getLostPanel().getResult().getText());
+
+        //gameView.getMainFrame().setContentPane(gameView.getLostPanel());
+        gameView.getLostPanel().getResult().setVisible(true);
+        gameView.getLostPanel().setVisible(true);
+
+
+        //gameView.getMainFrame().revalidate();
+        //gameView.getMainFrame().repaint();
     }
 }
