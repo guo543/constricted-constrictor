@@ -480,7 +480,7 @@ public class GameController {
             gameView.getLostPanel().getResult().setVisible(false);
         }
         gameModel.setGameState(GameModel.GameState.PAUSED);
-        gameView.getLostPanel().getResult().setText("Your score was: " + gameModel.getSnake().getScore());
+        gameView.getLostPanel().getResult().setText("Your score: " + gameModel.getSnake().getScore());
         if (gameModel.getUser() != null) {
             if (gameModel.getIsHighScore()) {
                 gameView.getLostPanel().getHighScoreLabel().setText("New High Score!");
